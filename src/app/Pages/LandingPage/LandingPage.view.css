@@ -15,6 +15,10 @@
     color: #fff;
 }
 
+.logo img {
+    width: 40px;
+}
+
 nav ul {
     list-style-type: none;
     display: flex;
@@ -137,7 +141,7 @@ nav a {
     text-align: center;
 }
 
-.features h2 {
+h2 {
     font-size: 36px;
     margin-bottom: 40px;
 }
@@ -161,6 +165,21 @@ nav a {
 .feature-box h3 {
     color: #ccc;
     margin-bottom: 20px;
+}
+
+.sub-section
+{
+    height: 100vh;
+}
+
+.sub-section.features {
+    background-image: url('/assets/images/features_bg.jpg');
+    background-size: cover;
+}
+
+.sub-section.datas {
+    background-image: url('/assets/images/search.jpg');
+    background-size: cover;
 }
 
 footer {
