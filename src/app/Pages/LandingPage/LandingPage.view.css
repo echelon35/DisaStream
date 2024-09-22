@@ -1,0 +1,175 @@
+.container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.header {
+    padding: 20px 0;
+    background-color: #16151f;
+    height: 9vh;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.cta-btn {
+    background-color: #6a5ac7;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+#myVideo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+}
+
+.hero {
+    text-align: center;
+    padding: 100px 0;
+    background: rgba(0,0,0,0.8);
+    height: 91vh;
+}
+
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 18px;
+    margin-bottom: 40px;
+}
+
+.buttons .btn-primary, .buttons .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.buttons .btn-primary {
+    background-color: #6a5ac7;
+    color: #fff;
+}
+
+.buttons .btn-secondary {
+    background-color: #28273a;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.dashboard {
+    background-color: #16151f;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.user-info img {
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.stat-box {
+    background-color: #28273a;
+    padding: 20px;
+    border-radius: 10px;
+    flex: 1;
+    margin: 0 10px;
+    text-align: center;
+}
+
+.stat-box h3 {
+    color: #ccc;
+    margin-bottom: 10px;
+}
+
+.stat-box p {
+    font-size: 24px;
+    color: #fff;
+}
+
+.chart img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+.features {
+    background-color: #0f0e24;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.features h2 {
+    font-size: 36px;
+    margin-bottom: 40px;
+}
+
+.features-grid {
+    display: flex;
+    justify-content: space-between;
+}
+
+.feature-box {
+    padding: 40px;
+    border-radius: 10px;
+    flex: 1;
+    margin: 0 10px;
+}
+
+.feature-bg {
+    background-color: #16151f;
+}
+
+.feature-box h3 {
+    color: #ccc;
+    margin-bottom: 20px;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 20px 0;
+    background-color: #16151f;
+    text-align: center;
+}
+
+footer p {
+    color: #ccc;
+}

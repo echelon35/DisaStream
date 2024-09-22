@@ -1,0 +1,102 @@
+.txt-ow-ellipsis { text-overflow: ellipsis; }
+.txt-ow-clip { text-overflow: clip; }
+
+.ws-nowrap { white-space: nowrap; }
+.ws-normal { white-space: normal; }
+
+.overflow-hidden { overflow: hidden; }
+
+.txt-align-start {text-align: start;}
+.txt-align-end {text-align: end;}
+.txt-align-center {text-align: center;}
+.txt-align-justify {text-align: justify;}
+
+
+.text-decoration-none {text-decoration: none;}
+.list-style-none
+{ list-style: none; margin-left:0; padding-left:0; }
+.list-style-none li {padding-top:0.5rem;}
+
+.badge-notif { font-family:'Times New Roman', Times, serif;}
+
+/* | TYPOGRAPHY */
+/* body{font-family: 'etna', Impact, 'Arial Narrow Bold', sans-serif;} */
+.h1,.h2,.h3,.h4{color: white;}
+.h1,.h2,.h3,.h4,label,a,.btn {letter-spacing: 0.5px;}
+/* h1 {font-size: 24px;}
+h2 {font-size: 22px;}
+h3 {font-size: 20px;}
+h4 {font-size: 1.1em;} */
+@media all and (max-width:576px)
+{
+    h1 {font-size: 1.5em;}
+    h2 {font-size: 1.4em;}
+    h3 {font-size: 1.3em;}
+    h4 {font-size: 1.2em;}
+}
+.badge {letter-spacing: 2px;}
+.font-etna {font-family: etna;}
+a {text-decoration:none;}
+.blue-satellearth {color:var(--blue-satellearth);}
+
+input.form-control {
+    height:auto;
+ }
+input::placeholder{
+    overflow: visible;
+}
+
+.neon
+{
+    text-transform:uppercase;
+    /* color:#f8f9fa;  */
+    text-shadow: 0 0 0.05vh #f8f9fa, 0 0 0.1vh #f8f9fa,
+    0 0 0.2vh #000, 0 0 0.35vh #000, 0 0 0.4vh #000,
+    0 0 0.5vh #f8f9fa, 0 0 0.75vh #000;
+}
+.neon-white{
+    color:#ffffff;
+    text-shadow: 0 0 0.05vh #17A2B8, 0 0 0.1vh #17A2B8, 0 0 0.15vh #17A2B8,
+    0 0 0.2vh #000, 0 0 0.35vh #000, 0 0 0.4vh #000,
+    0 0 0.5vh #f8f9fa, 0 0 0.75vh #000;
+}
+.neon-blue-animated{
+    text-transform:uppercase;
+    color:var(--blue-satellearth);
+    font-weight:bold;
+    animation: flicker 3s infinite alternate;
+}
+.neon-blue{
+    color:var(--blue-satellearth);
+    text-transform:uppercase;
+    font-weight:bold;
+    text-shadow:
+    -0.05rem -0.05rem 0.25rem rgb(59, 57, 57,0),
+    0.05rem 0.05rem 0.25rem rgb(59, 57, 57,0),
+    0 0 0.25rem var(--blue-satellearth);
+}
+
+.rem07{
+    font-size: 0.7rem;
+}
+.rem08{
+    font-size: 0.8rem;
+}
+.rem09{
+    font-size: 0.9rem;
+}
+.rem11{
+    font-size: 1.1rem;
+}
+.rem125{
+    font-size: 1.25rem;
+}
+.rem150{
+    font-size: 1.5rem;
+}
+.rem175{
+    font-size: 1.75rem;
+}
+.rem200{
+    font-size: 2rem;
+}
