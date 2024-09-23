@@ -7,6 +7,9 @@
     padding: 20px 0;
     background-color: #16151f;
     height: 9vh;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
 }
 
 .logo {
@@ -51,7 +54,7 @@ nav a {
     text-align: center;
     padding: 100px 0;
     background: rgba(0,0,0,0.8);
-    height: 91vh;
+    height: 100vh;
 }
 
 .hero h1 {
@@ -64,19 +67,19 @@ nav a {
     margin-bottom: 40px;
 }
 
-.buttons .btn-primary, .buttons .btn-secondary {
+.btn-primary, .btn-secondary {
     padding: 15px 30px;
     border-radius: 5px;
     text-decoration: none;
     font-size: 18px;
 }
 
-.buttons .btn-primary {
+.btn-primary {
     background-color: #6a5ac7;
     color: #fff;
 }
 
-.buttons .btn-secondary {
+.btn-secondary {
     background-color: #28273a;
     color: #fff;
     margin-left: 10px;
@@ -183,7 +186,6 @@ h2 {
 }
 
 footer {
-    margin-top: 20px;
     padding: 20px 0;
     background-color: #16151f;
     text-align: center;

@@ -36,7 +36,7 @@ h4 {font-size: 1.1em;} */
 }
 .badge {letter-spacing: 2px;}
 .font-etna {font-family: etna;}
-a {text-decoration:none;}
+a {text-decoration:none;color:#6a5ac7;}
 .blue-satellearth {color:var(--blue-satellearth);}
 
 input.form-control {

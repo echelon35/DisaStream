@@ -6,29 +6,32 @@
         </div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Features</a></li>
-                <li><a href="#">Pricing</a></li>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#pricing">Pricing</a></li>
             </ul>
         </nav>
-        <a href="#" class="cta-btn">Let's go free</a>
+        <div>
+            <a href="/auth" class="btn-primary">Let's go free</a>
+            <a href="/login" class="margin-l10 btn-secondary">Login</a>
+        </div>
     </div>
 </header>
-<section class="hero">
+<section class="hero" id="home">
     <div class="container align-center">
         <h1>The best way to stay tuned with elements</h1>
         <p>Define your area, choose your risk, be alerted</p>
         <div class="buttons">
-            <a href="#" class="btn-primary">Let's go free</a>
-            <a href="#" class="btn-secondary">View pricing</a>
+            <a href="/auth" class="btn-primary">Let's go free</a>
+            <a href="#features" class="btn-secondary">Tell me more</a>
         </div>
     </div>
 </section>
 <video autoplay muted loop id="myVideo">
     <source src="/assets/videos/landing.mp4" type="video/mp4">
 </video>
-<section class="sub-section features d-flex align-items-center">
+<section class="sub-section features d-flex align-items-center" id="features">
     <div class="container">
         <h2>Features as powerful as nature itself</h2>
         <div class="features-grid">
@@ -45,31 +48,33 @@
                 <p>Receive alerts that match your criteria</p>
             </div>
         </div>
-    </div>
-</section>
-
-<section class="sub-section datas d-flex align-items-center">
-    <div class="container">
-        <h2 class="text-center margin-10">Best quality data</h2>
-        <div class="container feature-bg text-center padding-40 margin-b20">
-            <p>Quality data collected by nearly twenty 
-                national and international observatories</p>
+        <div class="margin-t40 buttons">
+            <a href="/auth" class="btn-primary">Let's go free</a>
+            <a href="#about" class="btn-secondary">Tell me more</a>
         </div>
     </div>
 </section>
 
-<section class="sub-section d-flex">
-    <div class="container align-items-center">
-        <h2 class="text-center margin-10">Disclaimer</h2>
-        <div class="container feature-bg text-center padding-40 margin-b20">
-            <p>This application is a monitoring support for natural disasters, 
-                in no case does it replace government alerts</p>
+<section class="sub-section datas d-flex align-items-center" id="about">
+        <div class="half1 padding-20 flex1">
+            <div class="container">
+                <h2 class="text-center">Receive the best Earth alerts, from everywhere</h2>
+            </div>
+            <div class="container feature-bg text-center padding-40 margin-b20">
+                <p>This application is a monitoring support for natural disasters, 
+                    in no case does it replace government alerts</p>
+            </div>
         </div>
-    </div>
+        <div class="half2 flex1 d-flex align-items-center justify-center">
+            <div class="container">
+                <img style="width: 700px;" src="/assets/images/mapdemo.png">
+            </div>
+        </div>
 </section>
 
 <footer>
     <div class="container">
-        <p>© 2024 Product. All rights reserved.</p>
+        <p>© 2024 Cataclysm. All rights reserved. This application is a monitoring support for natural disasters, 
+            in no case does it replace government alerts</p>
     </div>
 </footer>

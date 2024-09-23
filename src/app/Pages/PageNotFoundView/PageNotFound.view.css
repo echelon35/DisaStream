@@ -1,0 +1,29 @@
+#error
+{
+    background-image: url("/assets/images/404.jpg");
+    width: 100%;
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.error-title
+{
+    font-size: 20rem;
+    color: white;
+}
+.error-subtitle
+{
+    font-size: 5rem;
+    color: white;
+}
+
+@media (max-width:990px){
+    #error{
+        height: calc(100vh - var(--mobile-top-menu-height) - var(--mobile-bottom-menu-height));
+    }
+}
+@media (min-width:990px){
+    #error{
+        height: 100vh;
+    }
+}
