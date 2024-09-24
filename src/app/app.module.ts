@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
+import { DashboardView } from './Pages/Dashboard/Dashboard.view';
+import { SharedModule } from './Shared/Shared.module';
 
 @NgModule({
   declarations: [
@@ -19,11 +21,13 @@ import { LoginView } from './Pages/Login/Login.view';
     LandingPageView,
     AuthenticationView,
     LoginView,
-    ForgotPasswordView
+    ForgotPasswordView,
+    DashboardView
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    SharedModule,
     ReactiveFormsModule,
     AppRoutingModule
   ],

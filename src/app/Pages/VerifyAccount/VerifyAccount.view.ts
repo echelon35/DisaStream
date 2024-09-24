@@ -8,7 +8,7 @@ import { SeoService } from 'src/app/Services/Seo.service';
 })
 export class VerifyAccountView implements OnInit {
 
-  showLogin: boolean = true;
+  showLogin = true;
 
   constructor(private seoService: SeoService) { 
     this.seoService.generateTags("S'authentifier sur SatellEarth","Inscrivez-vous sur SatellEarth pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");

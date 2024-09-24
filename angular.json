@@ -25,10 +25,11 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
               "src/assets/style/layout.css",
               "src/assets/style/spacement.css",
-              "src/assets/style/typography.css"
+              "src/assets/style/typography.css",
+              "src/assets/style/colors.css",
+              "src/assets/style/buttons.css"
             ],
             "scripts": []
           },
@@ -93,6 +94,15 @@
               "src/styles.css"
             ],
             "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
           }
         }
       }

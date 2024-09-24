@@ -16,7 +16,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError(err => {
 
             if(err.error){
-                var error = err.error.message || err.statusText;
+                const error = err.error.message || err.statusText;
 
                 if(err.status == 404){
                     this.router.navigate(['/404']).then(() => {

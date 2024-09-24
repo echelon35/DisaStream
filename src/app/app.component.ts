@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,10 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'cataclysm';
-  isAuthenticated: boolean = true;
+
+  env = environment;
+  appName: string = this.env.settings.appName;
+  
+  title = this.appName;
+  isAuthenticated = false;
 
   constructor(public route: Router){
-
+    console.log(route.url);
   }
 }

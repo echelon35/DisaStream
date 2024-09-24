@@ -1,0 +1,23 @@
+.selector {
+    height: 100vh;
+    width: 250px;
+    position:absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    background: #1C2679;
+}
+.selector .svg-container
+{
+    margin: 10px;
+    cursor: pointer;
+}
+.selector svg {
+    stroke: white;
+}
+.selector svg:hover {
+    stroke: var(--blue-satellearth);
+}

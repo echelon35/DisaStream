@@ -8,10 +8,10 @@ export class SeoService {
 
   constructor(private meta: Meta, private title:Title) { }
 
-  generateTags(title:string = "",description:string = "",picturePath:string = ""){
+  generateTags(title = "",description = "",picturePath = ""){
 
     //Default values
-    var config = {
+    const config = {
       title: (title != "") ? title : "SatellEarth - Réseau social géocentré",
       description: (description != "") ? description : "Le premier réseau social où la Terre est votre meilleure amie",
       image: (picturePath != "") ? picturePath : '/assets/background/world_Moment.jpg'

@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'login', component: LoginView },
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
+  { path: 'dashboard', component: PageNotFoundView },
 ];
 
 @NgModule({

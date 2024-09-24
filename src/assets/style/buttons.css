@@ -1,0 +1,29 @@
+.btn-primary, .btn-secondary, .btn-tertiary {
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover {
+    color: #c2bdbd;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-tertiary {
+    background-color: var(--tertiary-color);
+    color: #fff;
+    font-weight: 600;
+}
