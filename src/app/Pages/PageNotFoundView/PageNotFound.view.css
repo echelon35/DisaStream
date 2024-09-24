@@ -16,50 +16,7 @@
     font-size: 5rem;
     color: white;
 }
-.header {
-    padding: 20px 40px;
-    background-color: #16151f;
-    height: 9vh;
-    position: fixed;
-    width: 100%;
-    z-index: 999;
-}
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: #fff;
-}
-
-.logo img {
-    width: 40px;
-}
-
-.btn-primary, .btn-secondary {
-    padding: 15px 30px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.btn-primary {
-    background-color: #6a5ac7;
-    color: #fff;
-}
-
-.btn-secondary {
-    background-color: #28273a;
-    color: #fff;
-    margin-left: 10px;
-}
-
-@media (max-width:990px){
-    #error{
-        height: calc(100vh - var(--mobile-top-menu-height) - var(--mobile-bottom-menu-height));
-    }
-}
-@media (min-width:990px){
-    #error{
-        height: 100vh;
-    }
+#error{
+    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height));
 }

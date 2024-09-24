@@ -1,6 +1,6 @@
 <app-logged-sidebar *ngIf="isAuthenticated"></app-logged-sidebar>
 <app-not-logged-header *ngIf="!isAuthenticated" 
-[isLandingPage] = "this.route.url == '/'"></app-not-logged-header>
+[isLandingPage] = "this.route.url == '/' || this.route.url.startsWith('/#')"></app-not-logged-header>
 
 <div class="content overflow-auto custom-scrollbar">
     <router-outlet></router-outlet>

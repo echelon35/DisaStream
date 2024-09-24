@@ -24,6 +24,7 @@
 		overflow: auto;
 		overflow-x: hidden;
 	}
+	.overflow-hidden { overflow: hidden; }
 	.custom-scrollbar::-webkit-scrollbar-track
 	{
 		/* border: 1px solid black; */

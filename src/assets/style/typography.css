@@ -4,12 +4,10 @@
 .ws-nowrap { white-space: nowrap; }
 .ws-normal { white-space: normal; }
 
-.overflow-hidden { overflow: hidden; }
-
-.txt-align-start {text-align: start;}
-.txt-align-end {text-align: end;}
-.txt-align-center {text-align: center;}
-.txt-align-justify {text-align: justify;}
+.text-start {text-align: start;}
+.text-end {text-align: end;}
+.text-center {text-align: center;}
+.text-justify {text-align: justify;}
 
 
 .text-decoration-none {text-decoration: none;}
@@ -34,46 +32,15 @@ h4 {font-size: 1.1em;} */
     h3 {font-size: 1.3em;}
     h4 {font-size: 1.2em;}
 }
-.badge {letter-spacing: 2px;}
-.font-etna {font-family: etna;}
-a {text-decoration:none;color:#6a5ac7;}
-.blue-satellearth {color:var(--blue-satellearth);}
+
+a {text-decoration:none;color:#c2bdbd;}
+a:hover {color:var(--primary-color);}
 
 input.form-control {
     height:auto;
  }
 input::placeholder{
     overflow: visible;
-}
-
-.neon
-{
-    text-transform:uppercase;
-    /* color:#f8f9fa;  */
-    text-shadow: 0 0 0.05vh #f8f9fa, 0 0 0.1vh #f8f9fa,
-    0 0 0.2vh #000, 0 0 0.35vh #000, 0 0 0.4vh #000,
-    0 0 0.5vh #f8f9fa, 0 0 0.75vh #000;
-}
-.neon-white{
-    color:#ffffff;
-    text-shadow: 0 0 0.05vh #17A2B8, 0 0 0.1vh #17A2B8, 0 0 0.15vh #17A2B8,
-    0 0 0.2vh #000, 0 0 0.35vh #000, 0 0 0.4vh #000,
-    0 0 0.5vh #f8f9fa, 0 0 0.75vh #000;
-}
-.neon-blue-animated{
-    text-transform:uppercase;
-    color:var(--blue-satellearth);
-    font-weight:bold;
-    animation: flicker 3s infinite alternate;
-}
-.neon-blue{
-    color:var(--blue-satellearth);
-    text-transform:uppercase;
-    font-weight:bold;
-    text-shadow:
-    -0.05rem -0.05rem 0.25rem rgb(59, 57, 57,0),
-    0.05rem 0.05rem 0.25rem rgb(59, 57, 57,0),
-    0 0 0.25rem var(--blue-satellearth);
 }
 
 .rem07{
