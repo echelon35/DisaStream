@@ -1,23 +1,33 @@
 .selector {
-    height: 100vh;
-    width: 250px;
-    position:absolute;
+    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height));
+    width: var(--pc-left-menu-width);
+    position:fixed;
+    z-index: 999;
     left: 0;
-    top: 0;
+    top: var(--pc-top-header-height);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    background: #1C2679;
+    background: var(--secondary-color);
 }
 .selector .svg-container
 {
-    margin: 10px;
+    margin: 10px 0px;
     cursor: pointer;
+    width: 100%;
+    text-align: center;
 }
 .selector svg {
     stroke: white;
 }
 .selector svg:hover {
-    stroke: var(--blue-satellearth);
+    stroke: var(--primary-color);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px white solid;
 }

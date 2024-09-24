@@ -1,0 +1,45 @@
+<div *ngIf="isVisible" class="bg-modal"></div>
+<div *ngIf="isVisible" class="modal align-center custom-scrollbar overflow-auto padding-10">
+    <!-- LOCATION : monde, france métropolitaine, etc... -->
+    <div class="text-light d-flex align-items-center">
+        <svg class="margin-r10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        <h3 class="">
+            Localisation
+        </h3>
+    </div>
+    <p *ngIf="this.selectedTown != null" class="text-warning text-uppercase margin-b10">
+        Votre sélection actuelle : {{this.selectedTown.label}}
+        <span *ngIf="this.selectedTown.state"> ({{this.selectedTown.state}})</span>
+    </p>
+    <p class="text-light margin-b10">Selectionnez l'endroit que vous souhaitez visualiser</p>
+    <div class="d-flex">
+        <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-disaster search-country form-control bg-dark border-dark font-etna">
+        <button (click)="setSearchPlace()">Rechercher</button>
+    </div>
+    
+    <!-- <p class="text-light margin-t10">Si vous le souhaitez, soyez plus précis en cliquant sur un tag</p>
+    <div class="d-flex flex-wrap">
+        <div (click)="setLocationType('all')"  class="badge badge-dark margin-l10 margin-r10 cursor-pointer">RAZ</div>
+        <div (click)="setLocationType('volcano')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Volcan</div>
+        <div (click)="setLocationType('river')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Cours d'eau</div>
+        <div (click)="setLocationType('administrative')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Pays ou ville</div>
+        <div (click)="setLocationType('attraction')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Lieu touristique</div>
+        <div (click)="setLocationType('sea')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Mer</div>
+        <div (click)="setLocationType('desert')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Désert</div>
+        <div (click)="setLocationType('wood')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Bois</div>
+    </div> -->
+    <div class="d-flex flex-wrap align-items-center margin-t20">
+        <div [ngClass]="{ current : this.selectedPlace == town.label,
+            volcan : town.type.name == 'volcano',
+            montagne : town.type.name == 'peak',
+            fleuve : town.type.name == 'river',
+            ocean : town.type.name == 'ocean' || town.type.name == 'sea' }" (click)="chooseTown(town)" (mouseenter)="moveCursor(town.id, town.label)" (mouseleave)="removeCursors()" class="parent-img margin-10 cursor-pointer" *ngFor="let town of townList" style="background-image: url('https://flagcdn.com/{{town.countryCode | lowercase }}.svg');">
+            <div class="category-card">
+            </div>
+            <p class="text-uppercase align-center">
+                {{town.name}}
+                <span *ngIf="town.state"> ({{town.state}})</span>
+            </p>
+        </div>
+    </div>
+</div>

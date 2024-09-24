@@ -1,34 +1,32 @@
-<nav class="nav nav-pills selector">
-    <div class="d-flex flex-column align-items-end">
-        <div class="d-flex align-items-center">
-            <p>Dashboard</p>
-            <div class="svg-container">
-                <img src="assets/images/logo_cataclysm.png" alt="logo Disaster" style="width: 24px; height: 24px;">
+<nav class="selector">
+    <div class="d-flex flex-column align-items-end justify-content-center">
+            <div title="Dashboard" class="svg-container">
+                <a href="/dashboard">
+                    <img src="assets/images/logo_cataclysm.png" alt="logo Disaster" style="width: 60px; height: 60px;">
+                </a>
             </div>
-        </div>
-        <div class="d-flex align-items-center">
-            <p>Gestion des zones</p>
-            <div class="svg-container position-relative">
-                <svg class="list-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+
+            <div title="Gestion des zones" class="svg-container">
+                <a href="/dashboard/areas/manage">
+                    <svg class="list-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>
+                </a>
             </div>
-        </div>
-        <div class="d-flex align-items-center">
-            <p>Evènements</p>
-            <div class="svg-container">
-                <svg class="location-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+
+            <div title="Créer une nouvelle zone" class="svg-container">
+                <a href="/dashboard/area/new">
+                    <svg class="add-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-plus"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+                </a>
             </div>
-        </div>
-        <div class="d-flex align-items-center">
-            <p>Formules</p>
-            <div class="svg-container">
+
+            <div title="Carte des aléas passés" class="svg-container">
                 <svg class="alea-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
             </div>
-        </div>
+
+            <div title="Ma formule" class="svg-container">
+                <svg class="price-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-badge-euro"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="M7 12h5"/><path d="M15 9.4a4 4 0 1 0 0 5.2"/></svg>
+            </div>
     </div>
-    <div class="d-flex align-items-center">
-        <p>Réduire</p>
-        <div class="svg-container position-relative">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-to-line"><path d="M3 19V5"/><path d="m13 6-6 6 6 6"/><path d="M7 12h14"/></svg>
-        </div>
+    <div class="d-flex align-items-center margin-b30">
+        <img src="/assets/images/bolide.jpg" class="avatar" />
     </div>
 </nav>

@@ -11,20 +11,15 @@
 
 
 .text-decoration-none {text-decoration: none;}
-.list-style-none
-{ list-style: none; margin-left:0; padding-left:0; }
+.list-style-none { list-style: none; margin-left:0; padding-left:0; }
 .list-style-none li {padding-top:0.5rem;}
 
 .badge-notif { font-family:'Times New Roman', Times, serif;}
 
 /* | TYPOGRAPHY */
-/* body{font-family: 'etna', Impact, 'Arial Narrow Bold', sans-serif;} */
 .h1,.h2,.h3,.h4{color: white;}
 .h1,.h2,.h3,.h4,label,a,.btn {letter-spacing: 0.5px;}
-/* h1 {font-size: 24px;}
-h2 {font-size: 22px;}
-h3 {font-size: 20px;}
-h4 {font-size: 1.1em;} */
+
 @media all and (max-width:576px)
 {
     h1 {font-size: 1.5em;}
@@ -33,7 +28,7 @@ h4 {font-size: 1.1em;} */
     h4 {font-size: 1.2em;}
 }
 
-a {text-decoration:none;color:#c2bdbd;}
+a {text-decoration:none;color:var(--white-secondary-color);}
 a:hover {color:var(--primary-color);}
 
 input.form-control {
@@ -66,4 +61,17 @@ input::placeholder{
 }
 .rem200{
     font-size: 2rem;
+}
+
+.w-400{
+    font-weight: 400;
+}
+.w-600{
+    font-weight: 600;
+}
+.w-800{
+    font-weight: 800;
+}
+.w-1000{
+    font-weight: 1000;
 }

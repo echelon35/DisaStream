@@ -1,0 +1,24 @@
+header {
+    padding: 20px 0;
+    background-color: #16151f;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+}
+
+.logo img {
+    width: 40px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px white solid;
+}

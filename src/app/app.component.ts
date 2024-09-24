@@ -7,15 +7,14 @@ import { environment } from 'src/environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class App {
 
   env = environment;
   appName: string = this.env.settings.appName;
   
   title = this.appName;
-  isAuthenticated = false;
+  isAuthenticated = true;
 
   constructor(public route: Router){
-    console.log(route.url);
   }
 }

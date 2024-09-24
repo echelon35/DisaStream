@@ -2,6 +2,20 @@
     --primary-color: #6a5ac7;
     --secondary-color: #28273a;
     --tertiary-color: #16151f;
+    --quaternary-color: #161616;
+
+    --white-primary-color: #fff;
+    --white-secondary-color: #c2bdbd;
+    --white-tertiary-color: #928a8a;
+}
+.white-primary-color {
+    color: var(--white-primary-color);
+}
+.white-secondary-color {
+    color: var(--white-secondary-color);
+}
+.white-tertiary-color {
+    color: var(--white-secondary-color);
 }
 .primary-color {
     color: var(--primary-color);
@@ -20,4 +34,7 @@
 }
 .tertiary-bg {
     background-color: var(--tertiary-color);
+}
+.quaternary-bg {
+    background-color: var(--quaternary-color);
 }

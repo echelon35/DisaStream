@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { App } from './app.component';
 import { LandingPageView } from './Pages/LandingPage/LandingPage.view';
 import { SeoService } from './Services/Seo.service';
 import { AuthenticationView } from './Pages/Authentification/Authentification.view';
@@ -14,26 +14,32 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { SharedModule } from './Shared/Shared.module';
+import { NewAreaView } from './Pages/NewArea/NewArea.component';
+import { MapModule } from './Map/map.module';
+import { ModalsModule } from './Modals/modals.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    App,
     LandingPageView,
     AuthenticationView,
     LoginView,
     ForgotPasswordView,
-    DashboardView
+    DashboardView,
+    NewAreaView
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    MapModule,
     SharedModule,
     ReactiveFormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ModalsModule
   ],
   providers: [SeoService, 
     AuthentificationApi,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [App]
 })
 export class AppModule { }

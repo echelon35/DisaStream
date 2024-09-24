@@ -1,0 +1,14 @@
+.modal
+{
+    width: 800px;
+    height: 800px;
+    z-index: 1000;
+    position: fixed;
+}
+.bg-modal
+{
+    background-color: black;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}

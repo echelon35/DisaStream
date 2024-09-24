@@ -1,0 +1,17 @@
+<div class="breadcrumb quaternary-bg d-flex w-800 padding-10 width100 justify-content-center align-items-center">
+    <p class="margin-r10 margin-l10 white-primary-color">Traçage de la zone</p>
+    <p class="margin-r10 margin-l10 white-tertiary-color">></p>
+    <p class="margin-r10 margin-l10 white-tertiary-color">Définition des critères d'alerte</p>
+    <p class="margin-r10 margin-l10 white-tertiary-color">></p>
+    <p class="margin-r10 white-tertiary-color">Modalités de réception</p>
+</div>
+<div id="map-new-area" class="main-panel">
+    <app-map [mapId]="'map-new-area'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true" [locationBox]="locationBox"></app-map>
+</div>
+<div class="next-step quaternary-bg d-flex justify-content-center align-items-center">
+    <button (click)="openModal()" class="btn-primary d-flex align-items-center justify-content-center" >
+        <span class="margin-r20">Etape suivante</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
+    </button>
+</div>
+<app-search-place-modal></app-search-place-modal>

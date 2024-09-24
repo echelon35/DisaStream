@@ -2,11 +2,11 @@
 	--mobile-top-menu-height: 12vh;
     --mobile-bottom-menu-height: 12vh;
     --pc-medium-left-menu-width: 30vw;
-    --pc-left-menu-width: 30vw;
     --pc-right-menu-width: 0vw;
 	
 	--pc-top-header-height: 9vh;
 	--pc-bottom-footer-height: 5vh;
+	--pc-left-menu-width: 100px;
 }
 @media all
 {
@@ -77,6 +77,8 @@
 		top: var(--pc-top-header-height);
 		height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height));
 		width: 100%;
+		left: var(--pc-left-menu-width);
+		width: calc(100vw - var(--pc-left-menu-width));
 	}
 }
 

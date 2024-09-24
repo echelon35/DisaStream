@@ -5,6 +5,9 @@ import { AuthenticationView } from './Pages/Authentification/Authentification.vi
 import { ForgotPasswordView } from './Pages/ForgotPassword/ForgotPassword.view';
 import { PageNotFoundView } from './Pages/PageNotFoundView/PageNotFound.view';
 import { LoginView } from './Pages/Login/Login.view';
+import { DashboardView } from './Pages/Dashboard/Dashboard.view';
+import { ManageAreasView } from './Pages/ManageAreas/ManageAreas.view';
+import { NewAreaView } from './Pages/NewArea/NewArea.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -12,7 +15,9 @@ const routes: Routes = [
   { path: 'login', component: LoginView },
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
-  { path: 'dashboard', component: PageNotFoundView },
+  { path: 'dashboard', component: DashboardView },
+  { path: 'dashboard/area/new', component: NewAreaView },
+  { path: 'dashboard/areas/manage', component: ManageAreasView },
 ];
 
 @NgModule({
