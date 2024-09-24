@@ -2,13 +2,38 @@
 {
     width: 800px;
     height: 800px;
-    z-index: 1000;
+    z-index: 1001;
     position: fixed;
+    background-color: var(--primary-color);
+    border-radius: 20px;
 }
 .bg-modal
 {
     background-color: black;
     position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
+    z-index: 1000;
+    opacity: 0.7;
+}
+.search-disaster:hover, .search-disaster:focus{
+    background-color: beige !important;
+    color: black;
+}
+.search-country
+{
+    color: white;
+    background-image: url("/assets/svg/search_input.svg");
+}
+.search-country:focus
+{
+    color: white
+}
+input.form-control {
+    height:auto;
+ }
+input::placeholder{
+    overflow: visible;
 }

@@ -14,7 +14,7 @@
     <p class="text-light margin-b10">Selectionnez l'endroit que vous souhaitez visualiser</p>
     <div class="d-flex">
         <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-disaster search-country form-control bg-dark border-dark font-etna">
-        <button (click)="setSearchPlace()">Rechercher</button>
+        <button class="btn-primary" (click)="setSearchPlace()">Rechercher</button>
     </div>
     
     <!-- <p class="text-light margin-t10">Si vous le souhaitez, soyez plus précis en cliquant sur un tag</p>
