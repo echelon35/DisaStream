@@ -16,6 +16,9 @@ export class NewAreaView implements OnInit {
     env = environment;
     appName: string = this.env.settings.appName;
 
+    cursorLayer?: L.LayerGroup;
+    areaMap?: L.Map;
+
     public locationBox?: L.LatLngBounds;
 
     constructor() { 
@@ -31,10 +34,15 @@ export class NewAreaView implements OnInit {
     }
 
     receiveLayer(layer: L.LayerGroup) {
+        this.cursorLayer = new L.LayerGroup();
+        if(this.areaMap !== undefined){
+            this.cursorLayer.addTo(this.areaMap);
+        }
         this.updateMap();
     }
 
     receiveMap(map: L.Map) {
+        this.areaMap = map;
         this.updateMap();
       }
 

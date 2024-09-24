@@ -4,7 +4,7 @@
     height: 800px;
     z-index: 1001;
     position: fixed;
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     border-radius: 20px;
 }
 .bg-modal
@@ -18,22 +18,50 @@
     z-index: 1000;
     opacity: 0.7;
 }
-.search-disaster:hover, .search-disaster:focus{
-    background-color: beige !important;
-    color: black;
-}
-.search-country
-{
+.search-country {
     color: white;
-    background-image: url("/assets/svg/search_input.svg");
+    background-color: var(--quaternary-color);
+    border-radius: 5px;
+    width: 350px;
+    margin-right: 20px;
+    background-image: url("/assets/images/svg/search_input.svg");
+    background-size: calc(1.5em + 2px);
+    background-position: 0.5rem;
+    background-repeat: no-repeat;
+    padding-left: calc(1.5em + .75rem + 5px);
+    height: auto;
+    border: none;
 }
-.search-country:focus
+.btn-search
 {
-    color: white
+    font-size: 0.8rem;
 }
-input.form-control {
-    height:auto;
- }
 input::placeholder{
     overflow: visible;
+}
+.parent-img{
+    position: relative;
+    height: 150px; 
+    width: 150px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+    color: var(--secondary-color);
+    cursor: pointer;
+}
+.category-card
+{
+    position: absolute;
+    height: 150px; 
+    width: 150px;
+    border-radius: 10px;
+    background: white;
+    opacity: 0.5;
+}
+.close-btn
+{
+    cursor: pointer;
+}
+.close-btn:hover svg {
+    stroke: var(--primary-color);
 }

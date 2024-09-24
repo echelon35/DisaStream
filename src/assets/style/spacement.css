@@ -145,6 +145,7 @@
 .flex5{flex:5}
 
 .flex-auto{flex:auto;}
+.flex-wrap{flex-wrap:wrap;}
 .align-items-stretch{align-items: stretch;}
 .align-items-center{align-items: center;}
 .align-items-start{align-items: start;}

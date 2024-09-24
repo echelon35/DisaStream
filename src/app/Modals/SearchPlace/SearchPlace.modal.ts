@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Place } from 'src/app/Model/Place';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
@@ -21,8 +21,8 @@ export class SearchPlace implements OnInit {
     public selectedTown?: Place;
     public filterPlace: string = "";
     public townList: Place[] = [];
-    cursorLayer?: L.LayerGroup;
-    aleaMap?: L.Map;
+    @Input() cursorLayer?: L.LayerGroup;
+    @Input() areaMap?: L.Map;
 
     acceptedTypes: string[] = [
         "administrative",
@@ -78,6 +78,7 @@ export class SearchPlace implements OnInit {
       chooseTown(town: Place){
         this.selectedTown = town;
         this.locationZoom(town.boundingbox);
+        this.close();
       }
 
       setSearchPlace(){
@@ -86,7 +87,6 @@ export class SearchPlace implements OnInit {
       }
     
       searchPlace(){
-        ////console.log(event);
         this.townList = [];
         this.razMarkers();
         const provider = new OpenStreetMapProvider({ params: {
@@ -97,7 +97,8 @@ export class SearchPlace implements OnInit {
           extratags: 1
         }});
         provider.search({ query: this.filterPlace }).then((res) => {
-          ////console.log(res);
+          console.log(res);
+          console.log(this.cursorLayer);
           if(this.cursorLayer !== undefined){
             this.cursorLayer.clearLayers();
             this.townList = [];
@@ -123,8 +124,8 @@ export class SearchPlace implements OnInit {
       }
 
       locationZoom(boundingbox: L.LatLngBounds){
-        if(this.aleaMap !== undefined){
-            this.aleaMap.fitBounds(boundingbox);
+        if(this.areaMap !== undefined){
+            this.areaMap.fitBounds(boundingbox);
         }
       }
     
