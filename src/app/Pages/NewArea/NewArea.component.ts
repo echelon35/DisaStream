@@ -3,6 +3,7 @@ import { Component, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
+import "@geoman-io/leaflet-geoman-free";
 
 @Component({
     selector: 'app-new-area',
@@ -20,6 +21,10 @@ export class NewAreaView {
     editableLayer?: L.FeatureGroup;
     areaMap?: L.Map;
 
+    selectedLayer?: L.Layer;
+
+    deletionMode: boolean = false;
+
     public locationBox?: L.LatLngBounds;
 
     constructor() { 
@@ -33,13 +38,18 @@ export class NewAreaView {
 
     drawPolygon(){
         if(this.areaMap !== undefined){
-            new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
+            // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
+            this.areaMap.pm.enableDraw("Polygon", {
+                snappable: true,
+                snapDistance: 5,
+            });
         }
     }
 
     drawCircle(){
         if(this.areaMap !== undefined){
-            new L.Draw.Circle(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7', opacity: 0.9, color: '#6a5ac7' }}).enable();
+            // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
+            this.areaMap.pm.enableDraw("Circle");
         }
     }
 
@@ -49,50 +59,26 @@ export class NewAreaView {
         console.log(this.cursorLayer);
         if(this.areaMap !== undefined){
             this.cursorLayer.addTo(this.areaMap);
-            
-            this.areaMap.on('draw:created', this.addShapeToMap, this);
-            const drawControl = new L.Control.Draw({
-                draw:{polygon: false,
-                      marker: false,
-                      circlemarker: false,
-                      rectangle: false,
-                      circle: false,
-                  },
-                edit: {
-                  featureGroup: this.editableLayer!,
-                }
-              });
-              this.areaMap.addControl(drawControl);
+            this.areaMap.on('pm:create', this.addShapeToMap, this);
+            this.areaMap.pm.disableGlobalDragMode();
         }
         this.updateMap();
     }
 
-    editShapes(){
-        // this.areaMap?.fire(L.Draw.Event.);
+    deleteShapes(sup: boolean){
+        this.deletionMode = sup;
+        this.deletionMode ? this.areaMap!.pm.enableGlobalRemovalMode : this.areaMap!.pm.disableGlobalRemovalMode;
     }
 
     addShapeToMap(e){
-        const layer = (e as L.DrawEvents.Created).layer;
-
-        const btnEdit = L.DomUtil.create('div','cursor-pointer');
-        const areaMap = this.areaMap;
-        btnEdit.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>`
-        btnEdit.addEventListener("click",function(){
-            // var layer = e.layer;
-            layer.fireEvent(L.Draw.Event.EDITSTART);
+        (e.layer as L.Layer).addEventListener("mousedown",function(){
+            this.pm.disableLayerDrag();
         });
-
-        const btnDel = L.DomUtil.create('div','cursor-pointer');
-        btnDel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>`
-        btnDel.addEventListener("click",function(){ layer.remove()});
-    
-        const popup = L.DomUtil.create('div','d-flex align-items-center');
-        popup.appendChild(btnEdit);
-        popup.appendChild(btnDel);
-
-        layer.bindPopup(popup, { closeButton: false })
-        this.editableLayer?.addLayer(layer);
-        this.areaMap!.addLayer(this.editableLayer!);
+        this.areaMap!.pm.disableDraw();
+        this.areaMap!.pm.enableGlobalEditMode({
+            snappable: true,
+            snapDistance: 50
+        });
     }
 
     receiveMap(map: L.Map) {
