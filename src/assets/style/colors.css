@@ -7,6 +7,8 @@
     --white-primary-color: #fff;
     --white-secondary-color: #c2bdbd;
     --white-tertiary-color: #928a8a;
+
+    --red-color: #c74b4b;
 }
 .white-primary-color {
     color: var(--white-primary-color);

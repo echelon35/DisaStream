@@ -29,7 +29,7 @@
     background-position: 0.5rem;
     background-repeat: no-repeat;
     padding-left: calc(1.5em + .75rem + 5px);
-    height: auto;
+    height: 40px;
     border: none;
 }
 .btn-search
@@ -49,6 +49,9 @@ input::placeholder{
     color: var(--secondary-color);
     cursor: pointer;
 }
+.parent-img:hover .category-card {
+    border: 8px var(--tertiary-color) solid;
+}
 .category-card
 {
     position: absolute;
@@ -58,10 +61,7 @@ input::placeholder{
     background: white;
     opacity: 0.5;
 }
-.close-btn
+.result-container
 {
-    cursor: pointer;
-}
-.close-btn:hover svg {
-    stroke: var(--primary-color);
+    height: 530px;
 }

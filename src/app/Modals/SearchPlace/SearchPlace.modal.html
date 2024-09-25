@@ -10,18 +10,18 @@
                 Recherchez une destination à afficher sur la carte
             </h3>
         </div>
-        <div class="close-btn" (click)="this.close()">
+        <div class="btn-icon" (click)="this.close()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </div>
      </div>
-    <p *ngIf="this.selectedTown !== undefined" class="text-warning text-uppercase margin-t10 margin-b10">
-        Votre sélection actuelle : {{this.selectedTown?.label}}
-        <span *ngIf="this.selectedTown?.state"> ({{this.selectedTown?.state}})</span>
-    </p>
+    <!-- <p *ngIf="this.selectedTown !== undefined" class="text-warning text-uppercase margin-t10 margin-b10">
+        Votre sélection actuelle : {{this.selectedTown.label}}
+        <span *ngIf="this.selectedTown?.state"> ({{this.selectedTown.state}})</span>
+    </p> -->
     <!-- <p class="text-light margin-b10 margin-t10">Recherchez une destination à afficher sur la carte</p> -->
-    <div class="d-flex margin-t20">
+    <div class="d-flex margin-t20 align-items-center">
         <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-country">
-        <button class="btn-primary btn-search" (click)="setSearchPlace()">Rechercher</button>
+        <button class="btn-primary sm-btn" (click)="setSearchPlace()">Rechercher</button>
     </div>
     
     <!-- <p class="text-light margin-t10">Si vous le souhaitez, soyez plus précis en cliquant sur un tag</p>
@@ -35,18 +35,21 @@
         <div (click)="setLocationType('desert')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Désert</div>
         <div (click)="setLocationType('wood')" class="badge badge-dark margin-l10 margin-r10 cursor-pointer">Bois</div>
     </div> -->
-    <div class="d-flex flex-wrap align-items-center margin-t20 overflow-auto custom-scrollbar">
+    <div class="d-flex flex-wrap margin-t20 overflow-auto custom-scrollbar result-container">
         <div [ngClass]="{ current : this.selectedPlace === town.label,
             volcan : town.type.name === 'volcano',
             montagne : town.type.name === 'peak',
             fleuve : town.type.name === 'river',
-            ocean : town.type.name === 'ocean' || town.type.name === 'sea' }" (click)="chooseTown(town)" (mouseenter)="moveCursor(town.id, town.label)" (mouseleave)="removeCursors()" class="parent-img margin-10 cursor-pointer" *ngFor="let town of townList" style="background-image: url('https://flagcdn.com/{{town.countryCode | lowercase }}.svg');">
+            ocean : town.type.name === 'ocean' || town.type.name === 'sea' }" (click)="chooseTown(town)" class="parent-img margin-10 cursor-pointer" *ngFor="let town of townList" style="background-image: url('https://flagcdn.com/{{town.countryCode | lowercase }}.svg');">
             <div class="category-card">
             </div>
-            <p class="text-uppercase align-center w-600 cursor-pointer">
+            <p title="{{town.label}}" class="text-uppercase align-center w-600 cursor-pointer">
                 {{town.name}}
                 <span *ngIf="town.state"> ({{town.state}})</span>
             </p>
         </div>
+    </div>
+    <div class="d-flex justify-content-end margin-t20">
+        <button class="btn-secondary md-btn" (click)="this.close()">Fermer</button>
     </div>
 </div>

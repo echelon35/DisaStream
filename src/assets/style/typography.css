@@ -75,3 +75,8 @@ input::placeholder{
 .w-1000{
     font-weight: 1000;
 }
+
+.color-red
+{
+    color: var(--red-color);
+}

@@ -1,9 +1,13 @@
-.btn-primary, .btn-secondary, .btn-tertiary {
-    padding: 15px 30px;
+.cursor-pointer
+{
+    cursor: pointer;
+}
+
+.btn-primary, .btn-secondary, .btn-tertiary, .btn-red, .btn-icon {
     border-radius: 5px;
     text-decoration: none;
-    font-size: 1rem;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .btn-primary:hover, .btn-secondary:hover, .btn-tertiary:hover {
@@ -13,17 +17,46 @@
 .btn-primary {
     background-color: var(--primary-color);
     color: #fff;
-    font-weight: 600;
 }
 
 .btn-secondary {
     background-color: var(--secondary-color);
     color: #fff;
-    font-weight: 600;
 }
 
 .btn-tertiary {
     background-color: var(--tertiary-color);
     color: #fff;
-    font-weight: 600;
+}
+
+.btn-red {
+    background-color: var(--red-color);
+    color: #fff;
+}
+
+.sm-btn {
+    height: 40px;
+    font-size: 0.8rem;
+    padding: 10px 20px;
+}
+
+.md-btn {
+    height: 50px;
+    font-size: 1rem;
+    padding: 15px 25px;
+}
+
+.lg-btn {
+    height: 60px;
+    font-size: 1.2rem;
+    padding: 15px 30px;
+}
+
+.btn-icon {
+    display: flex;
+    align-items: center;
+}
+
+.btn-icon:hover svg {
+    stroke: var(--white-secondary-color);
 }

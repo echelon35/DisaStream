@@ -10,6 +10,8 @@
     "declaration": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "importHelpers": true,
     "typeRoots": [

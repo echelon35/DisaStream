@@ -15,3 +15,38 @@
     position: absolute;
     left: 0;
 }
+.search-country {
+    color: white;
+    background-color: var(--quaternary-color);
+    border-radius: 5px;
+    width: 350px;
+    margin-right: 20px;
+    background-image: url("/assets/images/svg/search_input.svg");
+    background-size: calc(1.5em + 2px);
+    background-position: 0.5rem;
+    background-repeat: no-repeat;
+    padding-left: calc(1.5em + .75rem + 5px);
+    height: 40px;
+    border: 2px white solid;
+}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip 
+{
+    background: #32383E;
+}
+
+.leaflet-popup-content:has(.alea-pop-up)
+{
+    margin: 0px;
+    border-radius: 15px;
+    max-width: 250px;
+}
+
+.leaflet-popup-content:has(.alea-pop-up) p{
+    margin: 0;
+}
+
+.alea-popup-content
+{
+    padding: 10px;
+}

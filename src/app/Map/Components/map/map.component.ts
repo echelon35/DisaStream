@@ -5,6 +5,7 @@ import * as L from 'leaflet';
 // import "leaflet.fullscreen/Control.Fullscreen";
 // import * as screenfull from 'screenfull';
 // window.screenfull = screenfull;
+import 'leaflet-draw';
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Observable, Subscription } from 'rxjs';
 
@@ -48,8 +49,6 @@ export class MapComponent implements OnInit,OnDestroy {
   public mapDetail!: L.Map;
   public mapLayer!: L.LayerGroup;
   //Prepare the layer group that contains the layer we want to display
-
-  constructor() { }
 
   ngOnInit():void{
     this.initMap();
@@ -98,7 +97,6 @@ export class MapComponent implements OnInit,OnDestroy {
         worldCopyJump: false,
         zoomDelta: this.zoomDelta,
         zoomSnap: 0
-        // fullscreenControl: true
       });
 
       this.limitMap(-90,-360,90,360);
@@ -129,8 +127,6 @@ export class MapComponent implements OnInit,OnDestroy {
       this.mapDetail.addEventListener("dragend",() =>{
         this.movedMap.emit(this.mapDetail);
       },this)
-
-      this.mapLayer = new L.LayerGroup;
 
   }
 

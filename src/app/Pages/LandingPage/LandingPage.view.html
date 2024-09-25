@@ -2,9 +2,9 @@
     <div class="container align-center">
         <h1>The best way to stay tuned with elements</h1>
         <p>Define your area, choose your risk, be alerted</p>
-        <div class="buttons">
-            <a href="/auth" class="btn-primary">Let's go free</a>
-            <a href="#features" class="btn-secondary margin-l20">Tell me more</a>
+        <div class="buttons margin-t20">
+            <button (click)="router.navigateByUrl('/auth')" class="btn-primary lg-btn">Let's go free</button>
+            <button (click)="router.navigateByUrl('/#features')" class="btn-secondary lg-btn margin-l20">Tell me more</button>
         </div>
     </div>
 </section>
@@ -29,8 +29,8 @@
             </div>
         </div>
         <div class="margin-t40 buttons">
-            <a href="/auth" class="btn-primary">Let's go free</a>
-            <a href="#about" class="btn-secondary margin-l20">Tell me more</a>
+            <button (click)="router.navigateByUrl('/auth')" class="btn-primary lg-btn">Let's go free</button>
+            <button (click)="router.navigateByUrl('/#about')" class="btn-secondary lg-btn margin-l20">Tell me more</button>
         </div>
     </div>
 </section>
