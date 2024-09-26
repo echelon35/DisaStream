@@ -132,17 +132,13 @@ export class NewAreaView {
 
     clickOnLayer(e){
         const layer = (e.target as L.Layer);
-        console.log(e.target);
         const alreadySelected = this.selectedLayer!.hasLayer(layer);
-        console.log(this.allLayers?.getLayers());
         if(alreadySelected){
             this.selectedLayer!.removeLayer(layer);
         }
         else{
             this.selectedLayer!.addLayer(layer);
         }
-
-        console.log(alreadySelected);
     }
 
     receiveMap(map: L.Map) {

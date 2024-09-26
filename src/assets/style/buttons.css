@@ -34,6 +34,11 @@
     color: #fff;
 }
 
+.btn-blue {
+    background-color: var(--blue-color);
+    color: #fff;
+}
+
 .sm-btn {
     height: 40px;
     font-size: 0.8rem;

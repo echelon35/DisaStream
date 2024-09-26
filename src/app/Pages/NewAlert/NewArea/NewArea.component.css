@@ -2,8 +2,10 @@
 {
     position: absolute;
     height: 80px;
+    left: 0;
     bottom: 0;
-    width: 100%;;
+    width: 100%;
+    padding: 0px 20px;
 }
 .breadcrumb {
     height: 80px;
@@ -17,7 +19,7 @@
 }
 .search-country {
     color: white;
-    background-color: var(--quaternary-color);
+    background-color: var(--dark-color);
     border-radius: 5px;
     width: 350px;
     margin-right: 20px;
@@ -49,4 +51,18 @@
 .alea-popup-content
 {
     padding: 10px;
+}
+.consigne
+{
+    position: absolute;
+    top:90px;
+    left: 50%;
+    transform: translate(-50%,0%);
+    background-color:var(--dark-color);
+    border-radius: 5px;
+    color: white;
+    z-index:1000;
+    padding: 10px;
+    display: flex;
+    align-items: center;
 }

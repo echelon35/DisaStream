@@ -1,0 +1,45 @@
+.aleas-list
+{
+    width: 100%;
+    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
+    position: absolute;
+    left: 0;
+    top: 80px;
+    padding: 20px;
+}
+.next-step
+{
+    position: absolute;
+    height: 80px;
+    bottom: 0;
+    width: 100%;;
+}
+.parent-img{
+    position: relative;
+    height: 150px; 
+    width: 150px;
+    border-radius: 10px;
+    background-size: cover;
+    background-position: center;
+}
+.category-card
+{
+    position: absolute;
+    height: 150px; 
+    width: 150px;
+    border-radius: 10px;
+    background: white;
+    opacity: 0.5;
+}
+.parent-img:hover .category-card, .parent-img.current .category-card
+{
+    opacity: 0;
+    transition: 3.5 ease-in;
+}
+.parent-img p
+{
+    position: absolute;
+    color: var(--secondary-white);
+    text-shadow: 5px 4px 11px rgb(0,0,0), 0 2px 5px rgb(0,0,0);
+    font-weight: 800;
+}

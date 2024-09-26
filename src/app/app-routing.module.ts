@@ -7,7 +7,7 @@ import { PageNotFoundView } from './Pages/PageNotFoundView/PageNotFound.view';
 import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { ManageAreasView } from './Pages/ManageAreas/ManageAreas.view';
-import { NewAreaView } from './Pages/NewArea/NewArea.component';
+import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
   { path: 'dashboard', component: DashboardView },
-  { path: 'dashboard/alert/new', component: NewAreaView },
+  { path: 'dashboard/alert/new', component: NewAlertView },
   { path: 'dashboard/alerts/manage', component: ManageAreasView },
 ];
 

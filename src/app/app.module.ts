@@ -14,9 +14,18 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { SharedModule } from './Shared/Shared.module';
-import { NewAreaView } from './Pages/NewArea/NewArea.component';
+import { NewAreaView } from './Pages/NewAlert/NewArea/NewArea.component';
 import { MapModule } from './Map/map.module';
 import { ModalsModule } from './Modals/modals.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
+import { AlertCriteriasComponent } from './Pages/NewAlert/AlertCriterias/AlertCriterias.component';
+import { CommonModule } from '@angular/common';
+import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
+import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.component';
 
 @NgModule({
   declarations: [
@@ -26,16 +35,25 @@ import { ModalsModule } from './Modals/modals.module';
     LoginView,
     ForgotPasswordView,
     DashboardView,
-    NewAreaView
+    NewAreaView,
+    NewAlertView,
+    AlertCriteriasComponent,
+    ReceptionModeComponent,
+    AleaTypesComponent
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     MapModule,
     SharedModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    ModalsModule
+    ModalsModule,
+    BrowserAnimationsModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [SeoService, 
     AuthentificationApi,
