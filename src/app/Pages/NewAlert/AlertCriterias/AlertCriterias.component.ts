@@ -40,4 +40,5 @@ export class AlertCriteriasComponent {
         }
     ]
     public selectedAlea = "";
+    public criterias = ["Premier_releve","Dernier_releve"]
 }

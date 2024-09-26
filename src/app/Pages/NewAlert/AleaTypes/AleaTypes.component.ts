@@ -40,16 +40,25 @@ export class AleaTypesComponent {
             category: "spatial"
         }
     ]
-    public categories;
+    public categories: AleaCategory[] = [];
     public selectedAleaTypes: Alea[] = [];
+    public spliceNumber = 0;
 
     constructor(){
-        // this.categories = this.aleaType.reduce(
-        //     (result:AleaCategory, currentValue:Alea) => { 
-        //         result.category = 
-        //       (result[currentValue.category] = result[currentValue.category] || []).push(currentValue);
-        //       return result;
-        //     }, {});
+        this.aleaType.forEach((item: Alea) => {
+            console.log(this.categories.find(cat => item.category == cat.category))
+            if(!this.categories.find(cat => item.category == cat.category)){
+                this.categories.push({
+                    category: item.category,
+                    aleas: [item]
+                })
+            }
+            else{
+                this.categories.find(cat => cat.category == item.category)?.aleas.push(item);
+            }
+        })
+
+        this.spliceNumber = Math.ceil(this.categories.length / 2);
 
         console.log(this.categories)
     }

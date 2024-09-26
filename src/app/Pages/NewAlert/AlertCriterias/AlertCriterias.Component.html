@@ -1,7 +1,7 @@
 <!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="criterias-list">
-    <h2 class="w-600">Quels critères doivent vous alerter ?</h2>
+    <h2 class="w-600 margin-t10">Quels critères doivent vous alerter ?</h2>
     <div class="d-flex flex-wrap align-items-center">
         <div class="margin-t20">
             <mat-form-field>
@@ -9,6 +9,13 @@
                 <mat-select matNativeControl [(ngModel)]="selectedAlea" name="car">
                     <mat-option value="" selected></mat-option>
                     <mat-option *ngFor="let alea of aleaType" [value]="alea">{{alea.name | titlecase }}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field class="margin-l20">
+                <mat-label>Critère</mat-label>
+                <mat-select matNativeControl [(ngModel)]="selectedAlea" name="car">
+                    <mat-option value="" selected></mat-option>
+                    <mat-option *ngFor="let criteria of criterias" [value]="criteria">{{criteria | titlecase }}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>

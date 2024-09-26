@@ -2,14 +2,16 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="aleas-list">
     <h2 class="w-600 margin-t20 margin-b20">Quels aléas souhaitez-vous surveiller ?</h2>
-    <div class="d-flex flex-wrap align-items-center">
-        <div *ngFor="let category of this.categories">
-            <h3 class="">{{category | titlecase}}</h3>
-            <!-- <div *ngFor="let alea of category"  class="parent-img margin-10 cursor-pointer" style="background-image: url('/assets/images/alea/{{alea.name | lowercase}}.jpg');">
-                <div class="category-card">
+    <div style="height:500px;" class="padding-10 custom-scrollbar overflow-auto d-flex flex-wrap">
+        <div class="margin-10" *ngFor="let category of this.categories">
+            <h3 class="margin-l10">{{category.category | titlecase}}</h3>
+            <div class="d-flex flex-wrap">
+                <div *ngFor="let alea of category?.aleas"  class="parent-img margin-10 cursor-pointer" style="background-image: url('/assets/images/alea/{{alea.name | lowercase}}.jpg');">
+                    <div class="category-card">
+                    </div>
+                    <p class="text-uppercase align-center">{{alea.name | titlecase}}</p>
                 </div>
-                <p class="text-uppercase align-center">{{alea.name | titlecase}}</p>
-            </div> -->
+            </div>
         </div>
     </div>
 </div>
