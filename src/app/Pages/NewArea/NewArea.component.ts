@@ -5,6 +5,11 @@ import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
 import "@geoman-io/leaflet-geoman-free";
 
+export interface IGeomanLayer {
+    layer: L.Layer;
+    shape: string;
+}
+
 @Component({
     selector: 'app-new-area',
     templateUrl: './NewArea.component.html',
@@ -17,13 +22,10 @@ export class NewAreaView {
     env = environment;
     appName: string = this.env.settings.appName;
 
-    cursorLayer?: L.LayerGroup;
-    editableLayer?: L.FeatureGroup;
     areaMap?: L.Map;
 
-    selectedLayer?: L.Layer;
-
-    deletionMode: boolean = false;
+    selectedLayer?: L.GeoJSON;
+    allLayers?: L.GeoJSON;
 
     public locationBox?: L.LatLngBounds;
 
@@ -32,11 +34,17 @@ export class NewAreaView {
         this.locationBox = L.latLngBounds(L.latLng(box[3], box[2]),L.latLng(box[1], box[0]))
     }
 
-    openModal() {
+    /**
+     * Open modal for searching locaitons
+     */
+    openModal(): void {
         this.modal?.open();
     }
 
-    drawPolygon(){
+    /**
+     * Draw polygon form by clicking the button
+     */
+    drawPolygon(): void {
         if(this.areaMap !== undefined){
             // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
             this.areaMap.pm.enableDraw("Polygon", {
@@ -46,34 +54,75 @@ export class NewAreaView {
         }
     }
 
-    drawCircle(){
+    /**
+     * Draw circle form by clicking the button
+     */
+    drawCircle(): void {
         if(this.areaMap !== undefined){
             // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
             this.areaMap.pm.enableDraw("Circle");
         }
     }
 
+    /**
+     * Receive layer from the map component
+     * @param layer 
+     */
     receiveLayer(layer: L.LayerGroup) {
-        this.cursorLayer = new L.LayerGroup();
-        this.editableLayer = new L.FeatureGroup();
-        console.log(this.cursorLayer);
-        if(this.areaMap !== undefined){
-            this.cursorLayer.addTo(this.areaMap);
-            this.areaMap.on('pm:create', this.addShapeToMap, this);
-            this.areaMap.pm.disableGlobalDragMode();
-        }
-        this.updateMap();
-    }
-
-    deleteShapes(sup: boolean){
-        this.deletionMode = sup;
-        this.deletionMode ? this.areaMap!.pm.enableGlobalRemovalMode : this.areaMap!.pm.disableGlobalRemovalMode;
-    }
-
-    addShapeToMap(e){
-        (e.layer as L.Layer).addEventListener("mousedown",function(){
-            this.pm.disableLayerDrag();
+        this.selectedLayer = new L.GeoJSON(null,{
+            style: {
+                fillColor: '#6a5ac7'
+            }
         });
+        this.allLayers = new L.GeoJSON(null,{
+            style: {
+                fillColor: '#6a5ac7'
+            }
+        });
+        if(this.areaMap !== undefined){
+            this.allLayers!.addTo(this.areaMap);
+            this.allLayers?.bringToFront()
+            this.areaMap.pm.setGlobalOptions({
+                layerGroup: this.allLayers,
+            });
+            this.areaMap.on('pm:create', this.addShapeToMap, this);
+        }
+    }
+
+    /**
+     * 
+     * @param layer 
+     */
+    onEachFeature(layer){
+
+        const btnDel = L.DomUtil.create('div','cursor-pointer');
+        btnDel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`
+        btnDel.addEventListener("click",function(){ layer.remove(); popup.close()});
+    
+        const popupHtml = L.DomUtil.create('div','d-flex align-items-center');
+        popupHtml.appendChild(btnDel);
+
+        const popup = L.popup({
+            closeButton: false,
+            autoClose: true,
+        });
+        popup.setContent(popupHtml);
+        
+        layer.bindPopup(popup);
+    }
+
+    /**
+     * After adding shape (polygon or circle) by button
+     * @param e 
+     */
+    addShapeToMap(){
+
+        this.allLayers?.setStyle({weight: 3,fillColor:'#ffffff', color:'white'});
+
+        this.allLayers?.eachLayer((layer) => this.onEachFeature(layer), this)
+        this.allLayers?.addTo(this.areaMap!);
+        this.allLayers?.bringToFront()
+
         this.areaMap!.pm.disableDraw();
         this.areaMap!.pm.enableGlobalEditMode({
             snappable: true,
@@ -81,13 +130,27 @@ export class NewAreaView {
         });
     }
 
+    clickOnLayer(e){
+        const layer = (e.target as L.Layer);
+        console.log(e.target);
+        const alreadySelected = this.selectedLayer!.hasLayer(layer);
+        console.log(this.allLayers?.getLayers());
+        if(alreadySelected){
+            this.selectedLayer!.removeLayer(layer);
+        }
+        else{
+            this.selectedLayer!.addLayer(layer);
+        }
+
+        console.log(alreadySelected);
+    }
+
     receiveMap(map: L.Map) {
         this.areaMap = map;
-        this.updateMap();
-      }
+    }
 
-    updateMap() {
-
+    nextStep(){
+        console.log(this.allLayers?.toGeoJSON());
     }
 
 }

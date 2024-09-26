@@ -30,9 +30,9 @@
     border: 2px white solid;
 }
 
-.leaflet-popup-content-wrapper, .leaflet-popup-tip 
+.leaflet-popup-content-wrapper, .leaflet-popup-tip
 {
-    background: #32383E;
+    background: #32383E !important;
 }
 
 .leaflet-popup-content:has(.alea-pop-up)

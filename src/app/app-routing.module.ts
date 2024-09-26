@@ -16,8 +16,8 @@ const routes: Routes = [
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
   { path: 'dashboard', component: DashboardView },
-  { path: 'dashboard/area/new', component: NewAreaView },
-  { path: 'dashboard/areas/manage', component: ManageAreasView },
+  { path: 'dashboard/alert/new', component: NewAreaView },
+  { path: 'dashboard/alerts/manage', component: ManageAreasView },
 ];
 
 @NgModule({
