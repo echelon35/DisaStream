@@ -1,0 +1,17 @@
+.modes-list
+{
+    width: 100%;
+    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
+    position: absolute;
+    left: 0;
+    top: 80px;
+    padding: 20px;
+}
+.next-step
+{
+    position: absolute;
+    height: 80px;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+}

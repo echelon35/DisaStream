@@ -26,6 +26,10 @@ import { AlertCriteriasComponent } from './Pages/NewAlert/AlertCriterias/AlertCr
 import { CommonModule } from '@angular/common';
 import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
 import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -53,7 +57,11 @@ import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.compone
     BrowserAnimationsModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatRadioModule
   ],
   providers: [SeoService, 
     AuthentificationApi,

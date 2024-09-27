@@ -3,7 +3,7 @@
     width: 100%;
     height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
     position: absolute;
-    left: 0;
+    left: 0px;
     top: 80px;
     padding: 20px;
 }
@@ -11,6 +11,7 @@
 {
     position: absolute;
     height: 80px;
+    left: 0;
     bottom: 0;
     width: 100%;;
 }

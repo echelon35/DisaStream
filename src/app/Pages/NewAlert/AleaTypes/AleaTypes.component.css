@@ -12,6 +12,7 @@
     position: absolute;
     height: 80px;
     bottom: 0;
+    left: 0;
     width: 100%;;
 }
 .parent-img{
