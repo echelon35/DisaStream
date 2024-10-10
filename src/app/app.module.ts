@@ -10,7 +10,7 @@ import { ForgotPasswordView } from './Pages/ForgotPassword/ForgotPassword.view';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { SharedModule } from './Shared/Shared.module';
@@ -61,7 +61,8 @@ import { MatRadioModule } from '@angular/material/radio';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatRadioModule
+    MatRadioModule,
+    HttpClientModule,
   ],
   providers: [SeoService, 
     AuthentificationApi,

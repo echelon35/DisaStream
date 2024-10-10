@@ -6,6 +6,7 @@ import { FormBuilder, Validators } from "@angular/forms";
     styleUrls: ['./NewAlert.component.css'],
 })
 export class NewAlertView {
+  
     private _formBuilder = inject(FormBuilder);
 
     firstFormGroup = this._formBuilder.group({
