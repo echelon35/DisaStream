@@ -1,3 +1,23 @@
 .mat-step-label {
     color: white;
 }
+.final-screen {
+    width: 100%;
+    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
+    position: absolute;
+    left: 0;
+    top: 80px;
+    padding: 20px;
+}
+.input-alert {
+    color: white;
+    background-color: var(--dark-color);
+    border-radius: 5px;
+    width: 350px;
+    margin-right: 20px;
+    padding-left: 1em;
+    padding-right: 1em;
+    height: 60px;
+    border: 2px white solid;
+    font-size: 20px;
+}

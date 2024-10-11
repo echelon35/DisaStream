@@ -19,6 +19,11 @@
     color: #fff;
 }
 
+.btn-primary:disabled {
+    background-color: var(--white-secondary-color);
+    color: #fff;
+}
+
 .btn-secondary {
     background-color: var(--secondary-color);
     color: #fff;
@@ -62,6 +67,6 @@
     align-items: center;
 }
 
-.btn-icon:hover svg {
+.btn-icon:hover:not(:disabled) svg {
     stroke: var(--white-secondary-color);
 }

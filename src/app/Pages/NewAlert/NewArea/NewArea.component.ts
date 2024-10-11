@@ -27,6 +27,7 @@ export class NewAreaView {
 
     selectedLayer?: L.GeoJSON;
     allLayers?: L.GeoJSON;
+    completed = false;
 
     @Output() areaChange = new EventEmitter<L.GeoJSON>();
 
@@ -104,6 +105,7 @@ export class NewAreaView {
             layer.remove();
             this.allLayers?.removeLayer(layer);
             popup.close();
+            this.areaChange.emit(this.allLayers);
         });
     
         const popupHtml = L.DomUtil.create('div','d-flex align-items-center');
@@ -116,6 +118,10 @@ export class NewAreaView {
         popup.setContent(popupHtml);
         
         layer.bindPopup(popup);
+    }
+
+    nbLayers() : number {
+        return  this.allLayers?.getLayers().length || 0;
     }
 
     /**
@@ -135,6 +141,8 @@ export class NewAreaView {
             snappable: true,
             snapDistance: 50
         });
+
+        this.areaChange.emit(this.allLayers);
     }
 
     clickOnLayer(e){
@@ -157,8 +165,7 @@ export class NewAreaView {
     }
 
     nextStep(){
-        const nbLayers = this.allLayers?.getLayers().length || 0;
-        console.log(nbLayers);
+        const nbLayers = this.nbLayers();
         if(nbLayers > 0){
             this.areaChange.emit(this.allLayers);
         }

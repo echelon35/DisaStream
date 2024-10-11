@@ -1,5 +1,5 @@
 import { Component, inject } from "@angular/core";
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { FeatureCollection, Geometry } from "geojson";
 import { Alea } from "src/app/Model/Alea";
 
@@ -12,6 +12,10 @@ export class NewAlertView {
     private _formBuilder = inject(FormBuilder);
     private areas: Geometry[] = [];
     private aleas: Alea[] = [];
+
+    formGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required],
+    });
 
     /**
      * First step -> Get areas
