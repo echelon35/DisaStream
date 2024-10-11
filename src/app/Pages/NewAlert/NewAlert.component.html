@@ -1,6 +1,6 @@
 
 <mat-stepper [linear]="true" #stepper class="dark-bg">
-    <mat-step errorMessage="Veuillez définir une zone avant de passer à l'étape suivante">
+    <mat-step>
         <ng-template matStepLabel><span class="w-600">Zones</span></ng-template>
         <app-new-area (areaChange)="areaAlert($event)"></app-new-area>
     </mat-step>

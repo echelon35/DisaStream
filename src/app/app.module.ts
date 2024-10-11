@@ -30,6 +30,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatInputModule,
     MatRadioModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
   ],
   providers: [SeoService, 
     AuthentificationApi,

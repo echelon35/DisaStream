@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
 import "@geoman-io/leaflet-geoman-free";
+import { ToastrService } from 'ngx-toastr';
 
 export interface IGeomanLayer {
     layer: L.Layer;
@@ -31,7 +32,7 @@ export class NewAreaView {
 
     public locationBox?: L.LatLngBounds;
 
-    constructor() { 
+    constructor(private toastrService: ToastrService) { 
         const box = [-6.113481,41.934978,10.307773,51.727030];
         this.locationBox = L.latLngBounds(L.latLng(box[3], box[2]),L.latLng(box[1], box[0]))
     }
@@ -152,7 +153,14 @@ export class NewAreaView {
     }
 
     nextStep(){
-        this.areaChange.emit(this.allLayers);
+        const nbLayers = this.allLayers?.getLayers().length || 0;
+        console.log(nbLayers);
+        if(nbLayers > 0){
+            this.areaChange.emit(this.allLayers);
+        }
+        else{
+            this.toastrService.error('Vous devez sélectionner une zone ou cliquer sur le bouton Monde Entier');
+        }
     }
 
 }
