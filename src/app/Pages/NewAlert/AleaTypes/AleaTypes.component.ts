@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { Alea } from "src/app/Model/Alea";
 import { AleaCategory } from "src/app/Model/AleaCategory";
 
@@ -43,6 +43,8 @@ export class AleaTypesComponent {
     public categories: AleaCategory[] = [];
     public selectedAleaTypes: Alea[] = [];
     public spliceNumber = 0;
+    
+    @Output() aleaChange = new EventEmitter<Alea[]>();
 
     constructor(){
         this.aleaType.forEach((item: Alea) => {
@@ -61,5 +63,13 @@ export class AleaTypesComponent {
         this.spliceNumber = Math.ceil(this.categories.length / 2);
 
         console.log(this.categories)
+    }
+    
+    nextStep(){
+        this.aleaChange.emit(this.selectedAleaTypes);
+    }
+
+    selectAlea(alea: Alea){
+        console.log(alea);
     }
 }

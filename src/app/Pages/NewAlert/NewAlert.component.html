@@ -1,21 +1,18 @@
-<mat-stepper #stepper class="dark-bg">
-    <mat-step [stepControl]="firstFormGroup" errorMessage="Veuillez définir une zone avant de passer à l'étape suivante">
-      <form [formGroup]="firstFormGroup">
+
+<mat-stepper [linear]="true" #stepper class="dark-bg">
+    <mat-step errorMessage="Veuillez définir une zone avant de passer à l'étape suivante">
         <ng-template matStepLabel><span class="w-600">Zones</span></ng-template>
-        <app-new-area></app-new-area>
-      </form>
+        <app-new-area (areaChange)="areaAlert($event)"></app-new-area>
     </mat-step>
-    <mat-step [stepControl]="secondFormGroup" errorMessage="Address is required.">
-      <form [formGroup]="secondFormGroup">
+    <mat-step errorMessage="Address is required.">
         <ng-template matStepLabel><span class="w-600">Aléas</span></ng-template>
-        <app-alea-types></app-alea-types>
-      </form>
+        <app-alea-types (aleaChange)="selectAleas($event)"></app-alea-types>
     </mat-step>
-    <mat-step>
+    <mat-step [optional]="true">
         <ng-template matStepLabel><span class="w-600">Critères d'alertes</span></ng-template>
         <app-alert-criterias></app-alert-criterias>
     </mat-step>
-    <mat-step>
+    <mat-step [optional]="true">
       <ng-template matStepLabel><span class="w-600">Modes de réception</span></ng-template>
       <app-reception-mode></app-reception-mode>
     </mat-step>
@@ -27,4 +24,4 @@
         <button mat-button (click)="stepper.reset()">Reset</button>
       </div>
     </mat-step>
-  </mat-stepper>
+</mat-stepper>

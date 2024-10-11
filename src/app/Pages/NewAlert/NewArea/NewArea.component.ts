@@ -1,5 +1,5 @@
 
-import { Component, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
@@ -26,6 +26,8 @@ export class NewAreaView {
 
     selectedLayer?: L.GeoJSON;
     allLayers?: L.GeoJSON;
+
+    @Output() areaChange = new EventEmitter<L.GeoJSON>();
 
     public locationBox?: L.LatLngBounds;
 
@@ -145,8 +147,12 @@ export class NewAreaView {
         this.areaMap = map;
     }
 
+    allWorld(){
+        this.areaChange.emit(new L.GeoJSON);
+    }
+
     nextStep(){
-        console.log(this.allLayers?.toGeoJSON());
+        this.areaChange.emit(this.allLayers);
     }
 
 }

@@ -1,5 +1,7 @@
 import { Component, inject } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
+import { FeatureCollection, Geometry } from "geojson";
+import { Alea } from "src/app/Model/Alea";
 
 @Component({
     templateUrl: './NewAlert.component.html',
@@ -8,12 +10,27 @@ import { FormBuilder, Validators } from "@angular/forms";
 export class NewAlertView {
   
     private _formBuilder = inject(FormBuilder);
+    private areas: Geometry[] = [];
+    private aleas: Alea[] = [];
 
-    firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
-    });
-    secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required],
-    });
-    isEditable = false;
+    /**
+     * First step -> Get areas
+     * @param layer 
+     */
+    areaAlert(layer: L.GeoJSON){
+      const collection = layer?.toGeoJSON() as FeatureCollection;
+      this.areas = [];
+      collection?.features.forEach(item => {
+        this.areas.push(item.geometry);
+      })
+      console.log(this.areas);
+    }
+
+    /**
+     * Second step -> Get aleas
+     */
+    selectAleas(aleas: Alea[]){
+      this.aleas = aleas
+      console.log(this.aleas);
+    }
 }
