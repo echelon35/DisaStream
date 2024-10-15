@@ -1,6 +1,21 @@
 import { Component, EventEmitter, Output } from "@angular/core";
+import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { Alea } from "src/app/Model/Alea";
-import { AleaCategory } from "src/app/Model/AleaCategory";
+import { PublicApiService } from "src/app/Services/PublicApi.service";
+
+class AleaVM {
+    alea: Alea;
+    selected = false;
+
+    constructor(alea: Alea){
+        this.alea = alea;
+    }
+}
+
+class AleaCategoryVM {
+    category = "";
+    aleas: AleaVM[] = [];
+}
 
 @Component({
     selector: "app-alea-types",
@@ -11,65 +26,95 @@ export class AleaTypesComponent {
     public aleaType: Alea[] = [
         {
             name: "seisme",
-            disponible: true,
-            legend: "",
-            category: "tectonique"
+            id: 1,
+            label: 'Séisme',
         },
         {
             name: "cyclone",
-            disponible: true,
-            legend: "",
-            category: "météo"
+            id: 2,
+            label: 'Cyclone'
         },
         {
             name: "inondation",
-            disponible: true,
-            legend: "",
-            category: "météo"
+            id: 3,
+            label: 'Inondation'
         },
         {
             name: "eruption",
-            disponible: true,
-            legend: "",
-            category: "tectonique"
+            id: 4,
+            label: 'Eruption'
         },
         {
             name: "Bolide",
-            disponible: true,
-            legend: "",
-            category: "spatial"
+            id: 5,
+            label: 'Bolide'
         }
     ]
-    public categories: AleaCategory[] = [];
+    public categories: AleaCategoryVM[] = [];
     public selectedAleaTypes: Alea[] = [];
-    public spliceNumber = 0;
     
     @Output() aleaChange = new EventEmitter<Alea[]>();
 
-    constructor(){
-        this.aleaType.forEach((item: Alea) => {
-            console.log(this.categories.find(cat => item.category == cat.category))
-            if(!this.categories.find(cat => item.category == cat.category)){
-                this.categories.push({
-                    category: item.category,
-                    aleas: [item]
-                })
-            }
-            else{
-                this.categories.find(cat => cat.category == item.category)?.aleas.push(item);
-            }
+    constructor(private readonly publicApiService: PublicApiService){
+        this.getAleas();
+        // this.aleaType.forEach((item: Alea) => {
+        //     console.log(this.categories.find(cat => item.category == cat.category))
+        //     if(!this.categories.find(cat => item.category == cat.category)){
+        //         this.categories.push({
+        //             category: item.category,
+        //             aleas: [item]
+        //         })
+        //     }
+        //     else{
+        //         this.categories.find(cat => cat.category == item.category)?.aleas.push(item);
+        //     }
+        // })
+    }
+
+    getAleas(){
+        this.publicApiService.getAleasByCategory().subscribe((v) => {
+            const aleasByCategory: AleaCategoryVM[] = [];
+            v.forEach((item) => {
+              const aleaCategoryDto = item as AleaCategoryDto;
+              if(!aleasByCategory.find((cat) => aleaCategoryDto.category_name == (cat as AleaCategoryVM).category)){
+                aleasByCategory.push({
+                      category: aleaCategoryDto.category_name,
+                      aleas: [{
+                        alea: {
+                            id: aleaCategoryDto.alea_id,
+                            name: aleaCategoryDto.alea_name,
+                            label: aleaCategoryDto.alea_label,
+                        },
+                        selected: false,
+                      }]
+                  })
+              }
+              else{
+                aleasByCategory.find((cat) => (cat as AleaCategoryVM).category == aleaCategoryDto.category_name)?.aleas.push({
+                  alea: {
+                  id: aleaCategoryDto.alea_id,
+                  name: aleaCategoryDto.alea_name,
+                  label: aleaCategoryDto.alea_label,
+                },
+                selected: false,
+                });
+              }
+            })
+            this.categories = aleasByCategory;
         })
-
-        this.spliceNumber = Math.ceil(this.categories.length / 2);
-
-        console.log(this.categories)
     }
     
     nextStep(){
+        this.selectedAleaTypes = [];
+        this.categories.forEach(item => item.aleas.forEach(aleaVM => {
+            if(aleaVM.selected){
+                this.selectedAleaTypes.push(aleaVM.alea);
+            }
+        }))
         this.aleaChange.emit(this.selectedAleaTypes);
     }
 
-    selectAlea(alea: Alea){
-        console.log(alea);
+    selectAlea(alea: AleaVM){
+        alea.selected = !alea.selected;
     }
 }

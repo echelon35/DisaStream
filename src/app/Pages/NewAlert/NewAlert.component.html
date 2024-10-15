@@ -7,24 +7,26 @@
       <ng-template matStepLabel><span class="w-600">Aléas</span></ng-template>
       <app-alea-types (aleaChange)="selectAleas($event)"></app-alea-types>
   </mat-step>
-  <mat-step [optional]="true">
+  <!-- <mat-step [optional]="true">
       <ng-template matStepLabel><span class="w-600">Critères d'alertes</span></ng-template>
       <app-alert-criterias></app-alert-criterias>
-  </mat-step>
-  <mat-step [optional]="true">
+  </mat-step> -->
+  <!-- <mat-step [optional]="true">
     <ng-template matStepLabel><span class="w-600">Modes de réception</span></ng-template>
     <app-reception-mode></app-reception-mode>
-  </mat-step>
+  </mat-step> -->
   <mat-step>
     <ng-template matStepLabel><span class="w-600">Alerte finalisée</span></ng-template>
     <div class="final-screen">
-      <div class="align-center">
-        <h1 class="w-600 margin-b20">Donnez un nom à votre alerte</h1>
-        <div class="d-flex align-items-center">
-          <input class="input-alert" type="text" placeholder="Nom de votre alerte" />
-          <button class="lg-btn btn-primary">J'ai terminé</button>
+      <form [formGroup]="formGroup">
+        <div class="align-center">
+          <h1 class="w-600 margin-b20">Donnez un nom à votre alerte</h1>
+          <div class="d-flex align-items-center">
+            <input formControlName="name" required class="input-alert" type="text" placeholder="Nom de votre alerte" />
+            <button class="lg-btn btn-primary" (click)="createAlert()">J'ai terminé</button>
+          </div>
         </div>
-      </div>
+      </form>
   </div>
   </mat-step>
 </mat-stepper>

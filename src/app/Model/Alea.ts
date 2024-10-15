@@ -1,6 +1,5 @@
 export class Alea {
+    id = -1;
     name = "";
-    legend = "";
-    disponible = false;
-    category = "";
+    label = "";
 }

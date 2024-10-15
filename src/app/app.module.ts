@@ -31,6 +31,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { ToastrModule } from 'ngx-toastr';
+import { PublicApiService } from './Services/PublicApi.service';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { ToastrModule } from 'ngx-toastr';
   ],
   providers: [SeoService, 
     AuthentificationApi,
+    PublicApiService,
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
   bootstrap: [App]
 })

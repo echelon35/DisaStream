@@ -21,10 +21,9 @@ export class AlertCriteriasComponent {
                 name: "intensite",
                 label: "Intensité",
                 alea: {
-                    name: "seisme",
-                    disponible: true,
-                    legend: "",
-                    category: "tectonique"
+                    name: "Séisme",
+                    label: "seisme",
+                    id: 1,
                 }
             },
             criteriaType: CriteriaType.EQUAL,
@@ -90,7 +89,7 @@ export class AlertCriteriasComponent {
             selectedAlea: item.criteria.alea,
             selectedCriteria: item.criteria,
             selectedOperator: item.criteriaType,
-            criteriaList: this.criteriasFromDb.filter(cr => cr.alea.name == item.criteria.alea.name),
+            criteriaList: [],
             typedValue: item.value
         } });
         this.feedAleaCriteriaList();
@@ -100,14 +99,14 @@ export class AlertCriteriasComponent {
      * Get alea with criterias
      */
     feedAleaCriteriaList(): void{
-        this.aleaType = this.aleasFromDb.filter( a => this.criteriasFromDb.some( b => a === b.alea ) );
+        // this.aleaType = this.aleasFromDb.filter( a => this.criteriasFromDb.some( b => a === b.alea ) );
     }
 
     /**
      * Get only the criterias associated with alea
      */
     feedCriteriaList(index: number): void{
-        this.AlertCriteriaVMList[index].criteriaList = this.criteriasFromDb.filter(item => item.alea == this.AlertCriteriaVMList[index].selectedAlea)
+        // this.AlertCriteriaVMList[index].criteriaList = this.criteriasFromDb.filter(item => item.alea == this.AlertCriteriaVMList[index].selectedAlea)
     }
 
     public objectComparisonFunction = function( option, value ) : boolean {

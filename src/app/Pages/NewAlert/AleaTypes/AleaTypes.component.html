@@ -6,10 +6,10 @@
         <div class="margin-10" *ngFor="let category of this.categories">
             <h3 class="margin-l10">{{category.category | titlecase}}</h3>
             <div class="d-flex flex-wrap">
-                <div *ngFor="let alea of category?.aleas"  class="parent-img margin-10 cursor-pointer" (click)="selectAlea(alea)" style="background-image: url('/assets/images/alea/{{alea.name | lowercase}}.jpg');">
-                    <div class="category-card">
+                <div *ngFor="let aleaCategory of category?.aleas"  class="parent-img margin-10 cursor-pointer" (click)="selectAlea(aleaCategory)" style="background-image: url('/assets/images/alea/{{aleaCategory.alea.name | lowercase}}.jpg');">
+                    <div class="category-card" [ngClass]="{'selected': aleaCategory.selected }">
                     </div>
-                    <p class="text-uppercase align-center">{{alea.name | titlecase}}</p>
+                    <p class="text-uppercase align-center">{{aleaCategory.alea.name | titlecase}}</p>
                 </div>
             </div>
         </div>
@@ -20,7 +20,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-left"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
         <span class="margin-l10">Redéfinir les zones</span>
     </button>
-    <button matStepperNext class="btn-primary btn-icon sm-btn">
+    <button (click)="nextStep()" matStepperNext class="btn-primary btn-icon sm-btn">
         <span class="margin-r10">Surveiller ces aléas</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
     </button>
