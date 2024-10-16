@@ -12,7 +12,7 @@
   }
   
   .form-section {
-    background-color: #16151f;
+    background-color: var(--tertiary-color);
   }
   
   .logo {
@@ -36,6 +36,7 @@
     border: none;
     font-size: 1rem;
     cursor: pointer;
+    border-radius: 6px;
   }
   
   .linkedin {
@@ -59,8 +60,9 @@
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: 1px solid #ccc;
+    border: none;
     border-radius: 4px;
+    background: var(--secondary-color);
   }
   
   .checkbox-container {
