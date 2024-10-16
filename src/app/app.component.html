@@ -3,7 +3,7 @@
 [isLandingPage] = "this.route.url === '/' || this.route.url.startsWith('/#')"></app-not-logged-header>
 <app-logged-header *ngIf="isAuthenticated"></app-logged-header>
 
-<div class="content overflow-auto custom-scrollbar">
+<div [ngClass]="{'not-logged': !this.isAuthenticated}" class="content overflow-auto custom-scrollbar">
     <router-outlet></router-outlet>
 </div>
 

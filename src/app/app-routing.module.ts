@@ -8,6 +8,8 @@ import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
+import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
+import { IsUserSignedIn } from './Helpers/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -15,9 +17,10 @@ const routes: Routes = [
   { path: 'login', component: LoginView },
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
-  { path: 'dashboard', component: DashboardView },
-  { path: 'dashboard/alert/new', component: NewAlertView },
-  { path: 'dashboard/alerts/manage', component: ManageAlertsView },
+  { path: 'profile', component: UserProfileComponent },
+  { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
+  { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
+  { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
 ];
 
 @NgModule({

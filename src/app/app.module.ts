@@ -27,11 +27,14 @@ import { CommonModule } from '@angular/common';
 import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
 import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.component';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { ToastrModule } from 'ngx-toastr';
 import { PublicApiService } from './Services/PublicApi.service';
+import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
+import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,9 @@ import { PublicApiService } from './Services/PublicApi.service';
     NewAlertView,
     AlertCriteriasComponent,
     ReceptionModeComponent,
-    AleaTypesComponent
+    AleaTypesComponent,
+    ManageAlertsView,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +67,7 @@ import { PublicApiService } from './Services/PublicApi.service';
     MatSelectModule,
     MatIconModule,
     MatButtonModule,
+    MatTableModule,
     MatInputModule,
     MatRadioModule,
     HttpClientModule,

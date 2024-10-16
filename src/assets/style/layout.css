@@ -72,6 +72,10 @@
 		left: var(--pc-left-menu-width);
 		width: calc(100vw - var(--pc-left-menu-width));
 	}
+	.content.not-logged{
+		left: 0;
+		width: 100vw;
+	}
 }
 
 /* Large devices (desktops, 992px and up) - Bootstrap -lg */
@@ -93,6 +97,10 @@
 		left: var(--pc-left-menu-width);
 		width: calc(100vw - var(--pc-left-menu-width));
 	}
+	.content.not-logged{
+		left: 0;
+		width: 100vw;
+	}
 }
 
 /* Extra large devices (large desktops, 1200px and up) */
@@ -113,6 +121,10 @@
 		width: 100%;
 		left: var(--pc-left-menu-width);
 		width: calc(100vw - var(--pc-left-menu-width));
+	}
+	.content.not-logged{
+		left: 0;
+		width: 100vw;
 	}
 }
 

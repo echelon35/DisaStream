@@ -1,9 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { AuthentificationApi } from "./AuthentificationApi.service";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { AuthentificationApi } from "./AuthentificationApi.service";
-import { Alert } from "../Model/Alert";
-import { Observable } from "rxjs";
+import { User } from "../Model/User";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -11,7 +10,7 @@ const API_URL = `${env.settings.backend}`;
 @Injectable({
   providedIn: 'root'
 })
-export class AlertApiService {
+export class UserApiService {
     private httpOptions = {};
 
     constructor(private http: HttpClient, private authService: AuthentificationApi){
@@ -23,11 +22,17 @@ export class AlertApiService {
           };
     }
 
-    createAlert(alert: Alert){
-      return this.http.post(API_URL + '/alert/create', alert, this.httpOptions);
+    getSummaryInfos(){
+      this.httpOptions = {
+        headers: new HttpHeaders({ 
+          'Content-Type': 'application/json', 
+          'Authorization': `Bearer ${this.authService.getToken()}`
+        })
+      };
+      return this.http.get<User>(API_URL + '/user/summary', this.httpOptions);
     }
 
-    getUserAlerts(): Observable<Alert[]> {
-      return this.http.get<Alert[]>(API_URL + '/alert', this.httpOptions)
+    getMyProfile(){
+      return this.http.get<User>(API_URL + '/profile', this.httpOptions);
     }
 }

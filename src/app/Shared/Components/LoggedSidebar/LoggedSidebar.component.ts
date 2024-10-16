@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoggedSidebar implements OnInit {
 
-  constructor() { 
-  }
+  userAvatarUrl: string | null = null;
 
   ngOnInit(): void {
+    this.userAvatarUrl = localStorage.getItem('avatarUrl');
   }
 
 }

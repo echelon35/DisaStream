@@ -1,0 +1,23 @@
+import { Component } from '@angular/core';
+import { User } from 'src/app/Model/User';
+import { UserApiService } from 'src/app/Services/UserApiService';
+
+@Component({
+  selector: 'app-user-profile',
+  templateUrl: './user-profile.component.html',
+  styleUrls: ['./user-profile.component.css']
+})
+export class UserProfileComponent {
+
+  user: User = new User();
+
+  constructor(private readonly userService: UserApiService){
+    this.getMyProfile();
+  }
+
+  getMyProfile(){
+    this.userService.getMyProfile().subscribe((user) => {
+      this.user = user;
+    })
+  }
+}

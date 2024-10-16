@@ -1,0 +1,8 @@
+.action-column
+{
+    width: 50px;
+    cursor: pointer;
+}
+.action-column:hover svg {
+    color: var(--primary-color);
+}

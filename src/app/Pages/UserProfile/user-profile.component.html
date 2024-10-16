@@ -1,0 +1,11 @@
+<div class="d-flex align-items-center justify-content-center padding-20">
+    <div class="avatar-container">
+        <img alt="avatar" class="avatar" src="{{user.avatar}}">
+        <div class="avatar-mask"></div>
+        <svg class="avatar-edit" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
+    </div>
+    <div class="margin-l20">
+        <h1>{{user.firstname | titlecase }} {{user.lastname | uppercase}}</h1>
+        <p>{{user.mail}}</p>
+    </div>
+</div>
