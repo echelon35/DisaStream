@@ -18,7 +18,7 @@
         <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-country">
         <button class="btn-primary sm-btn" (click)="setSearchPlace()">Rechercher</button>
     </div>
-    <div class="d-flex flex-wrap margin-t20 overflow-auto custom-scrollbar result-container">
+    <div class="d-flex flex-wrap margin-t20 overflow-auto custom-scrollbar result-container margin-b50">
         <div [ngClass]="{ current : this.selectedPlace === town.label,
             volcan : town.type.name === 'volcano',
             montagne : town.type.name === 'peak',
@@ -32,7 +32,7 @@
             </p>
         </div>
     </div>
-    <div class="d-flex justify-content-end margin-t20">
-        <button class="btn-secondary md-btn" (click)="this.close()">Fermer</button>
+    <div class="close-btn">
+        <button class="btn-primary md-btn" (click)="this.close()">Fermer</button>
     </div>
 </div>

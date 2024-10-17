@@ -35,6 +35,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
+import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { UserProfileComponent } from './Pages/UserProfile/user-profile.component
     ReceptionModeComponent,
     AleaTypesComponent,
     ManageAlertsView,
-    UserProfileComponent
+    UserProfileComponent,
+    AddMailAlertsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/Model/User';
+import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 
 @Component({
@@ -11,7 +12,7 @@ export class UserProfileComponent {
 
   user: User = new User();
 
-  constructor(private readonly userService: UserApiService){
+  constructor(private readonly userService: UserApiService, private readonly authService: AuthentificationApi){
     this.getMyProfile();
   }
 
@@ -19,5 +20,9 @@ export class UserProfileComponent {
     this.userService.getMyProfile().subscribe((user) => {
       this.user = user;
     })
+  }
+
+  logout(){
+    this.authService.logOut();
   }
 }

@@ -71,3 +71,7 @@
 .btn-icon:hover:not(:disabled) svg {
     stroke: var(--white-secondary-color);
 }
+
+.mat-mdc-form-field-subscript-wrapper {
+    display: none;
+}

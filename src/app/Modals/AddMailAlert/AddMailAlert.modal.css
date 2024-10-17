@@ -1,7 +1,7 @@
 .modal
 {
-    width: 800px;
-    max-height: 800px;
+    width: 600px;
+    height: 300px;
     z-index: 1001;
     position: fixed;
     background-color: var(--secondary-color);
@@ -18,7 +18,7 @@
     z-index: 1000;
     opacity: 0.7;
 }
-.search-country {
+.mail-input {
     color: white;
     background-color: var(--dark-color);
     border-radius: 5px;
@@ -63,7 +63,7 @@ input::placeholder{
 }
 .result-container
 {
-    max-height: 530px;
+    height: 530px;
 }
 .close-btn
 {

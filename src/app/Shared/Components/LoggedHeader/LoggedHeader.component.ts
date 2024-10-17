@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -14,6 +15,8 @@ export class LoggedHeader implements OnInit {
     firstname: string | null = null;
     lastname: string | null = null;
     appName: string = this.env.settings.appName;
+
+    constructor(public router: Router){}
 
     ngOnInit() {
         this.userAvatarUrl = localStorage.getItem('avatarUrl');

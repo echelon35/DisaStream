@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { FeatureCollection } from "geojson";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
+import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 
 @Component({
@@ -28,6 +29,10 @@ export class NewAlertView {
       const collection = layer?.toGeoJSON() as FeatureCollection;
       this.alert.areas = collection?.features[0]?.geometry;
       console.log(this.alert.areas);
+    }
+
+    addMails(mails: MailAlert[]){
+      this.alert.mailAlerts = mails;
     }
 
     /**

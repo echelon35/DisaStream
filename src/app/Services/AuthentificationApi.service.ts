@@ -49,6 +49,8 @@ export class AuthentificationApi {
     public logOut() {
         window.localStorage.removeItem(TOKEN_KEY);
         window.localStorage.removeItem(AVATAR_KEY);
-        window.location.href = API_URL;
+        window.localStorage.removeItem(FIRSTNAME_KEY);
+        window.localStorage.removeItem(LASTNAME_KEY);
+        window.location.href = '/';
     }
 }

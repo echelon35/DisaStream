@@ -58,11 +58,11 @@
     top:90px;
     left: 50%;
     transform: translate(-50%,0%);
-    background-color:var(--dark-color);
+    /* background-color:var(--dark-color); */
     border-radius: 5px;
     color: white;
     z-index:1000;
     padding: 10px;
-    display: flex;
-    align-items: center;
+    /* display: flex;
+    align-items: center; */
 }

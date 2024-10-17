@@ -1,4 +1,4 @@
-<mat-stepper [linear]="true" #stepper class="dark-bg">
+<mat-stepper [linear]="true" #stepper class="tertiary-bg">
   <mat-step>
       <ng-template matStepLabel><span class="w-600">Zones</span></ng-template>
       <app-new-area (areaChange)="areaAlert($event)"></app-new-area>
@@ -6,6 +6,10 @@
   <mat-step>
       <ng-template matStepLabel><span class="w-600">Aléas</span></ng-template>
       <app-alea-types (aleaChange)="selectAleas($event)"></app-alea-types>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel><span class="w-600">Destinataires</span></ng-template>
+    <app-add-mail-alerts (mailAlertsChange)="addMails($event)"></app-add-mail-alerts>
   </mat-step>
   <!-- <mat-step [optional]="true">
       <ng-template matStepLabel><span class="w-600">Critères d'alertes</span></ng-template>
@@ -16,7 +20,7 @@
     <app-reception-mode></app-reception-mode>
   </mat-step> -->
   <mat-step>
-    <ng-template matStepLabel><span class="w-600">Alerte finalisée</span></ng-template>
+    <ng-template matStepLabel><span class="w-600">Finalisation</span></ng-template>
     <div class="final-screen">
       <form [formGroup]="formGroup">
         <div class="align-center">
@@ -27,6 +31,6 @@
           </div>
         </div>
       </form>
-  </div>
+    </div>
   </mat-step>
 </mat-stepper>

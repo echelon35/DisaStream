@@ -4,6 +4,7 @@ import { NotLoggedHeader } from "./Components/NotLoggedHeader/NotLoggedHeader.co
 import { CommonModule } from "@angular/common";
 import { Footer } from "./Components/Footer/Footer.component";
 import { LoggedHeader } from "./Components/LoggedHeader/LoggedHeader.component";
+import { RouterModule } from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -12,7 +13,7 @@ import { LoggedHeader } from "./Components/LoggedHeader/LoggedHeader.component";
     LoggedHeader,
     Footer
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   exports: [LoggedSidebar, NotLoggedHeader, Footer, LoggedHeader]
 })
 export class SharedModule { }

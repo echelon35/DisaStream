@@ -1,28 +1,29 @@
 <div class="consigne">
-    <p class="w-600" style="max-width: 270px;">Tracez les zones pour lesquelles vous souhaitez définir cette alerte</p>
-    <button title="Dessiner une zone" (click)="drawPolygon()" class="btn-primary btn-icon sm-btn margin-l20">
-        <span class="margin-r10">Polygone</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-spline"><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><path d="M5 17A12 12 0 0 1 17 5"/></svg>
-    </button>
-    <button title="Dessiner un rayon" (click)="drawCircle()" class="btn-primary btn-icon sm-btn margin-l10">
-        <span class="margin-r10">Cercle</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radius"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg>
-    </button>
+    <p class="w-600 margin-b10">Tracez les zones pour lesquelles vous souhaitez définir cette alerte</p>
+    <div class="d-flex align-items-center justify-content-center">
+        <button title="Dessiner une zone" (click)="drawPolygon()" class="btn-primary btn-icon sm-btn">
+            <span class="margin-r10">Polygone</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-spline"><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><path d="M5 17A12 12 0 0 1 17 5"/></svg>
+        </button>
+        <button title="Dessiner un rayon" (click)="drawCircle()" class="btn-primary btn-icon sm-btn margin-l10">
+            <span class="margin-r10">Cercle</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-radius"><path d="M20.34 17.52a10 10 0 1 0-2.82 2.82"/><circle cx="19" cy="19" r="2"/><path d="m13.41 13.41 4.18 4.18"/><circle cx="12" cy="12" r="2"/></svg>
+        </button>
+        <span class="margin-10 margin-r10 w-1000">OU</span>
+        <button matStepperNext class="btn-blue btn-icon sm-btn" (click)="allWorld()">
+            <span class="margin-r10">Monde entier</span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+        </button>
+    </div>
 </div>
 <div id="map-new-area" class="main-panel">
     <app-map [mapId]="'map-new-area'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true" [locationBox]="locationBox"></app-map>
 </div>
-<div class="next-step dark-bg d-flex justify-content-between align-items-center">
+<div class="next-step tertiary-bg d-flex justify-content-between align-items-center">
     <input (click)="openModal()" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-country">
-    <div class="d-flex align-items-center">
-        <button matStepperNext class="btn-blue btn-icon sm-btn" (click)="allWorld()">
-            <span class="margin-r10">Appliquer au monde entier</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-earth"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-        </button>
-        <button [disabled]="(this.nbLayers() > 0) ? '' : 'disabled'" matStepperNext class="btn-primary btn-icon sm-btn" (click)="nextStep()">
-            <span class="margin-r20">Appliquer à mes zones</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
-        </button>
-    </div>
+    <button [disabled]="(this.nbLayers() > 0) ? '' : 'disabled'" matStepperNext class="btn-primary btn-icon lg-btn margin-10" (click)="nextStep()">
+        <span class="margin-r20">Appliquer à mes zones</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
+    </button>
 </div>
 <app-search-place-modal #modal [areaMap]="areaMap"></app-search-place-modal>
