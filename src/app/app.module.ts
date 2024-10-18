@@ -22,7 +22,6 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
-import { AlertCriteriasComponent } from './Pages/NewAlert/AlertCriterias/AlertCriterias.component';
 import { CommonModule } from '@angular/common';
 import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
 import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.component';
@@ -47,7 +46,6 @@ import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAl
     DashboardView,
     NewAreaView,
     NewAlertView,
-    AlertCriteriasComponent,
     ReceptionModeComponent,
     AleaTypesComponent,
     ManageAlertsView,
