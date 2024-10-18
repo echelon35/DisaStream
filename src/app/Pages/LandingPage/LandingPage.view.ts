@@ -8,7 +8,7 @@ import { UserApiService } from 'src/app/Services/UserApiService';
   styleUrls: ['./LandingPage.view.css']
 })
 export class LandingPageView {
-  title = 'Connectez-vous aux forces de la nature avec Cataclysm';
+  title = 'Connectez-vous aux forces de la nature avec Disastream';
 
   constructor(private route: ActivatedRoute,
     public router: Router, private authenticationApi: AuthentificationApi, private userApiService: UserApiService){

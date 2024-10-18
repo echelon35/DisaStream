@@ -5,5 +5,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./Dashboard.view.css']
 })
 export class DashboardView {
-  title = 'Connectez-vous aux forces de la nature avec Cataclysm';
+  title = 'Connectez-vous aux forces de la nature avec Disastream';
 }
