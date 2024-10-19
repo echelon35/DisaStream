@@ -41,6 +41,6 @@ jobs:
     # 6. Déployer le dossier dist sur le serveur
     - name: Deploy to server
       run: |
-        scp -r ./dist/disastream/* root@${{ secrets.SERVER_URL }}:/opt/
+        scp -r ./dist/disastream/* root@${{ secrets.SERVER_URL }}:/opt/disastream
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
