@@ -12,7 +12,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
-import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { SharedModule } from './Shared/Shared.module';
 import { NewAreaView } from './Pages/NewAlert/NewArea/NewArea.component';
 import { MapModule } from './Map/map.module';
@@ -35,6 +34,7 @@ import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 @NgModule({ declarations: [
         App,
@@ -42,7 +42,6 @@ import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAl
         AuthenticationView,
         LoginView,
         ForgotPasswordView,
-        DashboardView,
         NewAreaView,
         NewAlertView,
         ReceptionModeComponent,
@@ -71,5 +70,6 @@ import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAl
         ToastrModule.forRoot()], providers: [SeoService,
         AuthentificationApi,
         PublicApiService,
+        provideCharts(withDefaultRegisterables()),
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

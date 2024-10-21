@@ -5,6 +5,7 @@ import { AuthentificationApi } from "./AuthentificationApi.service";
 import { Alert } from "../Model/Alert";
 import { Observable } from "rxjs";
 import { MailAlert } from "../Model/MailAlert";
+import { StatisticsOnPeriodDTO } from "../DTO/StatisticsOnPeriod.dto";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -30,6 +31,10 @@ export class AlertApiService {
 
     getUserAlerts(): Observable<Alert[]> {
       return this.http.get<Alert[]>(API_URL + '/alert', this.httpOptions)
+    }
+
+    getLastWeekStatistics(): Observable<StatisticsOnPeriodDTO[]> {
+      return this.http.get<StatisticsOnPeriodDTO[]>(API_URL + '/history/last-week', this.httpOptions)
     }
 
     getMailAlerts(): Observable<MailAlert[]> {

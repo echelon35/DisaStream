@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
-import { AleaCategory } from "../Model/AleaCategory";
 import { AleaCategoryDto } from "../DTO/AleaCategory.dto";
 import { Observable } from "rxjs";
 
