@@ -1,4 +1,4 @@
 export class StatisticsOnPeriodDTO {
-    periodItem: Date = new Date();
+    perioditem: Date = new Date();
     count = 0;
 }

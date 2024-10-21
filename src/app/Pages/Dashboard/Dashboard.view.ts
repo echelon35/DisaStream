@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
@@ -9,14 +9,13 @@ import { AlertApiService } from 'src/app/Services/AlertApiService';
   standalone: true,
   imports: [BaseChartDirective],
 })
-export class DashboardView {
+export class DashboardView implements OnInit {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
       {
         data: [0, 0, 0, 0, 0, 0, 0],
-        label: 'Semaine',
         backgroundColor: 'rgba(148,159,177,0.2)',
         borderColor: 'rgba(148,159,177,1)',
         pointBackgroundColor: 'rgba(148,159,177,1)',
@@ -24,9 +23,10 @@ export class DashboardView {
         pointHoverBackgroundColor: '#fff',
         pointHoverBorderColor: 'rgba(148,159,177,0.8)',
         fill: 'origin',
+        offset: 1
       },
     ],
-    labels: ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'],
+    labels: ['', '', '', '', '', '', ''],
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -36,12 +36,23 @@ export class DashboardView {
       },
     },
     scales: {
+      x: {
+        ticks: {
+          color: 'rgba(255,255,255,0.5)',
+        },
+      },
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
         position: 'left',
+        ticks: {
+          color: 'rgba(255,255,255,0.5)',
+        },
       },
     },
-
+    plugins: {
+      legend: { display: true },
+      colors: { }
+    }
   };
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
@@ -50,27 +61,24 @@ export class DashboardView {
   legends: string[] = [];
 
   constructor(private readonly alertApiService: AlertApiService){
+  }
+
+  ngOnInit(): void {
     this.lastWeek();
   }
 
-  async lastWeek(){
+  public lastWeek(): void{
     this.alertApiService.getLastWeekStatistics().subscribe(periods => {
       this.lineChartData.datasets[0].data = [];
       this.lineChartData.labels = [];
-      console.log(periods)
-      periods.map(item => {
-        this.lineChartData.datasets[0].data.push(item.count);
-        this.lineChartData.labels?.push(item.periodItem);
-      });
-      for (let j = 0; j < periods.length; j++) {
-        this.lineChartData.datasets[0].data[j] = periods[j].count;
-        this.lineChartData.labels[j] = periods[j].periodItem;
+
+      this.lineChartData.labels.length = 0;
+      for (let i = periods.length - 1; i >= 0; i--) {
+        const currentDate = new Date(periods[i].perioditem);
+        this.lineChartData.labels.push(currentDate.toLocaleDateString('fr'));
+        this.lineChartData.datasets[0].data.push(periods[i].count)
       }
-      console.log(this.chart?.data?.datasets[0].data);
-      console.log(this.chart?.labels);
       this.chart?.update();
-      // this.lineChartData.datasets[0].data = periods.keys['count'];
-      // this.lineChartData.labels = periods.keys['periodItem'];
     })
   }
 }

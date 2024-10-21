@@ -21,3 +21,17 @@
     border: 2px white solid;
     font-size: 20px;
 }
+
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+}
+
+@media (max-width: 768px) { 
+    ::ng-deep .mat-step-header:has(.mat-step-icon-selected){
+        display: flex;
+        width: 300px;
+    }
+    ::ng-deep .mat-step-header:not(:has(.mat-step-icon-selected)){
+        display: none;
+    }
+}
