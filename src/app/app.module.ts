@@ -10,7 +10,7 @@ import { ForgotPasswordView } from './Pages/ForgotPassword/ForgotPassword.view';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { DashboardView } from './Pages/Dashboard/Dashboard.view';
 import { SharedModule } from './Shared/Shared.module';
@@ -36,47 +36,40 @@ import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
 
-@NgModule({
-  declarations: [
-    App,
-    LandingPageView,
-    AuthenticationView,
-    LoginView,
-    ForgotPasswordView,
-    DashboardView,
-    NewAreaView,
-    NewAlertView,
-    ReceptionModeComponent,
-    AleaTypesComponent,
-    ManageAlertsView,
-    UserProfileComponent,
-    AddMailAlertsComponent
-  ],
-  imports: [
-    BrowserModule,
-    CommonModule,
-    FormsModule,
-    MapModule,
-    SharedModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    ModalsModule,
-    BrowserAnimationsModule,
-    MatStepperModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatInputModule,
-    MatRadioModule,
-    HttpClientModule,
-    ToastrModule.forRoot(),
-  ],
-  providers: [SeoService, 
-    AuthentificationApi,
-    PublicApiService,
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }],
-  bootstrap: [App]
-})
+@NgModule({ declarations: [
+        App,
+        LandingPageView,
+        AuthenticationView,
+        LoginView,
+        ForgotPasswordView,
+        DashboardView,
+        NewAreaView,
+        NewAlertView,
+        ReceptionModeComponent,
+        AleaTypesComponent,
+        ManageAlertsView,
+        UserProfileComponent,
+        AddMailAlertsComponent
+    ],
+    bootstrap: [App], imports: [BrowserModule,
+        CommonModule,
+        FormsModule,
+        MapModule,
+        SharedModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        ModalsModule,
+        BrowserAnimationsModule,
+        MatStepperModule,
+        MatFormFieldModule,
+        MatSelectModule,
+        MatIconModule,
+        MatButtonModule,
+        MatTableModule,
+        MatInputModule,
+        MatRadioModule,
+        ToastrModule.forRoot()], providers: [SeoService,
+        AuthentificationApi,
+        PublicApiService,
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
