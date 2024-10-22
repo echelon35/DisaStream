@@ -6,10 +6,10 @@
         <div class="margin-10" *ngFor="let category of this.categories">
             <h3 class="margin-l10">{{category.category | titlecase}}</h3>
             <div class="d-flex flex-wrap">
-                <div *ngFor="let aleaCategory of category?.aleas"  class="parent-img margin-10 cursor-pointer" (click)="selectAlea(aleaCategory)" style="background-image: url('/assets/images/alea/{{aleaCategory.alea.name | lowercase}}.jpg');">
+                <div *ngFor="let aleaCategory of category?.aleas"  class="parent-img margin-10 cursor-pointer" (click)="selectAlea(aleaCategory)" style="background-image: url('https://disastream.s3.eu-west-3.amazonaws.com/background/{{aleaCategory.alea.name | lowercase}}.jpg');">
                     <div class="category-card" [ngClass]="{'selected': aleaCategory.selected }">
                     </div>
-                    <p class="text-uppercase align-center">{{aleaCategory.alea.name | titlecase}}</p>
+                    <p class="text-uppercase align-center">{{aleaCategory.alea.label | titlecase}}</p>
                 </div>
             </div>
         </div>

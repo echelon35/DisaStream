@@ -1,10 +1,12 @@
 
-import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
 import "@geoman-io/leaflet-geoman-free";
 import { ToastrService } from 'ngx-toastr';
+import { Observable, Subscription } from 'rxjs';
+import { Alert } from 'src/app/Model/Alert';
 
 export interface IGeomanLayer {
     layer: L.Layer;
@@ -16,7 +18,7 @@ export interface IGeomanLayer {
     templateUrl: './NewArea.component.html',
     styleUrls: ['./NewArea.component.css']
 })
-export class NewAreaView {
+export class NewAreaView implements OnInit, OnDestroy {
     
     @ViewChild('modal') modal?: SearchPlace;
 
@@ -29,6 +31,10 @@ export class NewAreaView {
     allLayers?: L.GeoJSON;
     completed = false;
 
+    private eventsSubscription: Subscription | undefined;
+
+    @Input() loadingAlert: Observable<Alert> | undefined;
+
     @Output() areaChange = new EventEmitter<L.GeoJSON | null>();
 
     public locationBox?: L.LatLngBounds;
@@ -36,6 +42,19 @@ export class NewAreaView {
     constructor(private toastrService: ToastrService) { 
         const box = [-6.113481,41.934978,10.307773,51.727030];
         this.locationBox = L.latLngBounds(L.latLng(box[3], box[2]),L.latLng(box[1], box[0]))
+    }
+    ngOnInit(): void {
+        this.eventsSubscription = this.loadingAlert?.subscribe((alert) => {
+            const geo = new L.GeoJSON(alert.areas);
+            this.onEachFeature(geo);
+            this.allLayers?.addLayer(geo);
+            this.addShapeToMap();
+            console.log(geo);
+        });
+    }
+
+    ngOnDestroy() {
+        this.eventsSubscription?.unsubscribe();
     }
 
     /**

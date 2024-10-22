@@ -1,24 +1,16 @@
 <mat-stepper [linear]="true" #stepper class="tertiary-bg">
   <mat-step>
       <ng-template matStepLabel><span class="w-600">Zones</span></ng-template>
-      <app-new-area (areaChange)="areaAlert($event)"></app-new-area>
+      <app-new-area [loadingAlert]="loadedAlert.asObservable()" (areaChange)="areaAlert($event)"></app-new-area>
   </mat-step>
   <mat-step>
       <ng-template matStepLabel><span class="w-600">Aléas</span></ng-template>
-      <app-alea-types (aleaChange)="selectAleas($event)"></app-alea-types>
+      <app-alea-types [loadingAlert]="loadedAlert.asObservable()" (aleaChange)="selectAleas($event)"></app-alea-types>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel><span class="w-600">Destinataires</span></ng-template>
-    <app-add-mail-alerts (mailAlertsChange)="addMails($event)"></app-add-mail-alerts>
+    <app-add-mail-alerts [loadingAlert]="loadedAlert.asObservable()" (mailAlertsChange)="addMails($event)"></app-add-mail-alerts>
   </mat-step>
-  <!-- <mat-step [optional]="true">
-      <ng-template matStepLabel><span class="w-600">Critères d'alertes</span></ng-template>
-      <app-alert-criterias></app-alert-criterias>
-  </mat-step> -->
-  <!-- <mat-step [optional]="true">
-    <ng-template matStepLabel><span class="w-600">Modes de réception</span></ng-template>
-    <app-reception-mode></app-reception-mode>
-  </mat-step> -->
   <mat-step>
     <ng-template matStepLabel><span class="w-600">Finalisation</span></ng-template>
     <div class="final-screen">
@@ -26,7 +18,7 @@
         <div class="align-center">
           <h1 class="w-600 margin-b20">Donnez un nom à votre alerte</h1>
           <div class="d-flex align-items-center">
-            <input formControlName="name" required class="input-alert" type="text" placeholder="Nom de votre alerte" />
+            <input [ngModel]="this.alert.name" formControlName="name" required class="input-alert" type="text" placeholder="Nom de votre alerte" />
             <button class="lg-btn btn-primary" (click)="createAlert()">J'ai terminé</button>
           </div>
         </div>

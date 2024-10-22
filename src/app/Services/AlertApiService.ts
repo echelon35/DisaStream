@@ -33,6 +33,10 @@ export class AlertApiService {
       return this.http.get<Alert[]>(API_URL + '/alert', this.httpOptions)
     }
 
+    getAlertById(id: number): Observable<Alert> {
+      return this.http.get<Alert>(API_URL + '/alert/' + id, this.httpOptions)
+    }
+
     getLastWeekStatistics(): Observable<StatisticsOnPeriodDTO[]> {
       return this.http.get<StatisticsOnPeriodDTO[]>(API_URL + '/history/last-week', this.httpOptions)
     }

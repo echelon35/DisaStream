@@ -22,6 +22,7 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/success', component: FinalScreenView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
+  { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
 ];
 

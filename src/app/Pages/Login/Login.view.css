@@ -81,7 +81,7 @@
   }
   
   .info-section {
-    background-image: url('/assets/images/alea/instabilite.jpg');
+    background-image: url('https://disastream.s3.eu-west-3.amazonaws.com/background/instability.jpg');
     background-position: center;
     color: white;
     display: flex;

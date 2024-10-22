@@ -11,7 +11,7 @@
 <table class="margin-t20" mat-table [dataSource]="this.alerts">
     <ng-container matColumnDef="edit">
         <th class="action-column" mat-header-cell *matHeaderCellDef></th>
-        <td title="Editer {{alert.name}}" class="action-column" mat-cell *matCellDef="let alert">
+        <td (click)="edit(alert.id)" title="Editer {{alert.name}}" class="action-column" mat-cell *matCellDef="let alert">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"/><path d="m15 5 4 4"/></svg>
         </td>
     </ng-container>
@@ -24,6 +24,10 @@
     <ng-container matColumnDef="createdAt">
         <th mat-header-cell *matHeaderCellDef> Date de création </th>
         <td mat-cell *matCellDef="let alert"> {{alert.createdAt | date:"dd MMM yyyy à hh:mm UTC"}} </td>
+    </ng-container>
+    <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef> Dernière modification le </th>
+        <td mat-cell *matCellDef="let alert"> {{alert.updatedAt | date:"dd MMM yyyy à hh:mm UTC"}} </td>
     </ng-container>
     <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef></th>

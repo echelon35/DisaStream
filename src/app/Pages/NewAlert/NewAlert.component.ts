@@ -1,7 +1,10 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
+import L from "leaflet";
+import { ToastrService } from "ngx-toastr";
+import { Subject } from "rxjs";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
@@ -14,13 +17,34 @@ import { AlertApiService } from "src/app/Services/AlertApiService";
 export class NewAlertView {
   
     private _formBuilder = inject(FormBuilder);
-    private alert: Alert = new Alert();
+
+    public alert: Alert = new Alert();
+    public loadedAlert: Subject<Alert> = new Subject<Alert>();
 
     formGroup = this._formBuilder.group({
       name: ['', Validators.required],
     });
 
-    constructor(private alertApiService: AlertApiService, private router: Router){}
+    constructor(private alertApiService: AlertApiService, private router: Router, private route: ActivatedRoute, private toastrService: ToastrService){
+      if(this.route.snapshot.queryParamMap.get('id') != null){
+        const id = parseInt(this.route.snapshot.queryParamMap.get('id')!);
+        console.log(id);
+        this.alertApiService.getAlertById(id).subscribe({
+          next: (alert) => {
+            this.loadedAlert.next(alert);
+            this.alert = alert;
+          },
+          error: (error) => { 
+            if(error.status == 403){
+              this.router.navigateByUrl('dashboard/alerts/manage').then(() => { this.toastrService.error('Vous n\'êtes pas autorisé à accéder à cette alerte'); 
+            })}
+            else {
+              this.toastrService.error(error?.message);
+            }
+          }
+        })
+      }
+    }
 
     /**
      * First step -> Get areas

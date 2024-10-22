@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { Observable, Subscription } from "rxjs";
 import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { Alea } from "src/app/Model/Alea";
+import { Alert } from "src/app/Model/Alert";
 import { PublicApiService } from "src/app/Services/PublicApi.service";
 
 class AleaVM {
@@ -22,7 +24,8 @@ class AleaCategoryVM {
     templateUrl: './AleaTypes.component.html',
     styleUrls: ['./AleaTypes.component.css'],
 })
-export class AleaTypesComponent {
+export class AleaTypesComponent implements OnInit, OnDestroy {
+
     public aleaType: Alea[] = [
         {
             name: "seisme",
@@ -52,23 +55,30 @@ export class AleaTypesComponent {
     ]
     public categories: AleaCategoryVM[] = [];
     public selectedAleaTypes: Alea[] = [];
+
+    private aleaTypeAlertSubscription!: Subscription;
+    @Input() loadingAlert!: Observable<Alert>;
     
     @Output() aleaChange = new EventEmitter<Alea[]>();
 
     constructor(private readonly publicApiService: PublicApiService){
         this.getAleas();
-        // this.aleaType.forEach((item: Alea) => {
-        //     console.log(this.categories.find(cat => item.category == cat.category))
-        //     if(!this.categories.find(cat => item.category == cat.category)){
-        //         this.categories.push({
-        //             category: item.category,
-        //             aleas: [item]
-        //         })
-        //     }
-        //     else{
-        //         this.categories.find(cat => cat.category == item.category)?.aleas.push(item);
-        //     }
-        // })
+    }
+
+    ngOnInit(): void {
+        this.aleaTypeAlertSubscription = this.loadingAlert?.subscribe((alert) => {
+            console.log(alert);
+            this.selectedAleaTypes = alert.aleas;
+            this.categories.forEach(item => item.aleas.forEach(aleaVM => {
+                if(this.selectedAleaTypes.find(alea => alea.name == aleaVM.alea.name)){
+                    aleaVM.selected = true;
+                }
+            }))
+        });
+    }
+
+    ngOnDestroy() {
+        this.aleaTypeAlertSubscription?.unsubscribe();
     }
 
     getAleas(){
