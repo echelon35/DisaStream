@@ -1,5 +1,6 @@
 import { Component, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
@@ -19,15 +20,20 @@ export class NewAlertView {
       name: ['', Validators.required],
     });
 
-    constructor(private alertApiService: AlertApiService){}
+    constructor(private alertApiService: AlertApiService, private router: Router){}
 
     /**
      * First step -> Get areas
      * @param layer 
      */
-    areaAlert(layer: L.GeoJSON){
-      const collection = layer?.toGeoJSON() as FeatureCollection;
-      this.alert.areas = collection?.features[0]?.geometry;
+    areaAlert(layer: L.GeoJSON | null){
+      if(layer != null){
+        const collection = layer?.toGeoJSON() as FeatureCollection;
+        this.alert.areas = collection?.features[0]?.geometry;
+      }
+      else{
+        this.alert.areas = null;
+      }
       console.log(this.alert.areas);
     }
 
@@ -47,7 +53,7 @@ export class NewAlertView {
       if(this.formGroup.value.name != null){
         this.alert.name = this.formGroup.value.name;
         this.alertApiService.createAlert(this.alert).subscribe(() => {
-          console.log('Alerte créé avec succès');
+          this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
         });
       }
     }

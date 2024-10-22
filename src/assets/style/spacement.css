@@ -173,3 +173,27 @@
 .border-none{
     border: none;
 }
+
+@media (max-width: 768px) { 
+    .mobile-block {
+        display: block;
+    }
+    .mobile-flex {
+        display: flex;
+    }
+    .pc-block, .pc-flex {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) { 
+    .pc-block {
+        display: block;
+    }
+    .pc-flex {
+        display: flex;
+    }
+    .mobile-block, .mobile-flex {
+        display: none;
+    }
+}

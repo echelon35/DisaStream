@@ -5,6 +5,6 @@ import { MailAlert } from "./MailAlert";
 export class Alert {
     name = "";
     aleas: Alea[] = [];
-    areas?: Geometry;
+    areas?: Geometry | null;
     mailAlerts: MailAlert[] = [];
 }

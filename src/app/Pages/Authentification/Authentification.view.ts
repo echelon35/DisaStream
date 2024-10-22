@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
 import { environment } from 'src/environments/environment';

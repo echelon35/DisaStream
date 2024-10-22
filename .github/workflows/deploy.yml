@@ -38,9 +38,12 @@ jobs:
       run: |
         ssh-keyscan -H ${{ secrets.SERVER_URL }} >> ~/.ssh/known_hosts
 
-    # 6. Déployer le dossier dist sur le serveur
-    - name: Deploy to server
+    - name: Clear old front-end
       run: |
-        scp -r ./dist/disastream/* root@${{ secrets.SERVER_URL }}:/opt/disastream
+        ssh root@${{ secrets.SERVER_URL }} "rm -r /opt/disastream || true && mkdir -p /opt/disastream"
+
+    - name: Deploy new front-end to server
+      run: |
+        scp -r ./dist/disastream/browser/* root@${{ secrets.SERVER_URL }}:/opt/disastream
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}

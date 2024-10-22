@@ -10,6 +10,7 @@ import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 import { IsUserSignedIn } from './Helpers/auth.guard';
+import { FinalScreenView } from './Pages/FinalScreen/FinalScreen.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: '404', component: PageNotFoundView },
   { path: 'profile', component: UserProfileComponent },
   { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
+  { path: 'dashboard/alert/success', component: FinalScreenView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
 ];

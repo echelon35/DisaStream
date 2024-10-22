@@ -18,11 +18,11 @@ export class ErrorInterceptor implements HttpInterceptor {
             if(err.error){
                 const error = err.error.message || err.statusText;
 
-                if(err.status == 404){
-                    this.router.navigate(['/404']).then(() => {
-                        console.log("");
-                    });
-                }
+                // if(err.status == 404){
+                //     this.router.navigate(['/404']).then(() => {
+                //         console.log("");
+                //     });
+                // }
                 
                 // return throwError(error);
             }

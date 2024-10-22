@@ -20,9 +20,6 @@ header {
 nav {
     display: none;
 }
-.isLandingPage nav {
-    display: block;
-}
 
 header.isHeaderNotVisible {
     display: none;
@@ -37,4 +34,10 @@ nav ul {
 nav a {
     color: #ccc;
     text-decoration: none;
+}
+
+@media (min-width: 768px) {
+    .isLandingPage nav {
+        display: block;
+    }    
 }

@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
+import { UserLoginDto } from "../DTO/UserLogin.dto";
+import { Observable } from "rxjs";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -52,5 +54,9 @@ export class AuthentificationApi {
         window.localStorage.removeItem(FIRSTNAME_KEY);
         window.localStorage.removeItem(LASTNAME_KEY);
         window.location.href = '/';
+    }
+
+    public login(userDto: UserLoginDto): Observable<string>{
+        return this.http.post<string>(API_URL + '/auth/login',userDto,this.httpOptions)
     }
 }

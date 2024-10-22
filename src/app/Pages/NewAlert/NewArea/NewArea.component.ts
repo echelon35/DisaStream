@@ -29,7 +29,7 @@ export class NewAreaView {
     allLayers?: L.GeoJSON;
     completed = false;
 
-    @Output() areaChange = new EventEmitter<L.GeoJSON>();
+    @Output() areaChange = new EventEmitter<L.GeoJSON | null>();
 
     public locationBox?: L.LatLngBounds;
 
@@ -64,7 +64,10 @@ export class NewAreaView {
     drawCircle(): void {
         if(this.areaMap !== undefined){
             // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
-            this.areaMap.pm.enableDraw("Circle");
+            this.areaMap.pm.enableDraw("Circle",{
+                snappable: true,
+                snapDistance: 5,
+            });
         }
     }
 
@@ -161,7 +164,7 @@ export class NewAreaView {
     }
 
     allWorld(){
-        this.areaChange.emit(new L.GeoJSON);
+        this.areaChange.emit(null);
     }
 
     nextStep(){

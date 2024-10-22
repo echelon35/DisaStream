@@ -63,6 +63,7 @@
     border: none;
     border-radius: 4px;
     background: var(--secondary-color);
+    color: white;
   }
   
   .checkbox-container {
