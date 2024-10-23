@@ -5,12 +5,22 @@
 .mail-screen
 {
     width: 100%;
-    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
     position: absolute;
     left: 0;
     top: 80px;
     padding: 20px;
 }
+@media (max-width: 768px){
+    .mail-screen {
+        height: calc(100vh - var(--mobile-top-header-height) - var(--mobile-bottom-footer-height) - var(--mobile-bottom-menu-height) - 80px);
+    }
+}
+@media (min-width: 768px){
+    .mail-screen {
+        height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
+    }
+}
+
 .next-step
 {
     position: absolute;

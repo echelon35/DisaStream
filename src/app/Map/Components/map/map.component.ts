@@ -21,6 +21,7 @@ export class MapComponent implements OnInit,OnDestroy {
   @Input() allowSearch: boolean = false;
   @Input() displayLayers: boolean = true;
   @Input() displayScale: boolean = true;
+  @Input() displayZoom: boolean = true;
   @Input() layerPrincipal: string = "";
   @Input() scrollZoom: boolean = true;
   @Input() dragMarker: boolean = false;
@@ -118,11 +119,13 @@ export class MapComponent implements OnInit,OnDestroy {
 
       this.layers();
 
-      L.control.zoom({
-        position:'topleft',
-        zoomInTitle:'Zoomer',
-        zoomOutTitle: 'Dézoomer'
-      }).addTo(this.mapDetail);
+      if(this.displayZoom){
+        L.control.zoom({
+          position:'topleft',
+          zoomInTitle:'Zoomer',
+          zoomOutTitle: 'Dézoomer'
+        }).addTo(this.mapDetail);
+      }
 
       this.mapDetail.addEventListener("dragend",() =>{
         this.movedMap.emit(this.mapDetail);

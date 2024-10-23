@@ -14,9 +14,12 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
         </div>
      </div>
-    <div class="d-flex margin-t20 align-items-center">
+    <div class="margin-t20 align-items-center d-flex">
         <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-country">
-        <button class="btn-primary sm-btn" (click)="setSearchPlace()">Rechercher</button>
+        <button class="btn-primary sm-btn pc-block" (click)="setSearchPlace()">Rechercher</button>
+        <button class="btn-primary sm-btn mobile-block" (click)="setSearchPlace()">
+            <img alt="search" src="/assets/images/svg/search_input.svg" />
+        </button>
     </div>
     <div class="d-flex flex-wrap margin-t20 overflow-auto custom-scrollbar result-container margin-b50">
         <div [ngClass]="{ current : this.selectedPlace === town.label,
@@ -32,7 +35,7 @@
             </p>
         </div>
     </div>
-    <div class="close-btn">
+    <div class="close-btn pc-block">
         <button class="btn-primary md-btn" (click)="this.close()">Fermer</button>
     </div>
 </div>

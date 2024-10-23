@@ -2,7 +2,7 @@
 <!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
 <div class="aleas-list">
     <h2 class="w-600 margin-t20 margin-b20">Quels aléas souhaitez-vous surveiller ?</h2>
-    <div style="height:500px;" class="padding-10 custom-scrollbar overflow-auto d-flex flex-wrap">
+    <div class="aleas-choice padding-10 custom-scrollbar overflow-auto d-flex flex-wrap">
         <div class="margin-10" *ngFor="let category of this.categories">
             <h3 class="margin-l10">{{category.category | titlecase}}</h3>
             <div class="d-flex flex-wrap">
@@ -14,13 +14,13 @@
             </div>
         </div>
     </div>
-    <div class="next-step tertiary-bg d-flex justify-content-between align-items-center margin-b20 padding-l40 padding-r40">
-        <button class="btn-primary btn-icon lg-btn" matStepperPrevious>
+    <div class="next-step tertiary-bg d-flex justify-content-between align-items-center padding-b20 padding-l40 padding-r40">
+        <button class="btn-primary btn-icon lg-btn" (click)="previousStep()">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-left"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
-            <span class="margin-l10">Redéfinir les zones</span>
+            <span class="pc-block margin-l10">Redéfinir les zones</span>
         </button>
         <button (click)="nextStep()" matStepperNext class="btn-primary btn-icon lg-btn">
-            <span class="margin-r10">Surveiller ces aléas</span>
+            <span class="margin-r10 pc-block">Surveiller ces aléas</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
         </button>
     </div>

@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
+import { ToastrService } from "ngx-toastr";
 import { Observable, Subscription } from "rxjs";
 import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { Alea } from "src/app/Model/Alea";
@@ -60,8 +61,9 @@ export class AleaTypesComponent implements OnInit, OnDestroy {
     @Input() loadingAlert!: Observable<Alert>;
     
     @Output() aleaChange = new EventEmitter<Alea[]>();
+    @Output() completeStep = new EventEmitter<string>();
 
-    constructor(private readonly publicApiService: PublicApiService){
+    constructor(private readonly publicApiService: PublicApiService, private readonly toastrService: ToastrService){
         this.getAleas();
     }
 
@@ -113,8 +115,8 @@ export class AleaTypesComponent implements OnInit, OnDestroy {
             this.categories = aleasByCategory;
         })
     }
-    
-    nextStep(){
+
+    complete(){
         this.selectedAleaTypes = [];
         this.categories.forEach(item => item.aleas.forEach(aleaVM => {
             if(aleaVM.selected){
@@ -123,8 +125,24 @@ export class AleaTypesComponent implements OnInit, OnDestroy {
         }))
         this.aleaChange.emit(this.selectedAleaTypes);
     }
+    
+    nextStep(){
+        if(this.selectedAleaTypes.length > 0){
+            this.complete()
+            this.completeStep.emit("mail-step");
+        }
+        else{
+            this.toastrService.error('Vous devez selectionner au moins un type d\'aléa');
+        }
+    }
+
+    previousStep(){
+        this.complete()
+        this.completeStep.emit("where-step");
+    }
 
     selectAlea(alea: AleaVM){
         alea.selected = !alea.selected;
+        this.complete();
     }
 }

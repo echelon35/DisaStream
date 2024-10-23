@@ -1,3 +1,8 @@
+body {
+    background-color: var(--tertiary-color);
+    color: #fff;
+}
+
 .txt-ow-ellipsis { text-overflow: ellipsis; }
 .txt-ow-clip { text-overflow: clip; }
 

@@ -3,7 +3,6 @@
 }
 .final-screen {
     width: 100%;
-    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
     position: absolute;
     left: 0;
     top: 80px;
@@ -22,16 +21,34 @@
     font-size: 20px;
 }
 
-::ng-deep .mat-horizontal-stepper-header{
-    pointer-events: none !important;
+@media (max-width: 768px){
+    .final-screen {
+        height: calc(100vh - var(--mobile-top-header-height) - var(--mobile-bottom-footer-height) - var(--mobile-bottom-menu-height) - 80px);
+    }
+    .input-alert {
+        width: 100%;;
+    }
+}
+@media (min-width: 768px){
+    .end-form {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .final-screen {
+        height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height) - 80px);
+    }
+    .input-alert {
+        width: 350px;
+    }
 }
 
-@media (max-width: 768px) { 
-    ::ng-deep .mat-step-header:has(.mat-step-icon-selected){
-        display: flex;
-        width: 300px;
-    }
-    ::ng-deep .mat-step-header:not(:has(.mat-step-icon-selected)){
-        display: none;
-    }
+.next-step
+{
+    position: absolute;
+    height: 80px;
+    bottom: 0;
+    left: 0;
+    width: 100%;;
 }

@@ -1,0 +1,7 @@
+<div style="width: 100%;display: flex;background:rgba(146, 138, 138, 0.8)">
+    <div [ngClass]="{'isActive': item.isActive, 'passed': item.passed}" class="step" (click)="activeSelect(item)" *ngFor="let item of steps">
+        <img class="icon-step" src="{{item.iconPath}}" />
+        <div class="label-step">{{item.stepLabel | uppercase}}</div>
+        <img class="margin-l10 icon-passed" src="/assets/images/svg/passed_step.svg">
+    </div>
+</div>

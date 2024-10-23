@@ -36,6 +36,7 @@ export class NewAreaView implements OnInit, OnDestroy {
     @Input() loadingAlert: Observable<Alert> | undefined;
 
     @Output() areaChange = new EventEmitter<L.GeoJSON | null>();
+    @Output() completeStep = new EventEmitter<string>();
 
     public locationBox?: L.LatLngBounds;
 
@@ -184,12 +185,14 @@ export class NewAreaView implements OnInit, OnDestroy {
 
     allWorld(){
         this.areaChange.emit(null);
+        this.completeStep.emit('alea-step');
     }
 
     nextStep(){
         const nbLayers = this.nbLayers();
         if(nbLayers > 0){
             this.areaChange.emit(this.allLayers);
+            this.completeStep.emit('alea-step');
         }
         else{
             this.toastrService.error('Vous devez sélectionner une zone ou cliquer sur le bouton Monde Entier');

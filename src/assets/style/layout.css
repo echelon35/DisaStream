@@ -9,7 +9,7 @@
 	--pc-left-menu-width: 100px;
 
 	--mobile-top-header-height: 80px;
-	--mobile-bottom-footer-height: 70px;
+	--mobile-bottom-footer-height: 0px;
 	--mobile-bottom-menu-height: 80px;
 }
 @media all
@@ -18,11 +18,6 @@
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
-	}
-	body {
-		font-family: 'Arial', sans-serif;
-		background-color: var(--tertiary-color);
-		color: #fff;
 	}
 	.overflow-auto {
 		overflow: auto;

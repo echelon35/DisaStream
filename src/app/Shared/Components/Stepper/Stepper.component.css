@@ -1,0 +1,38 @@
+.step {
+    flex: 1;
+    text-align:center;
+    padding: 20px 0;
+    cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 16px;
+}
+.step:hover {
+    color: rgb(28 199 177);
+}
+.step.isActive {
+    font-weight: 1000;
+    color: rgb(28 199 177);
+}
+.icon-passed {
+    width: 20px;
+}
+.step:not(.passed) .icon-passed {
+    display: none;
+}
+.step.passed .icon-passed {
+    display: block;
+}
+.icon-step {
+    width: 30px;
+    height: 30px;
+    margin-right: 20px;
+}
+@media (max-width:768px){
+    .step:not(.isActive){
+        display: none;
+    }
+}

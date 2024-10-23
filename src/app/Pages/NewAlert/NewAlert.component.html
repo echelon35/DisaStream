@@ -1,28 +1,27 @@
-<mat-stepper [linear]="true" #stepper class="tertiary-bg">
-  <mat-step>
-      <ng-template matStepLabel><span class="w-600">Zones</span></ng-template>
-      <app-new-area [loadingAlert]="loadedAlert.asObservable()" (areaChange)="areaAlert($event)"></app-new-area>
-  </mat-step>
-  <mat-step>
-      <ng-template matStepLabel><span class="w-600">Aléas</span></ng-template>
-      <app-alea-types [loadingAlert]="loadedAlert.asObservable()" (aleaChange)="selectAleas($event)"></app-alea-types>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel><span class="w-600">Destinataires</span></ng-template>
-    <app-add-mail-alerts [loadingAlert]="loadedAlert.asObservable()" (mailAlertsChange)="addMails($event)"></app-add-mail-alerts>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel><span class="w-600">Finalisation</span></ng-template>
-    <div class="final-screen">
-      <form [formGroup]="formGroup">
-        <div class="align-center">
-          <h1 class="w-600 margin-b20">Donnez un nom à votre alerte</h1>
-          <div class="d-flex align-items-center">
-            <input [ngModel]="this.alert.name" formControlName="name" required class="input-alert" type="text" placeholder="Nom de votre alerte" />
-            <button class="lg-btn btn-primary" (click)="createAlert()">J'ai terminé</button>
-          </div>
-        </div>
-      </form>
+<app-stepper style="position: absolute;top:0;z-index:11; width: 100%;" [steps]="steps" [isClickable]="false"></app-stepper>
+<app-new-area id="where-step" [loadingAlert]="loadedAlert.asObservable()" (areaChange)="areaAlert($event)" (completeStep)="completeStep($event)"></app-new-area>
+<app-alea-types id="alea-step" style="display:none;" [loadingAlert]="loadedAlert.asObservable()" (aleaChange)="selectAleas($event)" (completeStep)="completeStep($event)"></app-alea-types>
+<app-add-mail-alerts id="mail-step" style="display:none;" [loadingAlert]="loadedAlert.asObservable()" (mailAlertsChange)="addMails($event)" (completeStep)="completeStep($event)"></app-add-mail-alerts>
+
+<div id="final-step" class="final-screen" style="display:none;">
+  <form [formGroup]="formGroup">
+    <div class="end-form">
+      <h1 class="w-600 margin-b20">Donnez un nom à votre alerte</h1>
+      <div class="pc-flex align-items-center">
+        <input [ngModel]="this.alert.name" formControlName="name" required class="input-alert" type="text" placeholder="Nom de votre alerte" />
+        <button class="lg-btn btn-primary" (click)="createAlert()">J'ai terminé</button>
+      </div>
+      <input [ngModel]="this.alert.name" formControlName="name" required class="input-alert mobile-block margin-10" type="text" placeholder="Nom de votre alerte" />
     </div>
-  </mat-step>
-</mat-stepper>
+  </form>
+  <div class="next-step tertiary-bg d-flex justify-content-between align-items-center margin-b20 padding-l40 padding-r40">
+    <button (click)="completeStep('mail-step')" class="btn-primary btn-icon lg-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-left"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
+        <span class="margin-l10 pc-block">Choisir des mails</span>
+    </button>
+    <button (click)="createAlert()" class="btn-primary btn-icon lg-btn">
+        <span class="margin-r10 pc-block">Finaliser</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    </button>
+</div>
+</div>

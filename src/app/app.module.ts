@@ -17,7 +17,6 @@ import { NewAreaView } from './Pages/NewAlert/NewArea/NewArea.component';
 import { MapModule } from './Map/map.module';
 import { ModalsModule } from './Modals/modals.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatStepperModule } from '@angular/material/stepper';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
@@ -59,7 +58,6 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
         AppRoutingModule,
         ModalsModule,
         BrowserAnimationsModule,
-        MatStepperModule,
         MatFormFieldModule,
         MatSelectModule,
         MatIconModule,

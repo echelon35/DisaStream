@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { ToastrService } from "ngx-toastr";
 import { Observable, Subscription } from "rxjs";
 import { AddMailAlert } from "src/app/Modals/AddMailAlert/AddMailAlert.modal";
 import { Alert } from "src/app/Model/Alert";
@@ -33,9 +34,10 @@ export class AddMailAlertsComponent implements OnInit, OnDestroy {
 
     mailAlertsSelected = new FormControl();
     @Output() mailAlertsChange = new EventEmitter<MailAlert[]>();
+    @Output() completeStep = new EventEmitter<string>();
     @ViewChild('modal') modal?: AddMailAlert;
     
-    constructor(private readonly alertApiService: AlertApiService){
+    constructor(private readonly alertApiService: AlertApiService, private readonly toastrService: ToastrService){
         this.feedMailAlertList();
     }
 
@@ -52,6 +54,21 @@ export class AddMailAlertsComponent implements OnInit, OnDestroy {
         const values = this.mailAlertsSelected.value;
         console.log(values);
         this.mailAlertsChange.emit(values);
+    }
+
+    previousStep(){
+        this.selectMails();
+        this.completeStep.emit('alea-step');
+    }
+
+    nextStep(){
+        this.selectMails();
+        if(this.mailAlertsSelected.value){
+            this.completeStep.emit('final-step');
+        }
+        else{
+            this.toastrService.error('Vous devez selectionner au moins une adresse mail.')
+        }
     }
 
     addMail(){
