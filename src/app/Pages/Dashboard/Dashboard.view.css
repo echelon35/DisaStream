@@ -1,4 +1,11 @@
-.graph {
-    width: 500px;
-    height: 500px;
+@media (max-width: 768px){
+    .graph {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px){
+    .graph {
+        width: 50%;
+    }
 }

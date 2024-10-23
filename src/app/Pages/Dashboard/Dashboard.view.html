@@ -1,7 +1,7 @@
 <div class="padding-20">
     <h1 class="margin-l20 margin-b20">Mon Dashboard</h1>
-    <div class="graph padding-10">
-        <h2 class="margin-l20 margin-b20">Vos statistiques de la semaine</h2>
-        <canvas baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
+    <div class="graph padding-10 d-flex flex-column align-items-center">
+        <h2 class="margin-l20 white-secondary-color">Vos alertes cette semaine</h2>
+        <canvas class="margin-t40" baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
     </div>
 </div>

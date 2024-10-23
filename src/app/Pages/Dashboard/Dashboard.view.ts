@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration} from 'chart.js';
+import { ChartConfiguration, Colors} from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 
@@ -37,21 +37,36 @@ export class DashboardView implements OnInit {
     },
     scales: {
       x: {
+        min: 0,
+        grid: {
+          z: 1,
+        },
         ticks: {
           color: 'rgba(255,255,255,0.5)',
+          z: 2,
         },
       },
       // We use this empty structure as a placeholder for dynamic theming.
       y: {
+        beginAtZero: true,
+        min: 0,
         position: 'left',
+        grid: {
+          z: 1,
+        },
         ticks: {
           color: 'rgba(255,255,255,0.5)',
+          z: 2,
+          stepSize: 1,
         },
       },
     },
     plugins: {
       legend: { display: true },
-      colors: { }
+      colors: { },
+      title: {
+        text: 'Vos alertes de la semaine',
+      }
     }
   };
 
