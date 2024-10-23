@@ -1,10 +1,21 @@
+.container {
+  display: flex;
+  width: 100%;
+  background-color: #16151f;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 768px){
   .container {
-    display: flex;
     height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height));
-    width: 100%;
-    background-color: #16151f;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+}
+
+@media (max-width: 768px){
+  .container {
+    height: calc(100vh - var(--mobile-top-header-height) - var(--mobile-bottom-footer-height));
+  }
+}
   
   .form-section, .info-section {
     padding: 40px;
@@ -84,7 +95,6 @@
     background-image: url('https://disastream.s3.eu-west-3.amazonaws.com/background/instability.jpg');
     background-position: center;
     color: white;
-    display: flex;
     flex-direction: column;
     justify-content: center;
   }
