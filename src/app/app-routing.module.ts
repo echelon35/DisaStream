@@ -11,6 +11,7 @@ import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 import { IsUserSignedIn } from './Helpers/auth.guard';
 import { FinalScreenView } from './Pages/FinalScreen/FinalScreen.component';
+import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'password/reset', component: ForgotPasswordView },
   { path: '404', component: PageNotFoundView },
   { path: 'profile', component: UserProfileComponent },
+  { path: 'confirm-email', component: ConfirmEmailView },
   { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/success', component: FinalScreenView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },

@@ -3,6 +3,9 @@ import { Injectable } from "@angular/core";
 import { environment } from "src/environments/environment";
 import { UserLoginDto } from "../DTO/UserLogin.dto";
 import { Observable } from "rxjs";
+import { CreateUserDto } from "../DTO/CreateUser.dto";
+import { User } from "../Model/User";
+import { TokenDto } from "../DTO/token.dto";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -56,7 +59,19 @@ export class AuthentificationApi {
         window.location.href = '/';
     }
 
-    public login(userDto: UserLoginDto): Observable<string>{
-        return this.http.post<string>(API_URL + '/auth/login',userDto,this.httpOptions)
+    public login(userDto: UserLoginDto): Observable<TokenDto>{
+        return this.http.post<TokenDto>(API_URL + '/auth/login',userDto,this.httpOptions)
+    }
+
+    public resend(token: string): Observable<string>{
+        return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?token=' + token,this.httpOptions);
+    }
+
+    public register(createUserDto: CreateUserDto): Observable<User>{
+        return this.http.post<User>(API_URL + '/auth/signin',createUserDto,this.httpOptions)
+    }
+
+    public confirm(token: string){
+        return this.http.get<User>(API_URL + '/auth/confirm-email?token=' + token,this.httpOptions)
     }
 }

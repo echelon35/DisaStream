@@ -27,6 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { ToastrModule } from 'ngx-toastr';
 import { PublicApiService } from './Services/PublicApi.service';
@@ -34,6 +35,7 @@ import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
 import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
+import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 
 @NgModule({ declarations: [
         App,
@@ -47,7 +49,8 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
         AleaTypesComponent,
         ManageAlertsView,
         UserProfileComponent,
-        AddMailAlertsComponent
+        AddMailAlertsComponent,
+        ConfirmEmailView
     ],
     bootstrap: [App], imports: [BrowserModule,
         CommonModule,
@@ -65,6 +68,7 @@ import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
         MatTableModule,
         MatInputModule,
         MatRadioModule,
+        MatProgressSpinnerModule,
         ToastrModule.forRoot()], providers: [SeoService,
         AuthentificationApi,
         PublicApiService,

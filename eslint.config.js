@@ -33,7 +33,7 @@ module.exports = tseslint.config(
       "@angular-eslint/component-class-suffix": [
         "warn",
         {
-            "suffixes": ["Component", "Page", "Modal"],
+            "suffixes": ["Component", "View", "Modal"],
         },
     ],
     },

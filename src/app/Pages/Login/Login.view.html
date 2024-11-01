@@ -8,12 +8,12 @@
             <p>Pas encore inscrit ? <a href="/auth">Inscrivez-vous</a></p>
             <button (click)="this.googleConnect()" class="social-login google">Se connecter avec Google</button>
             <p class="divider">OU</p>
-            <form action="">
-            <input [ngModel]="mail" type="email" placeholder="E-mail" required>
-            <input [ngModel]="password" type="password" placeholder="Mot de passe" required>
-            <a href="/password/reset">Mot de passe oublié ?</a>
-            <button (click)="this.connect()" type="submit" class="submit-button btn-primary margin-t20">Connexion</button>
-        </form>
+            <form [formGroup]="loginForm">
+                <input placeholder="Email" formControlName="mail" type="email" required />
+                <input placeholder="Mot de passe" formControlName="password" type="password" required />
+                <a href="/password/reset">Mot de passe oublié ?</a>
+                <button (click)="this.connect()" type="submit" class="submit-button btn-primary margin-t20">Connexion</button>
+            </form>
         </div>
     </div>
 
