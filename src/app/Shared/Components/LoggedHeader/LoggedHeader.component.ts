@@ -14,6 +14,7 @@ export class LoggedHeader implements OnInit {
     userAvatarUrl: string | null = null;
     firstname: string | null = null;
     lastname: string | null = null;
+    username: string | null = null;
     appName: string = this.env.settings.appName;
 
     constructor(public router: Router){}
@@ -22,6 +23,7 @@ export class LoggedHeader implements OnInit {
         this.userAvatarUrl = localStorage.getItem('avatarUrl');
         this.firstname = localStorage.getItem('firstname');
         this.lastname = localStorage.getItem('lastname');
+        this.username = localStorage.getItem('username');
     }
 
 }

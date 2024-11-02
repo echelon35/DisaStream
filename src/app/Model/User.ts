@@ -3,4 +3,5 @@ export class User {
     firstname = "";
     lastname = "";
     mail = "";
+    username = "";
 }

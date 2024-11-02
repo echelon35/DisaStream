@@ -16,7 +16,7 @@ export class LandingPageView {
     if(token){
       authenticationApi.saveToken(token);
       this.userApiService.getSummaryInfos().subscribe((a) => {
-        authenticationApi.saveSummary(a.avatar,a.firstname, a.lastname);
+        authenticationApi.saveSummary(a.avatar,a.firstname, a.lastname, a.username);
         this.router.navigate(['/dashboard/alerts/manage']).then(() => {
           window.location.reload();
         });

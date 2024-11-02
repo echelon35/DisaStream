@@ -1,6 +1,9 @@
 
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { TokenDto } from 'src/app/DTO/token.dto';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
 
@@ -11,11 +14,18 @@ import { SeoService } from 'src/app/Services/Seo.service';
 export class LoginView {
 
   showLogin = true;
-  mail = "";
-  password = "";
+  loginForm: FormGroup;
 
-  constructor(private seoService: SeoService, private readonly authService: AuthentificationApi, private readonly toastrService: ToastrService) { 
+  constructor(private seoService: SeoService, 
+    private readonly authService: AuthentificationApi, 
+    private readonly toastrService: ToastrService,
+    private readonly router: Router,
+    private fb: FormBuilder) { 
     this.seoService.generateTags("Se connecter sur Disastream","Inscrivez-vous sur Disastream pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
+    this.loginForm = this.fb.group({
+      password: ['', Validators.required],
+      mail: ['', [Validators.required, Validators.email]],
+    });
   }
 
   showLoginDiv(show:boolean){
@@ -23,14 +33,14 @@ export class LoginView {
   }
 
   connect(){
-    const userDto = {
-      mail: this.mail,
-      password: this.password
-    };
-    console.log(userDto);
-    this.authService.login(userDto).subscribe({
-      next: (token: string) => { console.log(token); },
-      error: (e) => { console.log(e); }
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (token: TokenDto) => {
+        this.router.navigateByUrl('?access_token=' + token.access_token);
+      },
+      error: (e) => {
+        console.log(e);
+        this.toastrService.error(e.error.message);
+      }
     });
   }
 

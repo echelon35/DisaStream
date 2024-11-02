@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="form-section overflow-auto custom-scrollbar">
+        <div class="d-flex justify-content-center">
+            <img class="text-center" src="/assets/images/logo_disastream.png" alt="Logo" class="logo">
+        </div>
+        @if(this.loading){
+            <div class="d-flex justify-content-center">
+                <mat-spinner></mat-spinner>
+            </div>
+        }
+        @else if(this.message !== ''){
+            <div class="margin-t30 margin-b10 text-center">
+                <h1>{{this.message}}</h1>
+                <button (click)="this.goLogin()" class="md-btn btn-primary margin-t20">Se connecter</button>
+            </div>
+        }
+        @else if(this.error !== ''){
+            <div class="margin-t30 margin-b10 text-center">
+                <h1>{{this.error}}</h1>
+                <form class="margin-t30" [formGroup]="resendForm" (ngSubmit)="resend()">
+                    <input placeholder="Email" formControlName="mail" type="email" required />
+                    <button class="sm-btn btn-primary margin-t20 flex1">Renvoyer un lien</button>
+                </form>
+            </div>
+        }
+    </div>
+
+    <div class="info-section pc-flex">
+    </div>
+</div>
