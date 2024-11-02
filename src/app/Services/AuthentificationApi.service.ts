@@ -13,6 +13,7 @@ const TOKEN_KEY = 'auth-token';
 const AVATAR_KEY = 'avatarUrl';
 const FIRSTNAME_KEY = 'firstname';
 const LASTNAME_KEY = 'lastname';
+const USERNAME_KEY = 'username';
 
 @Injectable({
     providedIn: 'root'
@@ -37,13 +38,15 @@ export class AuthentificationApi {
         window.localStorage.setItem(TOKEN_KEY, token);
     }
 
-    public saveSummary(avatarPath: string, firstname: string, lastname: string): void {
+    public saveSummary(avatarPath: string, firstname: string, lastname: string, username: string): void {
         window.localStorage.removeItem(AVATAR_KEY);
         window.localStorage.removeItem(FIRSTNAME_KEY);
         window.localStorage.removeItem(LASTNAME_KEY);
+        window.localStorage.removeItem(USERNAME_KEY);
         localStorage.setItem(AVATAR_KEY, avatarPath || '');
         localStorage.setItem(FIRSTNAME_KEY, firstname || '');
         localStorage.setItem(LASTNAME_KEY, lastname || '');
+        localStorage.setItem(USERNAME_KEY, username || '');
     }
     
     public getToken(): string | null {
@@ -56,6 +59,7 @@ export class AuthentificationApi {
         window.localStorage.removeItem(AVATAR_KEY);
         window.localStorage.removeItem(FIRSTNAME_KEY);
         window.localStorage.removeItem(LASTNAME_KEY);
+        window.localStorage.removeItem(USERNAME_KEY);
         window.location.href = '/';
     }
 
@@ -63,8 +67,8 @@ export class AuthentificationApi {
         return this.http.post<TokenDto>(API_URL + '/auth/login',userDto,this.httpOptions)
     }
 
-    public resend(token: string): Observable<string>{
-        return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?token=' + token,this.httpOptions);
+    public resend(mail: string): Observable<string>{
+        return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?mail=' + mail,this.httpOptions);
     }
 
     public register(createUserDto: CreateUserDto): Observable<User>{

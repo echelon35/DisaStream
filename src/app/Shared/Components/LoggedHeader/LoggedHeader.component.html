@@ -5,7 +5,12 @@
             <a class="margin-l10 text-decoration-none w-1000 appName" href="/">{{appName | uppercase}}</a>
         </div>
         <div class="d-flex align-items-center cursor-pointer" (click)="router.navigateByUrl('/profile')">
-            <p class="w-600 margin-r20">{{firstname | titlecase}} {{lastname | uppercase}}</p>
+            @if(username){
+                <p class="w-600 margin-r20">{{username | titlecase}}</p>
+            }
+            @else{
+                <p class="w-600 margin-r20">{{firstname | titlecase}} {{lastname | uppercase}}</p>
+            }
             <img alt="avatar de {{firstname}}" title="avatar de {{firstname}}" src="{{this.userAvatarUrl}}" class="avatar" />
         </div>
     </div>

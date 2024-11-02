@@ -17,7 +17,10 @@
         @else if(this.error !== ''){
             <div class="margin-t30 margin-b10 text-center">
                 <h1>{{this.error}}</h1>
-                <button (click)="this.resend()" class="md-btn btn-primary margin-t20">Renvoyer un nouveau lien</button>
+                <form class="margin-t30" [formGroup]="resendForm" (ngSubmit)="resend()">
+                    <input placeholder="Email" formControlName="mail" type="email" required />
+                    <button class="sm-btn btn-primary margin-t20 flex1">Renvoyer un lien</button>
+                </form>
             </div>
         }
     </div>

@@ -1,5 +1,6 @@
 
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
@@ -17,14 +18,19 @@ export class ConfirmEmailView {
   error = '';
   token = '';
   loading = true;
+  resendForm: FormGroup;
 
   constructor(private route: ActivatedRoute,
     private router: Router,
+    private fb: FormBuilder,
     private readonly toastrService: ToastrService,
     private authentificationApi: AuthentificationApi) { 
       const token = this.route.snapshot.queryParamMap.get('token');
       this.token = (token !== null) ? token?.toString() : '';
       this.confirm(); 
+      this.resendForm = this.fb.group({
+        mail: ['', [Validators.required, Validators.email]],
+      });
     }
 
   confirm(): void {
@@ -33,7 +39,7 @@ export class ConfirmEmailView {
         this.loading = false;
         this.message = `Votre adresse mail a bien été validée ! Félicitations, vous pouvez dès à présent créer des alertes
   sur DisaStream !`},
-      error: () => { 
+      error: () => {
         this.loading = false;
         this.error = 'Lien de confirmation invalide ou expiré.' }
     });
@@ -44,14 +50,15 @@ export class ConfirmEmailView {
   }
 
   resend(): void {
-    console.log(this.token)
+    if (this.resendForm.invalid) return;
     this.loading = true;
-    this.authentificationApi.resend(this.token).subscribe({
+    const mail = this.resendForm.controls['mail'].value;
+    this.authentificationApi.resend(mail).subscribe({
       next: (message: string) => {
         this.loading = false;
         // redirection ou message de succès
         this.router.navigateByUrl('/');
-        this.toastrService.success(message);
+        this.toastrService.success(`Un nouvel email de confirmation vient d'être envoyé à ${mail}`);
       },
       error: (err) => {
         this.loading = false;
