@@ -30,7 +30,11 @@ export class AuthentificationApi {
     }
 
     googleLogin(): void {
-        window.location.href = API_URL + '/auth/google';
+        window.location.href = API_URL + '/auth/google/login';
+    }
+
+    googleSignin(): void {
+        window.location.href = API_URL + '/auth/google/signin';
     }
 
     public saveToken(token: string): void {
@@ -77,5 +81,9 @@ export class AuthentificationApi {
 
     public confirm(token: string){
         return this.http.get<User>(API_URL + '/auth/confirm-email?token=' + token,this.httpOptions)
+    }
+
+    public confirmAssociation(token: string){
+        return this.http.get<User>(API_URL + '/auth/confirm-association?token=' + token,this.httpOptions)
     }
 }

@@ -37,7 +37,7 @@ export class AuthenticationView {
   }
 
   authenticate(): void {
-    this.authentificationApi.googleLogin();
+    this.authentificationApi.googleSignin();
   }
 
   onSubmit(): void {
@@ -46,8 +46,7 @@ export class AuthenticationView {
     this.authentificationApi.register(this.registerForm.value).subscribe({
       next: (user: User) => {
         // redirection ou message de succès
-        this.route.navigateByUrl('/');
-        this.toastrService.success(`Inscription réalisée avec succès. Un mail de confirmation vient de vous être envoyé à ${user.mail}.`);
+        this.route.navigateByUrl(`/?mail=${user.mail}`);
       },
       error: (err) => {
         this.errorMessage = err.error.message || 'Erreur inconnue';

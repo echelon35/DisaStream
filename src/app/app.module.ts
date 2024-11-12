@@ -36,6 +36,7 @@ import { UserProfileComponent } from './Pages/UserProfile/user-profile.component
 import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
+import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssociation.view';
 
 @NgModule({ declarations: [
         App,
@@ -50,7 +51,8 @@ import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
         ManageAlertsView,
         UserProfileComponent,
         AddMailAlertsComponent,
-        ConfirmEmailView
+        ConfirmEmailView,
+        ConfirmAssociationView
     ],
     bootstrap: [App], imports: [BrowserModule,
         CommonModule,
