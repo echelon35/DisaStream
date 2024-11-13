@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 
@@ -11,8 +12,9 @@ export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
 
   constructor(private route: ActivatedRoute,
-    public router: Router, private authenticationApi: AuthentificationApi, private userApiService: UserApiService){
+    public router: Router, private authenticationApi: AuthentificationApi, private userApiService: UserApiService, private toastrService: ToastrService){
     const token = this.route.snapshot.queryParamMap.get('access_token');
+    const mail = this.route.snapshot.queryParamMap.get('mail');
     if(token){
       authenticationApi.saveToken(token);
       this.userApiService.getSummaryInfos().subscribe((a) => {
@@ -21,6 +23,9 @@ export class LandingPageView {
           window.location.reload();
         });
       })
+    }
+    else if(mail){
+      this.toastrService.success(`Inscription réalisée avec succès. Un mail de confirmation vient de vous être envoyé à ${mail}.`);
     }
   }
 }
