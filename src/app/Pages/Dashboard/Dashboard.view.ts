@@ -32,7 +32,7 @@ export class DashboardView implements OnInit {
   public lineChartOptions: ChartConfiguration['options'] = {
     elements: {
       line: {
-        tension: 0.5,
+        tension: 0,
       },
     },
     scales: {
@@ -52,6 +52,7 @@ export class DashboardView implements OnInit {
         min: 0,
         position: 'left',
         grid: {
+          color: 'rgba(200,85,175,0.4)',
           z: 1,
         },
         ticks: {

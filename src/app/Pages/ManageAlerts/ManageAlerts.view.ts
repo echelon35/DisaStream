@@ -11,7 +11,7 @@ import { AlertApiService } from 'src/app/Services/AlertApiService';
 export class ManageAlertsView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   alerts: Alert[] = [];
-  displayedColumns: string[] = ['edit','name','createdAt','updatedAt','delete']
+  displayedColumns: string[] = ['edit','type','name','createdAt','updatedAt','delete']
 
   constructor(private readonly alertApiService: AlertApiService, private readonly toastrService: ToastrService, public router: Router){
     this.getAlerts();
