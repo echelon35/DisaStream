@@ -1,0 +1,10 @@
+<div *ngIf="(disaster$ | async) as disaster" class="disaster-detail">
+    <h1>Inondation n°{{disaster.id}}</h1>
+    <div id="mapDetail">
+        <app-map [displayZoom]="false" [displayLayers]="false" [mapId]="'mapDetail'" (map$)="receiveMap($event)" [layerPrincipal]="'GoogleMap'" [scrollZoom]="true"></app-map>
+    </div>
+    <p>Démarrée le {{disaster.premier_releve | date:"d MMMM y 'à' H:mm"}}</p>
+    <p>Terminée le {{disaster.dernier_releve | date:"d MMMM y 'à' H:mm"}}</p>
+    <p>Detectée le {{disaster.createdAt | date:"d MMMM y 'à' H:mm"}}</p>
+
+</div>

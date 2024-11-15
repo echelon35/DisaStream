@@ -10,7 +10,7 @@ import { ForgotPasswordView } from './Pages/ForgotPassword/ForgotPassword.view';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, HttpClientModule } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { SharedModule } from './Shared/Shared.module';
 import { NewAreaView } from './Pages/NewAlert/NewArea/NewArea.component';
@@ -37,6 +37,10 @@ import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAl
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssociation.view';
+import { DisasterView } from './Pages/DisasterView/disaster.view';
+import { DisasterApiService } from './Services/DisasterApiService';
+import { MarkerService } from './Map/Services/marker.service';
+import { GraphQLModule } from './graphql.module';
 
 @NgModule({ declarations: [
         App,
@@ -45,6 +49,7 @@ import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssoci
         LoginView,
         ForgotPasswordView,
         NewAreaView,
+        DisasterView,
         NewAlertView,
         ReceptionModeComponent,
         AleaTypesComponent,
@@ -52,7 +57,7 @@ import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssoci
         UserProfileComponent,
         AddMailAlertsComponent,
         ConfirmEmailView,
-        ConfirmAssociationView
+        ConfirmAssociationView,
     ],
     bootstrap: [App], imports: [BrowserModule,
         CommonModule,
@@ -71,9 +76,14 @@ import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssoci
         MatInputModule,
         MatRadioModule,
         MatProgressSpinnerModule,
-        ToastrModule.forRoot()], providers: [SeoService,
+        ToastrModule.forRoot(),
+        HttpClientModule,
+        GraphQLModule], 
+        providers: [SeoService,
         AuthentificationApi,
         PublicApiService,
+        DisasterApiService,
+        MarkerService,
         provideCharts(withDefaultRegisterables()),
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
