@@ -4,8 +4,10 @@ import L from "leaflet";
 import 'leaflet.markerclusterv2';
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
+import { Alert } from "src/app/Model/Alert";
 import { Earthquake } from "src/app/Model/Earthquake";
 import { Flood } from "src/app/Model/Flood";
+import { AlertApiService } from "src/app/Services/AlertApiService";
 // import { LoaderService } from "src/app/Services/Loader.service";
 
 @Component({
@@ -16,13 +18,30 @@ export class DisasterView {
 
     disastersMap?: L.Map;
     disastersLayer?: L.LayerGroup;
+    alertsLayer?: L.LayerGroup;
+    alerts: Alert[];
     protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, maxClusterRadius: 40 });
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
 
     constructor(private readonly apollo: Apollo,
-      private readonly markerService: MarkerService
+      private readonly markerService: MarkerService,
+      private readonly alertApiService: AlertApiService
     ){
 
+    }
+
+    getAreas(){
+      this.alertsLayer?.clearLayers();
+      this.alertApiService.getUserAlerts().subscribe((alerts) => {
+        this.alerts = alerts;
+        console.log(this.alerts);
+        //La zone de l'alerte ne doit s'afficher que si :
+        //- L'utilisateur a souhaité l'afficher via la case à cocher
+        //- L'alerte concerne le type d'aléa affiché
+        this.alerts.filter(i => i.areas != null).forEach(item => {
+          this.markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item)
+        })
+      })
     }
 
     getEarthquakes(){
@@ -104,5 +123,7 @@ export class DisasterView {
 
     receiveMap(map: L.Map) {
       this.disastersMap = map;
+      this.alertsLayer = new L.LayerGroup();
+      this.getAreas();
     }
 }

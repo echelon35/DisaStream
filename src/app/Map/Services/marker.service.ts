@@ -5,6 +5,7 @@ import L from "leaflet";
 import 'leaflet.markerclusterv2';
 import { Flood } from "src/app/Model/Flood";
 import { DetailService } from "src/app/Services/DetailService";
+import { Alert } from "src/app/Model/Alert";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class MarkerService {
    * Creation of an earthquake marker
    * @param map 
    * @param layer 
-   * @param res 
+   * @param earthquake 
    * @param cluster 
    * @param clickableMarker 
    */
@@ -53,11 +54,11 @@ export class MarkerService {
    * Creation of a flood marker
    * @param map 
    * @param layer 
-   * @param res 
+   * @param flood 
    * @param cluster 
    * @param clickableMarker 
    */
-    makeFloodMarkers(map: L.Map, layer: L.LayerGroup, flood:Flood, cluster: L.MarkerClusterGroup | null, clickableMarker: boolean, addOnCluster = true): void{
+  makeFloodMarkers(map: L.Map, layer: L.LayerGroup, flood:Flood, cluster: L.MarkerClusterGroup | null, clickableMarker: boolean, addOnCluster = true): void{
 
       if(flood != undefined && map != undefined){
           const lon = flood.point.coordinates[0];
@@ -99,7 +100,31 @@ export class MarkerService {
         
       }
   
-    }
+  }
+
+  /**
+   * Area of alert
+   * @param map 
+   * @param layer 
+   * @param alert
+   */
+  makeAlertShapes(map: L.Map, layer: L.LayerGroup, alert: Alert): void{
+
+      if(alert != undefined && map != undefined && alert.areas != null){
+
+        //Zone de l'alerte
+        const areaSurface = L.geoJSON(alert.areas);
+        areaSurface.setStyle({
+          color: '#6a55af',
+          weight: 2
+        })
+        areaSurface.setZIndex(4)
+        areaSurface.addTo(layer);
+        layer.addTo(map);
+        
+      }
+  
+  }
 
   /**
    * Apparence du marqueur d'un séisme
@@ -113,7 +138,7 @@ export class MarkerService {
     if(feature.magnitude > 6.5){
       const bigIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/max-seisme.svg",	
+        iconUrl: "assets/images/markers/max-earthquake.svg",	
         iconSize:     [34, 40], // size of icon
         iconAnchor:   [17, 20], // marker position on icon
         popupAnchor:  [0, -20] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor
@@ -125,7 +150,7 @@ export class MarkerService {
     else if(feature.magnitude > 5.5){
       const mediumIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/med-seisme.svg",	
+        iconUrl: "assets/images/markers/med-earthquake.svg",	
         iconSize:     [30, 34], // size of icon
         iconAnchor:   [15, 17], // marker position on icon
         popupAnchor:  [0, -17] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor
@@ -137,7 +162,7 @@ export class MarkerService {
     else{
       const smallIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/min-seisme.svg",	
+        iconUrl: "assets/images/markers/min-earthquake.svg",	
         iconSize:     [24, 28], // size of icon
         iconAnchor:   [12, 14], // marker position on icon
         popupAnchor:  [0, -14] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor
@@ -151,13 +176,13 @@ export class MarkerService {
   
   }
 
-    /**
+  /**
    * Apparence du marqueur d'un séisme
    * @param feature 
    * @param latlng 
    * @returns 
    */
-    apparenceFlood(feature,latlng){
+  apparenceFlood(feature,latlng){
 
       const smallIcon = L.icon({
         className: 'leaflet-pulsing-icon',
@@ -171,6 +196,10 @@ export class MarkerService {
     
       return marker;
     
-    }
+  }
+
+  apparenceArea(feature){
+
+  }
 
 }
