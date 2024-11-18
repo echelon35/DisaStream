@@ -1,10 +1,11 @@
-<app-logged-sidebar *ngIf="isAuthenticated"></app-logged-sidebar>
-<app-not-logged-header *ngIf="!isAuthenticated" 
-[isLandingPage] = "this.route.url === '/' || this.route.url.startsWith('/#')"></app-not-logged-header>
-<app-logged-header *ngIf="isAuthenticated"></app-logged-header>
+<app-logged-sidebar *ngIf="isAuthenticated && (this.route.url !== '/' && !this.route.url.startsWith('/#'))"></app-logged-sidebar>
+<app-logged-header *ngIf="(this.route.url !== '/' && !this.route.url.startsWith('/#')) && isAuthenticated"></app-logged-header>
 
-<div [ngClass]="{'not-logged': !this.isAuthenticated}" class="content overflow-auto custom-scrollbar">
+@if(this.route.url !== '/' && !this.route.url.startsWith('/#')){
+    <div [ngClass]="{'not-logged': !this.isAuthenticated}" class="h-full">
+        <router-outlet></router-outlet>
+    </div>
+}
+@else{
     <router-outlet></router-outlet>
-</div>
-
-<app-footer></app-footer>
+}
