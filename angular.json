@@ -37,7 +37,8 @@
               "src/assets/style/spacement.css",
               "src/assets/style/typography.css",
               "src/assets/style/colors.css",
-              "src/assets/style/buttons.css"
+              "src/assets/style/buttons.css",
+              "src/styles.css"
             ],
             "scripts": [],
             "browser": "src/main.ts"
