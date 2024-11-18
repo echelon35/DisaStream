@@ -8,8 +8,7 @@ import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.servic
 import { SeoService } from 'src/app/Services/Seo.service';
 
 @Component({
-  templateUrl: './Login.view.html',
-  styleUrls: ['./Login.view.css']
+  templateUrl: './Login.view.html'
 })
 export class LoginView {
 

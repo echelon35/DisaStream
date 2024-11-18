@@ -9,8 +9,7 @@ import { SeoService } from 'src/app/Services/Seo.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './Authentification.view.html',
-  styleUrls: ['./Authentification.view.css']
+  templateUrl: './Authentification.view.html'
 })
 export class AuthenticationView {
 
