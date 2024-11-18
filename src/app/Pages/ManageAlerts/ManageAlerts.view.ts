@@ -23,9 +23,9 @@ export class ManageAlertsView {
     })
   }
 
-  edit(id: number){
-    this.router.navigateByUrl('/dashboard/alert/edit?id=' + id);
-  }
+  // edit(id: number){
+  //   this.router.navigateByUrl('/dashboard/alert/edit?id=' + id);
+  // }
 
   deleteAlert(id: number){
     this.alertApiService.deleteAlert(id).subscribe((message) => this.toastrService.info(message));
