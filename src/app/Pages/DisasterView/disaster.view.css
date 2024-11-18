@@ -1,6 +1,6 @@
 #map-disaster{
     width: 100%;
-    height: calc(100vh - var(--pc-top-header-height) - var(--pc-bottom-footer-height));
+    height: 100vh;
     top: 0;
     position: absolute;
     left: 0;
