@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { App } from './app.component';
 import { LandingPageView } from './Pages/LandingPage/LandingPage.view';
@@ -27,7 +26,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
 import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
@@ -75,7 +73,6 @@ import { ToastrService } from './Shared/Services/toastr.service';
         MatTableModule,
         MatInputModule,
         MatRadioModule,
-        MatProgressSpinnerModule,
         HttpClientModule,
         GraphQLModule], 
         providers: [SeoService,
