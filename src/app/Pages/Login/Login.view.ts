@@ -20,6 +20,11 @@ export class LoginView {
     private readonly toastrService: ToastrService,
     private readonly router: Router,
     private fb: FormBuilder) { 
+
+    //Redirect if already connected
+    if(this.authService.isAuthenticated()){
+      this.router.navigateByUrl('/dashboard');
+    }
     this.seoService.generateTags("Se connecter sur Disastream","Inscrivez-vous sur Disastream pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
     this.loginForm = this.fb.group({
       password: ['', Validators.required],

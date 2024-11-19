@@ -24,6 +24,12 @@ export class AuthenticationView {
     private authentificationApi: AuthentificationApi, 
     private toastrService: ToastrService, 
     private fb: FormBuilder) { 
+
+    //Redirect if already connected
+    if(this.authentificationApi.isAuthenticated()){
+      this.route.navigateByUrl('/dashboard');
+    }
+
     this.seoService.generateTags("S'authentifier sur SatellEarth","Inscrivez-vous sur SatellEarth pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
 
     this.registerForm = this.fb.group({
