@@ -15,8 +15,7 @@ export interface IGeomanLayer {
 
 @Component({
     selector: 'app-new-area',
-    templateUrl: './NewArea.component.html',
-    styleUrls: ['./NewArea.component.css']
+    templateUrl: './NewArea.component.html'
 })
 export class NewAreaView implements OnInit, OnDestroy {
     

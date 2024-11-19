@@ -14,7 +14,6 @@ import { ToastrService } from "src/app/Shared/Services/toastr.service";
 
 @Component({
     templateUrl: './NewAlert.component.html',
-    styleUrls: ['./NewAlert.component.css'],
 })
 export class NewAlertView {
   
@@ -22,6 +21,13 @@ export class NewAlertView {
 
     public alert: Alert = new Alert();
     public loadedAlert: Subject<Alert> = new Subject<Alert>();
+    panelVisible = true;
+
+    //Area
+    areaMap?: L.Map;
+    allLayers?: L.GeoJSON;
+    selectedLayer?: L.GeoJSON;
+    public locationBox?: L.LatLngBounds;
 
     public steps: Step[] = [{
       stepLabel: 'Où ?',
@@ -77,6 +83,10 @@ export class NewAlertView {
           }
         })
       }
+    }
+
+    showPanel(){
+      this.panelVisible = !this.panelVisible;
     }
 
    fade(element: HTMLElement) {
@@ -165,5 +175,103 @@ export class NewAlertView {
           this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
         });
       }
+    }
+
+
+
+    /**
+     * Receive layer from the map component
+     * @param layer 
+     */
+    receiveLayer(layer: L.LayerGroup) {
+        this.selectedLayer = new L.GeoJSON(null,{
+            style: {
+                fillColor: '#6a5ac7'
+            }
+        });
+        this.allLayers = new L.GeoJSON(null,{
+            style: {
+                fillColor: '#6a5ac7'
+            }
+        });
+        if(this.areaMap !== undefined){
+            this.allLayers!.addTo(this.areaMap);
+            this.allLayers?.bringToFront()
+            this.areaMap.pm.setGlobalOptions({
+                layerGroup: this.allLayers,
+            });
+            this.areaMap.on('pm:create', this.addShapeToMap, this);
+        }
+    }
+
+    receiveMap(map: L.Map) {
+      this.areaMap = map;
+    }
+
+    /**
+     * Draw polygon form by clicking the button
+     */
+    drawPolygon(): void {
+      if(this.areaMap !== undefined){
+          if(this.panelVisible){
+            this.showPanel();
+          }
+          // new L.Draw.Polygon(this.areaMap as (L.DrawMap), { shapeOptions: { stroke: true, fillColor: '#6a5ac7' }}).enable();
+          this.areaMap.pm.enableDraw("Polygon", {
+              snappable: true,
+              snapDistance: 5,
+          });
+      }
+    }
+
+    
+    /**
+     * After adding shape (polygon or circle) by button
+     * @param e 
+     */
+    addShapeToMap(){
+
+      this.allLayers?.setStyle({weight: 3,fillColor:'#ffffff', color:'white'});
+
+      this.allLayers?.eachLayer((layer) => this.onEachFeature(layer), this)
+      this.allLayers?.addTo(this.areaMap!);
+      this.allLayers?.bringToFront()
+
+      this.areaMap!.pm.disableDraw();
+      this.areaMap!.pm.enableGlobalEditMode({
+          snappable: true,
+          snapDistance: 50
+      });
+
+      if(!this.panelVisible){
+        this.showPanel();
+      }
+    }
+
+    /**
+     * 
+     * @param layer 
+     */
+    onEachFeature(layer){
+
+        const btnDel = L.DomUtil.create('div','cursor-pointer');
+        btnDel.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>`
+        btnDel.addEventListener("click",() => { 
+            layer.remove();
+            this.allLayers?.removeLayer(layer);
+            popup.close();
+            // this.areaChange.emit(this.allLayers);
+        });
+    
+        const popupHtml = L.DomUtil.create('div','d-flex align-items-center');
+        popupHtml.appendChild(btnDel);
+
+        const popup = L.popup({
+            closeButton: false,
+            autoClose: true,
+        });
+        popup.setContent(popupHtml);
+        
+        layer.bindPopup(popup);
     }
 }

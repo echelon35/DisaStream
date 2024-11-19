@@ -1,4 +1,4 @@
-@if(isAuthenticated && (this.route.url !== '/' && !this.route.url.startsWith('/#'))){
+@if(isAuthenticated && (this.route.url !== '/' && !this.route.url.startsWith('/#') && !this.route.url.startsWith('/?'))){
     <div>
         <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
           <div class="fixed inset-0 bg-gray-900/80 transition-opacity ease-linear duration-300"
@@ -162,7 +162,7 @@
           </a>
         </div>
       
-        <main class="lg:pl-72 h-screen mx-3 my-3">
+        <main class="lg:pl-72 h-screen">
             <router-outlet></router-outlet>
         </main>
     </div>

@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 @Component({
     selector: 'app-toastr',
     templateUrl: './Toastr.component.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
   })
 export class ToastrComponent implements OnInit {
 
