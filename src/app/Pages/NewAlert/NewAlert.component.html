@@ -86,10 +86,10 @@
             <!-- Project description -->
             <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
               <div>
-                <label for="project-description" class="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">Description</label>
+                <label for="project-description" class="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">Aléas</label>
               </div>
               <div class="sm:col-span-2">
-                <textarea id="project-description" name="project-description" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"></textarea>
+                <app-alea-types id="alea-step" [loadingAlert]="loadedAlert.asObservable()" (aleaChange)="selectAleas($event)" ></app-alea-types>
               </div>
             </div>
 
