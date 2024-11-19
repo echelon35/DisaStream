@@ -14,6 +14,15 @@
           <div>
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
 
+              <div class="text-red-400 text-sm" *ngIf="errorMessage">{{ errorMessage }}</div>
+              <div class="text-red-400 text-sm" *ngIf="passwordFormField?.dirty">
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('^(?=.*[A-Z])')}">At least one uppercase letter is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[a-z])')}">At least one lowercase letter is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(.*[0-9].*)')}">At least one digit is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[!@#$%^&*])')}">At least one special character is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('.{8,}')}">At least 8 characters long.</span>
+              </div>
+
                 <div class="mt-2">
                     <input placeholder="Pseudo" formControlName="username" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
                 </div>
@@ -23,7 +32,7 @@
                 </div>
 
                 <div class="mt-2">
-                  <input placeholder="Mot de passe" name="password" type="password" autocomplete="current-password" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
+                  <input placeholder="Mot de passe" formControlName="password" type="password" autocomplete="current-password" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
                 </div>
 
                 <div class="relative flex items-start">
@@ -39,12 +48,12 @@
                       <input formControlName="allowMarketing" name="allowMarketing" type="checkbox" class="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
                     </div>
                     <div class="ml-3 text-sm/6">
-                      <label for="allowMarketing" class="font-medium text-gray-400">J'accepte de recevoir des notifications de la part de {{appName}}</label>
+                      <label for="allowMarketing" class="font-medium text-gray-400">J'accepte de recevoir la newsletter de {{appName}} pour rester informé des dernières mises à jour</label>
                     </div>
                 </div>
   
               <div>
-                <button type="submit" [disabled]="registerForm.invalid" class="flex w-full justify-center rounded-md bg-indigo-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
+                <button type="submit" [disabled]="registerForm.invalid" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
               </div>
             </form>
           </div>

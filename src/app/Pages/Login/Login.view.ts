@@ -2,10 +2,10 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { TokenDto } from 'src/app/DTO/token.dto';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 
 @Component({
   templateUrl: './Login.view.html'

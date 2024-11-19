@@ -19,9 +19,16 @@
         <div class="hidden lg:flex lg:gap-x-12">
           <a href="#product" class="text-sm/6 font-semibold text-white">Product</a>
         </div>
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/login" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
-        </div>
+        @if(isAuth){
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="/dashboard" class="text-sm/6 font-semibold text-white">Dashboard <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        }
+        @else{
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="/login" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        }
       </nav>
       <!-- Mobile menu, show/hide based on menu open state. -->
       <div class="lg:hidden" role="dialog" aria-modal="true">
