@@ -1,30 +1,33 @@
-<div class="container">
-    <div class="form-section overflow-auto custom-scrollbar">
-        <div class="d-flex justify-content-center">
-            <img class="text-center" src="/assets/images/logo_disastream.png" alt="Logo" class="logo">
+<div class="flex min-h-full bg-gray-900">
+    <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
+        <div class="flex justify-center">
+            <img class="h-20 text-center" src="/assets/images/logo_disastream.png" alt="Logo">
         </div>
         @if(this.loading){
-            <div class="d-flex justify-content-center">
-                <mat-spinner></mat-spinner>
+            <div class="mt-4 flex justify-center">
+                <app-spinner></app-spinner>
             </div>
         }
         @else if(this.message !== ''){
-            <div class="margin-t30 margin-b10 text-center">
-                <h1>{{this.message}}</h1>
-                <button (click)="this.goLogin()" class="md-btn btn-primary margin-t20">Se connecter</button>
+            <div class="mt-5 mb-2 text-center space-y-6">
+                <h1 class="text-white">{{this.message}}</h1>
+                <button (click)="goLogin()" type="button" class="rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20">Se connecter</button>
             </div>
         }
         @else if(this.error !== ''){
-            <div class="margin-t30 margin-b10 text-center">
-                <h1>{{this.error}}</h1>
-                <form class="margin-t30" [formGroup]="resendForm" (ngSubmit)="resend()">
-                    <input placeholder="Email" formControlName="mail" type="email" required />
-                    <button class="sm-btn btn-primary margin-t20 flex1">Renvoyer un lien</button>
+            <div class="mt-5 mb-2 text-center">
+                <h1 class="text-red-400">{{this.error}}</h1>
+                <form class="space-y-6" [formGroup]="resendForm" (ngSubmit)="resend()">
+                    <input placeholder="Email" formControlName="mail" type="email" required  class="mt-2 block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
+                    <div class="text-red-400 text-sm" *ngIf="mailFormField?.invalid">
+                        <span class="block">Invalid mail format.</span>
+                    </div>
+                    <button class="rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20">Renvoyer un lien</button>
                 </form>
             </div>
         }
     </div>
-
-    <div class="info-section pc-flex">
+    <div class="relative hidden w-0 flex-1 lg:block">
+      <img class="absolute inset-0 size-full object-cover" src="https://disastream.s3.eu-west-3.amazonaws.com/background/instability.jpg" alt="">
     </div>
 </div>
