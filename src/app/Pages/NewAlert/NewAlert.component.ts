@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
 import L from "leaflet";
-import { ToastrService } from "ngx-toastr";
 import { Subject } from "rxjs";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
@@ -11,6 +10,7 @@ import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { Step } from "src/app/Shared/Components/Stepper/Stepper.component";
 import { ElementRef } from '@angular/core';
+import { ToastrService } from "src/app/Shared/Services/toastr.service";
 
 @Component({
     templateUrl: './NewAlert.component.html',

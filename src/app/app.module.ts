@@ -29,7 +29,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRadioModule } from '@angular/material/radio';
-import { ToastrModule } from 'ngx-toastr';
 import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
@@ -41,6 +40,7 @@ import { DisasterView } from './Pages/DisasterView/disaster.view';
 import { DisasterApiService } from './Services/DisasterApiService';
 import { MarkerService } from './Map/Services/marker.service';
 import { GraphQLModule } from './graphql.module';
+import { ToastrService } from './Shared/Services/toastr.service';
 
 @NgModule({ declarations: [
         App,
@@ -76,11 +76,11 @@ import { GraphQLModule } from './graphql.module';
         MatInputModule,
         MatRadioModule,
         MatProgressSpinnerModule,
-        ToastrModule.forRoot(),
         HttpClientModule,
         GraphQLModule], 
         providers: [SeoService,
         AuthentificationApi,
+        ToastrService,
         PublicApiService,
         DisasterApiService,
         MarkerService,

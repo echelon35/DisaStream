@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

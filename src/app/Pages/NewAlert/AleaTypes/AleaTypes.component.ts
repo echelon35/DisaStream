@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
 import { Observable, Subscription } from "rxjs";
 import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { PublicApiService } from "src/app/Services/PublicApi.service";
+import { ToastrService } from "src/app/Shared/Services/toastr.service";
 
 class AleaVM {
     alea: Alea;

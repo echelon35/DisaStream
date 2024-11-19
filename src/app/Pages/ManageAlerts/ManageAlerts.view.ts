@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { Alert } from 'src/app/Model/Alert';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 
 @Component({
   templateUrl: './ManageAlerts.view.html',

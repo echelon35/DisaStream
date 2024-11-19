@@ -38,7 +38,6 @@
     "leaflet-geosearch": "^4.0.0",
     "leaflet.markerclusterv2": "^2.0.1",
     "ng2-charts": "^6.0.1",
-    "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

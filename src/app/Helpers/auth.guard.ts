@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthentificationApi } from '../Services/AuthentificationApi.service';
+import { ToastrService } from '../Shared/Services/toastr.service';
 
 @Injectable({ providedIn: 'root' })
 export class IsUserSignedIn  {
@@ -18,7 +18,7 @@ export class IsUserSignedIn  {
             return true;
         }
 
-        this.toastrService.info("Vous devez-être connecté pour pouvoir accéder à cette page");
+        this.toastrService.warning("Connexion","<a href='/login'>Vous devez-être connecté pour pouvoir accéder à cette page</a>");
         // not logged in so redirect to login page with the return url
         this.router.navigate(['/auth']);
         return false;

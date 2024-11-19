@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
-import { ToastrService } from "ngx-toastr";
 import { Observable, Subscription } from "rxjs";
 import { AddMailAlert } from "src/app/Modals/AddMailAlert/AddMailAlert.modal";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
+import { ToastrService } from "src/app/Shared/Services/toastr.service";
 
 
 @Component({

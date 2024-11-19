@@ -2,8 +2,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

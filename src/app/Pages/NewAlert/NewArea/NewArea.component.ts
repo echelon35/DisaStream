@@ -4,9 +4,9 @@ import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { SearchPlace } from 'src/app/Modals/SearchPlace/SearchPlace.modal';
 import "@geoman-io/leaflet-geoman-free";
-import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription } from 'rxjs';
 import { Alert } from 'src/app/Model/Alert';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 
 export interface IGeomanLayer {
     layer: L.Layer;
