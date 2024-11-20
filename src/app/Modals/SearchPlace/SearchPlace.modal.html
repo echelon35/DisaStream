@@ -1,41 +1,43 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div *ngIf="isVisible" class="bg-modal" (click)="this.close()"></div>
-<div *ngIf="isVisible" class="modal align-center custom-scrollbar overflow-auto padding-30">
-    <!-- LOCATION : monde, france métropolitaine, etc... -->
-     <div class="d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center">
-            <svg class="margin-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
-            <h3 class="">
-                Recherchez une destination à afficher sur la carte
-            </h3>
-        </div>
-        <div class="btn-icon" (click)="this.close()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-        </div>
-     </div>
-    <div class="margin-t20 align-items-center d-flex">
-        <input (keyup.enter)="setSearchPlace()" [(ngModel)]="this.filterPlace" type="text" placeholder="Rechercher un pays, une ville, un paysage" class="search-country">
-        <button class="btn-primary sm-btn pc-block" (click)="setSearchPlace()">Rechercher</button>
-        <button class="btn-primary sm-btn mobile-block" (click)="setSearchPlace()">
-            <img alt="search" src="/assets/images/svg/search_input.svg" />
-        </button>
-    </div>
-    <div class="d-flex flex-wrap margin-t20 overflow-auto custom-scrollbar result-container margin-b50">
-        <div [ngClass]="{ current : this.selectedPlace === town.label,
-            volcan : town.type.name === 'volcano',
-            montagne : town.type.name === 'peak',
-            fleuve : town.type.name === 'river',
-            ocean : town.type.name === 'ocean' || town.type.name === 'sea' }" (click)="chooseTown(town)" class="parent-img margin-10 cursor-pointer" *ngFor="let town of townList" style="background-image: url('https://flagcdn.com/{{town.countryCode | lowercase }}.svg');">
-            <div class="category-card">
+<div class="w-full sm:max-w-xs mt-2">
+    <label for="email" class="sr-only">Place</label>
+    <div class="flex items-center relative">
+        <div class="relative rounded-md shadow-sm w-full">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                <svg class="size-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8c0 3.613-3.869 7.429-5.393 8.795a1 1 0 0 1-1.214 0C9.87 15.429 6 11.613 6 8a6 6 0 0 1 12 0"/><circle cx="12" cy="8" r="2"/><path d="M8.714 14h-3.71a1 1 0 0 0-.948.683l-2.004 6A1 1 0 0 0 3 22h18a1 1 0 0 0 .948-1.316l-2-6a1 1 0 0 0-.949-.684h-3.712"/></svg>
             </div>
-            <p title="{{town.label}}" class="text-uppercase align-center w-600 cursor-pointer">
-                {{town.name}}
-                <span *ngIf="town.state"> ({{town.state}})</span>
-            </p>
+            <input [(ngModel)]="this.filterPlace" (keyup)="setSearchPlace()" placeholder="Search a specific place ?" type="text" class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6">
+            <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <app-spinner *ngIf="this.loading" [width]="'w-4'" [dark]="false"></app-spinner>
+                <svg (click)="this.clear()" *ngIf="!this.loading && this.filterPlace != ''" class="size-5 text-red-300 cursor-pointer hover:text-red-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"/><path d="m14.5 7.5-5 5"/><path d="m9.5 7.5 5 5"/></svg>
+            </div>
+            <!-- <span class="size-5" *ngIf="this.loading">
+                <app-spinner *ngIf="this.loading" [width]="'w-4'" [dark]="false"></app-spinner>
+            </span> -->
         </div>
-    </div>
-    <div class="close-btn pc-block">
-        <button class="btn-primary md-btn" (click)="this.close()">Fermer</button>
+        @if(townList.length > 0){
+            <div *ngIf="isVisible" class="absolute z-on-map-2 top-10 left-0 divide-y divide-gray-200 w-full border-2 border-gray-400 max-h-64 overflow-auto">
+                <div class="bg-indigo-600 text-white flex items-center border-black px-2 py-2">
+                    <p class="text-sm">
+                        Click on result to display it on the map
+                    </p>
+                </div>
+                <div (click)="chooseTown(town)" class="cursor-pointer flex items-center bg-white border-black px-2 py-2 hover:text-indigo-400" *ngFor="let town of townList">
+                    <img class="w-4 mr-2" src="https://flagcdn.com/{{town.countryCode | lowercase }}.svg" />
+                    <p title="{{town.label}}" class="text-sm">
+                        {{town.name}}
+                        <span *ngIf="town.state"> ({{town.state}})</span>
+                    </p>
+                </div>
+            </div>
+        }
+        @else if(this.filterPlace != ''){
+            <div *ngIf="isVisible" class="absolute z-on-map-2 top-10 left-0 divide-y divide-gray-200 w-full border-2 border-gray-400">
+                <div class="cursor-pointer flex items-center bg-white border-black px-2 py-2">
+                    <p title="Aucun résultat" class="text-sm">
+                        Aucun résultat trouvé
+                    </p>
+                </div>
+            </div>
+        }
     </div>
 </div>

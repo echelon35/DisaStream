@@ -1,5 +1,5 @@
 
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, Input } from '@angular/core';
 import { Place } from 'src/app/Model/Place';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
@@ -14,8 +14,10 @@ export class SearchPlace {
 
     env = environment;
     appName: string = this.env.settings.appName;
+    loading = false;
 
     isVisible = false;
+    private wasInside = false;
 
     public selectedPlace = "";
     public selectedTown?: Place;
@@ -35,7 +37,7 @@ export class SearchPlace {
         "attraction" //LIEUX TOURISTIQUES
     ]
 
-    open() {
+    show() {
       this.isVisible = true;
     }
   
@@ -52,8 +54,32 @@ export class SearchPlace {
     setSearchPlace(){
       this.searchPlace();
     }
+
+    clear(){
+      this.filterPlace = "";
+      this.townList = [];
+    }
+
+    @HostListener('click')
+    clickIn() {
+      this.wasInside = true;
+      if(!this.isVisible){
+        this.show();
+      }
+    }
+
+    @HostListener('document:click')
+    clickout() {
+      if (!this.wasInside) {
+        if(this.isVisible){
+          this.close();
+        }
+      }
+      this.wasInside = false;
+    }
   
     searchPlace(){
+      this.loading = true;
       this.townList = [];
       const provider = new OpenStreetMapProvider({ params: {
         'accept-language': 'fr',
@@ -64,11 +90,14 @@ export class SearchPlace {
       }});
       provider.search({ query: this.filterPlace }).then((res) => {
           this.townList = [];
+          console.log(res);
+          this.show();
           res.filter(item => item.raw.type != null && this.acceptedTypes.find(element => element == item.raw.type)).forEach(cursor => {
             const thisPlace = new Place();
             thisPlace.copyFromOpenStreetmapProvider(cursor);
             this.townList.push(thisPlace);
           })
+          this.loading = false;
       });
   
     }

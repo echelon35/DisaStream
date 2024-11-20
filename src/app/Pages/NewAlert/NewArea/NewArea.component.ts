@@ -61,7 +61,7 @@ export class NewAreaView implements OnInit, OnDestroy {
      * Open modal for searching locaitons
      */
     openModal(): void {
-        this.modal?.open();
+        // this.modal?.open();
     }
 
     /**

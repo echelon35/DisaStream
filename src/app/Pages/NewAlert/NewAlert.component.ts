@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, ElementRef, HostListener, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
@@ -8,8 +8,9 @@ import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
-import { ElementRef } from '@angular/core';
 import { ToastrService } from "src/app/Shared/Services/toastr.service";
+import { AddMailAlert } from "src/app/Modals/AddMailAlert/AddMailAlert.modal";
+import { AuthentificationApi } from "src/app/Services/AuthentificationApi.service";
 
 @Component({
     templateUrl: './NewAlert.component.html',
@@ -28,11 +29,20 @@ export class NewAlertView {
     selectedLayer?: L.GeoJSON;
     public locationBox?: L.LatLngBounds;
 
+    //team
+    public mailAlerts: MailAlert[] = [];
+    
+    @ViewChild('modal') modal?: AddMailAlert;
+
     formGroup = this._formBuilder.group({
       name: ['', Validators.required],
     });
 
-    constructor(private alertApiService: AlertApiService, private router: Router, private route: ActivatedRoute, private toastrService: ToastrService, private elementRef: ElementRef<HTMLElement>){
+    constructor(private alertApiService: AlertApiService, 
+      private router: Router, 
+      private route: ActivatedRoute, 
+      private toastrService: ToastrService,
+      private authService: AuthentificationApi){
       // if(this.route.snapshot.queryParamMap.get('id') != null){
       //   const id = parseInt(this.route.snapshot.queryParamMap.get('id')!);
       //   console.log(id);
@@ -51,37 +61,27 @@ export class NewAlertView {
       //     }
       //   })
       // }
+      this.alertApiService.getMailAlerts().subscribe((ma) => {
+        this.mailAlerts = ma;
+        console.log(this.mailAlerts)
+      })
+
+      console.log(this.alert.areas);
     }
 
     showPanel(){
       this.panelVisible = !this.panelVisible;
     }
 
-   fade(element: HTMLElement) {
-      let op = 1;  // initial opacity
-      const timer = setInterval(function () {
-          if (op <= 0.1){
-              clearInterval(timer);
-              element.style.display = 'none';
-          }
-          element.style.opacity = op.toString();
-          element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-          op -= op * 0.1;
-      }, 5);
-  }
-
-  unfade(element: HTMLElement) {
-    let op = 0.1;  // initial opacity
-    element.style.display = 'block';
-    const timer = setInterval(function () {
-        if (op >= 1){
-            clearInterval(timer);
+    @HostListener('keydown.esc', ['$event'])
+    onEsc(event: KeyboardEvent) {
+      if(this.areaMap != null){
+        this.areaMap.pm.disableDraw();
+        if(!this.panelVisible){
+          this.showPanel();
         }
-        element.style.opacity = op.toString();
-        element.style.filter = 'alpha(opacity=' + op * 100 + ")";
-        op += op * 0.1;
-    }, 5);
-}
+      }
+    }
 
     /**
      * First step -> Get areas
@@ -109,17 +109,6 @@ export class NewAlertView {
       this.alert.aleas = aleas;
       console.log(this.alert.aleas);
     }
-
-    createAlert(){
-      if(this.formGroup.value.name != null){
-        this.alert.name = this.formGroup.value.name;
-        this.alertApiService.createAlert(this.alert).subscribe(() => {
-          this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
-        });
-      }
-    }
-
-
 
     /**
      * Receive layer from the map component
@@ -166,6 +155,11 @@ export class NewAlertView {
       }
     }
 
+    deleteArea(){
+      this.allLayers?.clearLayers();
+      this.alert.areas = null;
+    }
+
     
     /**
      * After adding shape (polygon or circle) by button
@@ -184,6 +178,11 @@ export class NewAlertView {
           snappable: true,
           snapDistance: 50
       });
+
+      if(this.allLayers != null){
+        const collection = this.allLayers?.toGeoJSON() as FeatureCollection;
+        this.alert.areas = collection?.features[0]?.geometry;
+      }
 
       if(!this.panelVisible){
         this.showPanel();
@@ -215,5 +214,25 @@ export class NewAlertView {
         popup.setContent(popupHtml);
         
         layer.bindPopup(popup);
+    }
+
+    testFullObject(){
+      if(this.formGroup.value.name != null){
+        this.alert.name = this.formGroup.value.name;
+        // this.alertApiService.createAlert(this.alert).subscribe(() => {
+        //   this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
+        // });
+      }
+      console.log(this.alert);
+    }
+
+    addTeamMember(){
+      this.modal?.open();
+    }
+
+    addCreatedMail(){
+      this.alertApiService.getMailAlerts().subscribe((ma) => {
+        this.mailAlerts = ma;
+      })
     }
 }
