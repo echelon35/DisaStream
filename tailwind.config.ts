@@ -8,7 +8,13 @@ export default {
   theme: {
     extend: {
       zIndex: {
-        '999': '999'
+        'sidebar': '50',
+        'map': '60',
+        'on-map-1': '61',
+        'on-map-2': '62',
+        'modal-bg': '899',
+        'modal': '900',
+        'toastr': '999'
       }
     },
   },
