@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, ViewChild, inject } from "@angular/core";
+import { Component, HostListener, ViewChild, inject } from "@angular/core";
 import { FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
@@ -31,6 +31,7 @@ export class NewAlertView {
 
     //team
     public mailAlerts: MailAlert[] = [];
+    selectedMailIds: number[] = [];
     
     @ViewChild('modal') modal?: AddMailAlert;
 
@@ -63,10 +64,7 @@ export class NewAlertView {
       // }
       this.alertApiService.getMailAlerts().subscribe((ma) => {
         this.mailAlerts = ma;
-        console.log(this.mailAlerts)
       })
-
-      console.log(this.alert.areas);
     }
 
     showPanel(){
@@ -74,7 +72,7 @@ export class NewAlertView {
     }
 
     @HostListener('keydown.esc', ['$event'])
-    onEsc(event: KeyboardEvent) {
+    onEsc() {
       if(this.areaMap != null){
         this.areaMap.pm.disableDraw();
         if(!this.panelVisible){
@@ -100,6 +98,25 @@ export class NewAlertView {
 
     addMails(mails: MailAlert[]){
       this.alert.mailAlerts = mails;
+    }
+
+    selectMailUser(event){
+      const mailId = parseInt(event.target.value);
+      if(event.target.checked){
+        this.selectedMailIds.push(mailId);
+      }
+      else{
+        let i = 0;
+        this.selectedMailIds.forEach((id: number) => {
+          if(id === mailId) {
+            this.selectedMailIds.splice(i,1);
+            return;
+          }
+    
+          i++;
+        });
+      }
+      this.alert.mailAlerts = this.mailAlerts.filter(x => this.selectedMailIds.some((n) => n === x.id))
     }
 
     /**
@@ -219,9 +236,6 @@ export class NewAlertView {
     testFullObject(){
       if(this.formGroup.value.name != null){
         this.alert.name = this.formGroup.value.name;
-        // this.alertApiService.createAlert(this.alert).subscribe(() => {
-        //   this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
-        // });
       }
       console.log(this.alert);
     }
