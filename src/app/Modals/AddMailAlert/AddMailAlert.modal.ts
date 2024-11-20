@@ -1,34 +1,53 @@
 
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MailAlert } from 'src/app/Model/MailAlert';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
     selector: "app-mail-alert-modal",
     styleUrls: ['./AddMailAlert.modal.css'],
-    templateUrl: './AddMailAlert.modal.html',
+    templateUrl: './AddMailAlert.modal.html'
 })
 export class AddMailAlert {
 
     env = environment;
     appName: string = this.env.settings.appName;
     mailToAdd: MailAlert = new MailAlert();
-    @Output() createdMail = new EventEmitter<MailAlert>();
+    @Output() createdMail = new EventEmitter();
+    inviteUserForm: FormGroup;
 
     isVisible = false;
     messageToDisplay = '';
+    loading = false;
 
-    constructor(private readonly alertApiService: AlertApiService){}
+    constructor(private readonly alertApiService: AlertApiService,
+      private fb: FormBuilder,
+      private toastrService: ToastrService
+    ){
+      this.inviteUserForm = this.fb.group({
+        mail: ['', [Validators.required, Validators.email]],
+      });
+    }
 
     addMail(){
-      if(this.mailToAdd.mail != ''){
-        this.alertApiService.addMailAlert(this.mailToAdd.mail).subscribe((message) => {
-          this.messageToDisplay = message;
-          this.createdMail.emit(this.mailToAdd);
+      this.loading = true;
+      const mail = this.inviteUserForm.get('mail')?.value;
+      if(mail != ''){
+        this.alertApiService.addMailAlert(mail).subscribe((message) => {
+          this.toastrService.success('Invitation envoyée',`Une invitation à rejoindre votre équipe a été envoyée à <b>${mail}</b>`)
+          this.createdMail.emit();
+          this.inviteUserForm.reset();
+          this.close();
+
         },(err) => {
           console.log(err)
+          this.toastrService.error('Erreur',`Une erreur est survenue lors de l'envoi de l'email d'invitation.`)
           this.messageToDisplay = err.error.error;
+        }, () => {
+          this.loading = false;
         });
       }
     }

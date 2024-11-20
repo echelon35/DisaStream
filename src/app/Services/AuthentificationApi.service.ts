@@ -79,6 +79,10 @@ export class AuthentificationApi {
         return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?mail=' + mail,this.httpOptions);
     }
 
+    public resendAssociation(maId: number): Observable<string>{
+        return this.http.post<string>(API_URL + '/auth/resend-confirmation-association-email?ma=' + maId,this.httpOptions);
+    }
+
     public register(createUserDto: CreateUserDto): Observable<User>{
         return this.http.post<User>(API_URL + '/auth/signin',createUserDto,this.httpOptions)
     }

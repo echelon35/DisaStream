@@ -30,7 +30,6 @@ import { MatRadioModule } from '@angular/material/radio';
 import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
-import { AddMailAlertsComponent } from './Pages/NewAlert/AddMailAlerts/AddMailAlerts.component';
 import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssociation.view';
@@ -53,7 +52,6 @@ import { ToastrService } from './Shared/Services/toastr.service';
         AleaTypesComponent,
         ManageAlertsView,
         UserProfileComponent,
-        AddMailAlertsComponent,
         ConfirmEmailView,
         ConfirmAssociationView,
     ],
