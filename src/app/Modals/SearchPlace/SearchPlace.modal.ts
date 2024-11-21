@@ -1,20 +1,23 @@
 
-import { Component, ElementRef, HostListener, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, inject, Input, OnInit } from '@angular/core';
 import { Place } from 'src/app/Model/Place';
 import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
+import { debounceTime, fromEvent, map } from 'rxjs';
 
 @Component({
     selector: "app-search-place-modal",
-    styleUrls: ['./SearchPlace.modal.css'],
     templateUrl: './SearchPlace.modal.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchPlace {
+export class SearchPlace implements OnInit {
 
     env = environment;
     appName: string = this.env.settings.appName;
     loading = false;
+
+    private cd = inject(ChangeDetectorRef)
 
     isVisible = false;
     private wasInside = false;
@@ -30,12 +33,36 @@ export class SearchPlace {
         "volcano", //VOLCANS
         "river", //COURS D'EAU
         "peak", //MONTAGNE
+        "mountain_range", //CHAINE DE MONTAGNES
         "ocean", //OCEAN
         "sea", //MER
         "desert", //DESERT
         "wood", //BOIS
         "attraction" //LIEUX TOURISTIQUES
     ]
+
+    ngOnInit(){
+      const searchBox = document.getElementById('search-country');
+      if(searchBox != null){
+        const keyup$ = fromEvent(searchBox, 'keyup');
+        keyup$.pipe(
+              map((i: any) => i.currentTarget.value),
+              debounceTime(500)
+            )
+            .subscribe((val) => {
+              console.log(val);
+              this.filterPlace = val;
+              this.searchPlace();
+            });
+      }
+    }
+
+    /**
+     * Update component
+     */
+    updateComponent(){
+      this.cd.markForCheck();
+    }
 
     show() {
       this.isVisible = true;
@@ -51,13 +78,10 @@ export class SearchPlace {
       this.close();
     }
 
-    setSearchPlace(){
-      this.searchPlace();
-    }
-
     clear(){
       this.filterPlace = "";
       this.townList = [];
+      this.updateComponent();
     }
 
     @HostListener('click')
@@ -90,13 +114,15 @@ export class SearchPlace {
       }});
       provider.search({ query: this.filterPlace }).then((res) => {
           this.townList = [];
-          console.log(res);
           this.show();
+          console.log(res);
           res.filter(item => item.raw.type != null && this.acceptedTypes.find(element => element == item.raw.type)).forEach(cursor => {
             const thisPlace = new Place();
             thisPlace.copyFromOpenStreetmapProvider(cursor);
             this.townList.push(thisPlace);
+            console.log(thisPlace);
           })
+          this.updateComponent();
           this.loading = false;
       });
   
