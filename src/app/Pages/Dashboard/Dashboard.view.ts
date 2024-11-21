@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ChartConfiguration, Colors} from 'chart.js';
+import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 
 @Component({
   templateUrl: './Dashboard.view.html',
-  styleUrls: ['./Dashboard.view.css'],
   standalone: true,
   imports: [BaseChartDirective],
 })
@@ -77,6 +76,14 @@ export class DashboardView implements OnInit {
   legends: string[] = [];
 
   constructor(private readonly alertApiService: AlertApiService){
+    const el = document.getElementById('myGraph') as HTMLCanvasElement;
+    if(el != null){
+      const canvas = el!.getContext('2d');
+      const purple_orange_gradient = canvas!.createLinearGradient(0, 0, 0, 350);
+      purple_orange_gradient!.addColorStop(1, 'rgba(80,47,68,0.5)');
+      purple_orange_gradient!.addColorStop(0, 'rgba(246,211,1235,0.5)');
+      this.lineChartData.datasets[0].backgroundColor = purple_orange_gradient;
+    }
   }
 
   ngOnInit(): void {
@@ -92,7 +99,8 @@ export class DashboardView implements OnInit {
       for (let i = periods.length - 1; i >= 0; i--) {
         const currentDate = new Date(periods[i].perioditem);
         this.lineChartData.labels.push(currentDate.toLocaleDateString('fr'));
-        this.lineChartData.datasets[0].data.push(periods[i].count)
+        // this.lineChartData.datasets[0].data.push(periods[i].count)
+        this.lineChartData.datasets[0].data.push(Math.random() * 100)
       }
       this.chart?.update();
     })

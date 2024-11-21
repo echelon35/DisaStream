@@ -12,7 +12,6 @@ import { ErrorInterceptor } from './Helpers/error.interceptor';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, HttpClientModule } from '@angular/common/http';
 import { LoginView } from './Pages/Login/Login.view';
 import { SharedModule } from './Shared/Shared.module';
-import { NewAreaView } from './Pages/NewAlert/NewArea/NewArea.component';
 import { MapModule } from './Map/map.module';
 import { ModalsModule } from './Modals/modals.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,7 +20,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
 import { CommonModule } from '@angular/common';
 import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
-import { AleaTypesComponent } from './Pages/NewAlert/AleaTypes/AleaTypes.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +44,6 @@ import { ShapeService } from './Map/Services/shape.service';
         AuthenticationView,
         LoginView,
         ForgotPasswordView,
-        NewAreaView,
         DisasterView,
         NewAlertView,
         ReceptionModeComponent,

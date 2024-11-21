@@ -1,9 +1,10 @@
-<div class="md:flex md:items-center md:justify-between mb-3">
-    <div class="min-w-0 flex-1">
-        <h2 class="text-2xl/7 font-bold text-white sm:truncate sm:text-3xl sm:tracking-tight">Mon dashboard</h2>
+<div class="py-6 px-6">
+    <div class="md:flex md:items-center md:justify-between mb-3">
+        <div class="min-w-0 flex-1">
+            <h2 class="text-2xl/7 font-bold text-white sm:truncate sm:text-3xl sm:tracking-tight">Mon dashboard</h2>
+        </div>
     </div>
-</div>
-<div class="graph padding-10 d-flex flex-column align-items-center">
-    <h2 class="margin-l20 white-secondary-color">Vos alertes cette semaine</h2>
-    <canvas class="margin-t40" baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
+    <div class="graph padding-10 d-flex flex-column align-items-center">
+        <canvas id="myGraph" class="margin-t40" baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
+    </div>
 </div>

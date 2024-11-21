@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/toastr.service';
@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './ConfirmAssociation.view.html',
-  styleUrls: ['./ConfirmAssociation.view.css']
 })
 export class ConfirmAssociationView {
 

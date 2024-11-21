@@ -23,7 +23,6 @@ class AleaCategoryVM {
 @Component({
     selector: "app-alea-types",
     templateUrl: './AleaTypes.component.html',
-    styleUrls: ['./AleaTypes.component.css'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AleaTypesComponent implements OnInit, OnDestroy {
