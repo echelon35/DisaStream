@@ -38,6 +38,7 @@ import { DisasterApiService } from './Services/DisasterApiService';
 import { MarkerService } from './Map/Services/marker.service';
 import { GraphQLModule } from './graphql.module';
 import { ToastrService } from './Shared/Services/toastr.service';
+import { ShapeService } from './Map/Services/shape.service';
 
 @NgModule({ declarations: [
         App,
@@ -49,7 +50,6 @@ import { ToastrService } from './Shared/Services/toastr.service';
         DisasterView,
         NewAlertView,
         ReceptionModeComponent,
-        AleaTypesComponent,
         ManageAlertsView,
         UserProfileComponent,
         ConfirmEmailView,
@@ -79,6 +79,7 @@ import { ToastrService } from './Shared/Services/toastr.service';
         PublicApiService,
         DisasterApiService,
         MarkerService,
+        ShapeService,
         provideCharts(withDefaultRegisterables()),
         { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
