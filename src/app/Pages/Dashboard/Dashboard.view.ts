@@ -51,7 +51,7 @@ export class DashboardView implements OnInit {
         min: 0,
         position: 'left',
         grid: {
-          color: 'rgba(200,85,175,0.4)',
+          color: 'rgba(255,255,255,0.1)',
           z: 1,
         },
         ticks: {
@@ -79,7 +79,7 @@ export class DashboardView implements OnInit {
     const el = document.getElementById('myGraph') as HTMLCanvasElement;
     if(el != null){
       const canvas = el!.getContext('2d');
-      const purple_orange_gradient = canvas!.createLinearGradient(0, 0, 0, 350);
+      const purple_orange_gradient = canvas!.createLinearGradient(0, 0, 0, 250);
       purple_orange_gradient!.addColorStop(1, 'rgba(80,47,68,0.5)');
       purple_orange_gradient!.addColorStop(0, 'rgba(246,211,1235,0.5)');
       this.lineChartData.datasets[0].backgroundColor = purple_orange_gradient;
