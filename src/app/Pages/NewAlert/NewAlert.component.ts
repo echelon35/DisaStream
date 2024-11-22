@@ -61,7 +61,6 @@ export class NewAlertView {
     //team
     public mailAlerts: MailAlert[] = [];
     selectedMailIds: number[] = [];
-    countryChosen = false;
     
     @ViewChild('mailAlertModal') mailAlertModal?: AddMailAlert;
     @ViewChild('endAlertModal') endAlertModal?: EndAlertComponent;
@@ -202,6 +201,7 @@ export class NewAlertView {
      */
     clickOnCountry(e){
       const geometry = (e.sourceTarget?.feature?.geometry);
+      const idCountry = (e.sourceTarget?.feature?.properties?.id);
       this.deleteArea();
       if(this.actualLayer != null && geometry != null){
           const geo = new L.GeoJSON(geometry);
@@ -209,7 +209,8 @@ export class NewAlertView {
           this.actualLayer?.addTo(this.areaMap!)
           const collection = this.actualLayer?.toGeoJSON() as FeatureCollection;
           this.alert.areas = collection?.features[0]?.geometry;
-          this.countryChosen = true;
+          this.alert.countryId = idCountry;
+          this.alert.isCountryShape = true;
       }
       this.hideCountries();
     }
@@ -249,8 +250,9 @@ export class NewAlertView {
      */
     deleteArea(){
       this.actualLayer?.clearLayers();
-      this.countryChosen = false;
+      this.alert.isCountryShape = false;
       this.alert.areas = null;
+      this.alert.countryId = null;
     }
 
     /**
@@ -422,6 +424,7 @@ export class NewAlertView {
         return;
       }
 
+      console.log(this.alert);
       this.endAlertModal?.open();
       this.endAlertModal?.createAlert();
 

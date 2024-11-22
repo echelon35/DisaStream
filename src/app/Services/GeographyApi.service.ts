@@ -25,4 +25,8 @@ export class GeographyApiService {
     getCountries(): Observable<Country[]> {
         return this.http.get<Country[]>(API_URL + '/country', this.httpOptions)
     }
+
+    getCountryById(countryId: number): Observable<Country> {
+        return this.http.get<Country>(API_URL + '/country/' + countryId, this.httpOptions)
+    }
 }

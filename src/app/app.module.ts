@@ -15,16 +15,8 @@ import { SharedModule } from './Shared/Shared.module';
 import { MapModule } from './Map/map.module';
 import { ModalsModule } from './Modals/modals.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { NewAlertView } from './Pages/NewAlert/NewAlert.component';
 import { CommonModule } from '@angular/common';
-import { ReceptionModeComponent } from './Pages/NewAlert/ReceptionMode/ReceptionMode.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatRadioModule } from '@angular/material/radio';
 import { PublicApiService } from './Services/PublicApi.service';
 import { ManageAlertsView } from './Pages/ManageAlerts/ManageAlerts.view';
 import { UserProfileComponent } from './Pages/UserProfile/user-profile.component';
@@ -37,6 +29,7 @@ import { MarkerService } from './Map/Services/marker.service';
 import { GraphQLModule } from './graphql.module';
 import { ToastrService } from './Shared/Services/toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
+import { PipeModule } from './PipeModule/pipe.module';
 
 @NgModule({ declarations: [
         App,
@@ -46,7 +39,6 @@ import { ShapeService } from './Map/Services/shape.service';
         ForgotPasswordView,
         DisasterView,
         NewAlertView,
-        ReceptionModeComponent,
         ManageAlertsView,
         UserProfileComponent,
         ConfirmEmailView,
@@ -56,18 +48,12 @@ import { ShapeService } from './Map/Services/shape.service';
         CommonModule,
         FormsModule,
         MapModule,
+        PipeModule,
         SharedModule,
         ReactiveFormsModule,
         AppRoutingModule,
         ModalsModule,
         BrowserAnimationsModule,
-        MatFormFieldModule,
-        MatSelectModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTableModule,
-        MatInputModule,
-        MatRadioModule,
         HttpClientModule,
         GraphQLModule], 
         providers: [SeoService,

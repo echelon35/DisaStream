@@ -22,6 +22,18 @@ export class UserProfileComponent {
     })
   }
 
+  changeAvatar(){
+    console.log('Update avatar');
+  }
+
+  updateIdentity(){
+    console.log('Update identity');
+  }
+
+  changePassword(){
+    console.log('Change password');
+  }
+
   logout(){
     this.authService.logOut();
   }
