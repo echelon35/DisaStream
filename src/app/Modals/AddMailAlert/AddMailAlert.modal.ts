@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
 
 @Component({
     selector: "app-mail-alert-modal",
-    styleUrls: ['./AddMailAlert.modal.css'],
     templateUrl: './AddMailAlert.modal.html'
 })
 export class AddMailAlert {

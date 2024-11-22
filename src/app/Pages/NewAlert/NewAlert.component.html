@@ -157,11 +157,15 @@
         <div class="shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6">
           <div class="flex justify-end space-x-3">
             <button type="button" class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Cancel</button>
-            <button (click)="createAlert()" class="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Create</button>
+            <button type="button" (click)="createAlert()" class="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <span *ngIf="!this.editMode">Create</span>
+              <span *ngIf="this.editMode">Edit</span>
+            </button>
           </div>
         </div>
       </form>
     </div>
   </div>
 </div>
-<app-mail-alert-modal #modal (createdMail)="getTeamMembersMail()"></app-mail-alert-modal>
+<app-mail-alert-modal #mailAlertModal (createdMail)="getTeamMembersMail()"></app-mail-alert-modal>
+<app-end-alert-modal #endAlertModal [alert]="this.alert" [editMode]="this.editMode"></app-end-alert-modal>

@@ -6,10 +6,11 @@ import { AddMailAlert } from './AddMailAlert/AddMailAlert.modal';
 import { DisasterDetailComponent } from './DisasterDetail/disaster-detail.component';
 import { MapModule } from '../Map/map.module';
 import { SharedModule } from '../Shared/Shared.module';
+import { EndAlertComponent } from './EndAlert/EndAlert.modal';
 
 @NgModule({
-    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent],
+    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent],
     imports: [CommonModule, FormsModule, MapModule, SharedModule, ReactiveFormsModule],
-    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent],
+    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent],
 })
 export class ModalsModule { }

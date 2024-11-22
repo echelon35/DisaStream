@@ -15,6 +15,7 @@ import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { PublicApiService } from "src/app/Services/PublicApi.service";
 import { GeographyApiService } from "src/app/Services/GeographyApi.service";
 import { ShapeService } from "src/app/Map/Services/shape.service";
+import { EndAlertComponent } from "src/app/Modals/EndAlert/EndAlert.modal";
 
 class AleaVM {
   alea: Alea;
@@ -62,7 +63,8 @@ export class NewAlertView {
     selectedMailIds: number[] = [];
     countryChosen = false;
     
-    @ViewChild('modal') modal?: AddMailAlert;
+    @ViewChild('mailAlertModal') mailAlertModal?: AddMailAlert;
+    @ViewChild('endAlertModal') endAlertModal?: EndAlertComponent;
 
     formGroup = this._formBuilder.group({
       name: ['', Validators.required],
@@ -382,7 +384,7 @@ export class NewAlertView {
      * Add another team mate
      */
     addTeamMember(){
-      this.modal?.open();
+      this.mailAlertModal?.open();
     }
 
     /**
@@ -403,26 +405,28 @@ export class NewAlertView {
     }
 
     createAlert(){
-
+      this.endAlertModal?.open();
       if(this.formGroup.value.name != null){
         this.alert.name = this.formGroup.value.name;
       }
-      console.log(this.alert);
       if(this.alert.name == '' || this.alert.name == null){
         this.toastrService.error('Alerte incomplète','Vous devez donner un nom à votre alerte');
+        return;
       }
       else if(this.alert.aleas.length === 0){
         this.toastrService.error('Alerte incomplète','Vous devez selectionner au moins un type d\'aléa à surveiller');
+        return;
       }
       else if(this.alert.mailAlerts.length === 0){
         this.toastrService.error('Alerte incomplète','Vous devez selectionner au moins une personne à qui envoyer l\'adresse');
+        return;
       }
+
+      this.endAlertModal?.open();
+      this.endAlertModal?.createAlert();
 
       // prévenir l'utilisateur sil n'a pas selectionné de zone que la
       // zone applicable est le monde entier et que cela peut le spammer (au moins s'il a selectionné les séismes)
 
-        // this.alertApiService.createAlert(this.alert).subscribe(() => {
-        //   this.router.navigateByUrl('/dashboard/alert/success?name=' + encodeURI(this.alert.name));
-        // });
     }
 }

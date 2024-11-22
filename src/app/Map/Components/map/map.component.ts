@@ -11,8 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  templateUrl: './map.component.html'
 })
 export class MapComponent implements OnInit,OnDestroy {
 
