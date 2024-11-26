@@ -1,21 +1,19 @@
 import { NgModule } from "@angular/core";
-import { LoggedSidebar } from "./Components/LoggedSidebar/LoggedSidebar.component";
-import { NotLoggedHeader } from "./Components/NotLoggedHeader/NotLoggedHeader.component";
 import { CommonModule } from "@angular/common";
 import { Footer } from "./Components/Footer/Footer.component";
-import { LoggedHeader } from "./Components/LoggedHeader/LoggedHeader.component";
 import { RouterModule } from "@angular/router";
 import { StepperComponent } from "./Components/Stepper/Stepper.component";
+import { ToastrComponent } from "./Components/Toastr/toastr.component";
+import { SpinnerComponent } from "./Components/Spinner/spinner.component";
 
 @NgModule({
   declarations: [
-    LoggedSidebar,
-    NotLoggedHeader,
-    LoggedHeader,
     Footer,
-    StepperComponent
+    ToastrComponent,
+    StepperComponent,
+    SpinnerComponent
   ],
   imports: [CommonModule, RouterModule],
-  exports: [LoggedSidebar, NotLoggedHeader, Footer, LoggedHeader, StepperComponent]
+  exports: [Footer, StepperComponent, ToastrComponent, SpinnerComponent]
 })
 export class SharedModule { }

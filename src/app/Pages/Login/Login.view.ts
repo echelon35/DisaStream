@@ -1,15 +1,14 @@
 
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TokenDto } from 'src/app/DTO/token.dto';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 
 @Component({
-  templateUrl: './Login.view.html',
-  styleUrls: ['./Login.view.css']
+  templateUrl: './Login.view.html'
 })
 export class LoginView {
 
@@ -20,7 +19,18 @@ export class LoginView {
     private readonly authService: AuthentificationApi, 
     private readonly toastrService: ToastrService,
     private readonly router: Router,
+    private route: ActivatedRoute,
     private fb: FormBuilder) { 
+
+      const error = this.route.snapshot.queryParamMap.get('error');
+      if(error){
+        this.toastrService.error(error);
+      }
+
+    //Redirect if already connected
+    if(this.authService.isAuthenticated()){
+      this.router.navigateByUrl('/dashboard');
+    }
     this.seoService.generateTags("Se connecter sur Disastream","Inscrivez-vous sur Disastream pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
     this.loginForm = this.fb.group({
       password: ['', Validators.required],

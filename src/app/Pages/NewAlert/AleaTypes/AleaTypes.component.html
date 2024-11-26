@@ -1,27 +1,23 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="aleas-list">
-    <h2 class="w-600 margin-t20 margin-b20">Quels aléas souhaitez-vous surveiller ?</h2>
-    <div class="aleas-choice padding-10 custom-scrollbar overflow-auto d-flex flex-wrap">
-        <div class="margin-10" *ngFor="let category of this.categories">
-            <h3 class="margin-l10">{{category.category | titlecase}}</h3>
-            <div class="d-flex flex-wrap">
-                <div *ngFor="let aleaCategory of category?.aleas"  class="parent-img margin-10 cursor-pointer" (click)="selectAlea(aleaCategory)" style="background-image: url('https://disastream.s3.eu-west-3.amazonaws.com/background/{{aleaCategory.alea.name | lowercase}}.jpg');">
-                    <div class="category-card" [ngClass]="{'selected': aleaCategory.selected }">
-                    </div>
-                    <p class="text-uppercase align-center">{{aleaCategory.alea.label | titlecase}}</p>
-                </div>
-            </div>
+<div *ngFor="let category of this.categories; index as i" [class.mt-2]="i > 0">
+  <h2 class="text-sm font-medium text-gray-500">{{category.category}}</h2>
+  <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+    <li (click)="selectAlea(aleaCategory)" *ngFor="let aleaCategory of category?.aleas" class="col-span-1 flex rounded-md shadow-sm">
+      <div class="flex w-16 shrink-0 items-center justify-center rounded-l-md bg-pink-600 text-sm font-medium text-white"
+      style="background-size: cover; background-image: url('https://disastream.s3.eu-west-3.amazonaws.com/background/{{aleaCategory.alea.name}}.jpg');">
+      </div>
+      <div 
+      [class.bg-indigo-500]="aleaCategory.selected"
+      [class.bg-white]="!aleaCategory.selected"
+      [class.border-gray-500]="aleaCategory.selected"
+      class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-300 cursor-pointer">
+        <div class="flex-1 truncate px-4 py-2 text-sm">
+          <p 
+          [class.text-white]="aleaCategory.selected"
+          [class.text-gray-500]="!aleaCategory.selected"
+          >{{aleaCategory.alea.name}}</p>
         </div>
-    </div>
-    <div class="next-step tertiary-bg d-flex justify-content-between align-items-center padding-b20 padding-l40 padding-r40">
-        <button class="btn-primary btn-icon lg-btn" (click)="previousStep()">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-left"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
-            <span class="pc-block margin-l10">Redéfinir les zones</span>
-        </button>
-        <button (click)="nextStep()" matStepperNext class="btn-primary btn-icon lg-btn">
-            <span class="margin-r10 pc-block">Surveiller ces aléas</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
-        </button>
-    </div>
+      </div>
+    </li>
+  </ul>
 </div>
+  

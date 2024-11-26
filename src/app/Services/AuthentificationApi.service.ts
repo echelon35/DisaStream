@@ -71,8 +71,16 @@ export class AuthentificationApi {
         return this.http.post<TokenDto>(API_URL + '/auth/login',userDto,this.httpOptions)
     }
 
+    isAuthenticated(): boolean {
+        return localStorage.getItem(TOKEN_KEY) != null;
+    }
+
     public resend(mail: string): Observable<string>{
         return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?mail=' + mail,this.httpOptions);
+    }
+
+    public resendAssociation(maId: number): Observable<string>{
+        return this.http.post<string>(API_URL + '/auth/resend-confirmation-association-email?ma=' + maId,this.httpOptions);
     }
 
     public register(createUserDto: CreateUserDto): Observable<User>{

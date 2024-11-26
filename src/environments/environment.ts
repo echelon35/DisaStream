@@ -4,6 +4,7 @@ export const environment = {
     settings:{
       google_key: "261772450171-q80hpml5unnarp4d0d6h6uqt4o966ad0.apps.googleusercontent.com",
       backend: "http://localhost:4003",
+      disasterapi: "http://localhost:4002",
       version: "1.0.0",
       appName: "Disastream"
     }

@@ -11,32 +11,31 @@ import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  templateUrl: './map.component.html'
 })
 export class MapComponent implements OnInit,OnDestroy {
 
-  @Input() mapId: string = 'map';
-  @Input() displayFullscreen: boolean = true;
-  @Input() allowSearch: boolean = false;
-  @Input() displayLayers: boolean = true;
-  @Input() displayScale: boolean = true;
-  @Input() displayZoom: boolean = true;
-  @Input() layerPrincipal: string = "";
-  @Input() scrollZoom: boolean = true;
-  @Input() dragMarker: boolean = false;
-  @Input() zoomDelta: number = 1;
+  @Input() mapId = 'map';
+  @Input() displayFullscreen = true;
+  @Input() allowSearch = false;
+  @Input() displayLayers = true;
+  @Input() displayScale = true;
+  @Input() displayZoom = true;
+  @Input() layerPrincipal = "";
+  @Input() scrollZoom = true;
+  @Input() dragMarker = false;
+  @Input() zoomDelta = 1;
 
   @Input() locationBox?: L.LatLngBounds;
 
   // @Output() finishedLoading: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Output() map$: EventEmitter<L.Map> = new EventEmitter();
-  @Output() layer$: EventEmitter<L.LayerGroup> = new EventEmitter();
+  @Output() map$ = new EventEmitter<L.Map>();
+  @Output() layer$ = new EventEmitter<L.LayerGroup>();
 
   public isLoading = false;
   
   @Output() markerEvent = new EventEmitter<L.Marker>();
-  @Output() movedMap: EventEmitter<L.Map> = new EventEmitter();
+  @Output() movedMap = new EventEmitter<L.Map>();
 
   //Marker move from outside
   private markerSubscription!: Subscription;
@@ -134,24 +133,24 @@ export class MapComponent implements OnInit,OnDestroy {
   }
 
   layers(){
-    let huerotate;
+    // let huerotate;
 
-    let GoogleEarthTileLayer = (L.tileLayer as any)('http://mt0.google.com/vt/lyrs=y&hl=fr&x={x}&y={y}&z={z}',{
+    const GoogleEarthTileLayer = (L.tileLayer as any)('http://mt0.google.com/vt/lyrs=y&hl=fr&x={x}&y={y}&z={z}',{
     })
 
-    let GoogleMapTileLayer = (L.tileLayer as any)('http://mt0.google.com/vt/lyrs=m&hl=fr&x={x}&y={y}&z={z}',{
+    const GoogleMapTileLayer = (L.tileLayer as any)('http://mt0.google.com/vt/lyrs=m&hl=fr&x={x}&y={y}&z={z}',{
     })
 
-    let TopographieTileLayer = (L.tileLayer as any)('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',{
+    const TopographieTileLayer = (L.tileLayer as any)('https://basemap.nationalmap.gov/arcgis/rest/services/USGSImageryOnly/MapServer/tile/{z}/{y}/{x}',{
       attribution: 'Tiles courtesy of the <a href="https://usgs.gov/">U.S. Geological Survey</a>'
     })
    
-    let DisasterJawgTileLayer = (L.tileLayer as any)('https://tile.jawg.io/ac7e4ceb-cd7d-4ec0-a080-b98d9ea0eb07/{z}/{x}/{y}{r}.png?access-token={accessToken}',{
+    const DisasterJawgTileLayer = (L.tileLayer as any)('https://tile.jawg.io/ac7e4ceb-cd7d-4ec0-a080-b98d9ea0eb07/{z}/{x}/{y}{r}.png?access-token={accessToken}',{
       attribution: '<a href="https://satellearth" title="Made by satellearth" target="_blank">&copy; <b>satellearth</b></a> with <a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       accessToken: '9DzG45EZHJkwSzBFKZSTA8IGmGruF13fwwiMUEQRlx7Hc6ZsS8j4kIi1PCBFCvab',
     })
 
-    let DisasterJawgHdTileLayer = (L.tileLayer as any)('https://tile.jawg.io/fff1b98e-40c8-4bfc-bd27-8ca9781fbb15/{z}/{x}/{y}{r}.png?access-token={accessToken}',{
+    const DisasterJawgHdTileLayer = (L.tileLayer as any)('https://tile.jawg.io/fff1b98e-40c8-4bfc-bd27-8ca9781fbb15/{z}/{x}/{y}{r}.png?access-token={accessToken}',{
       attribution: '<a href="https://satellearth" title="Made by satellearth" target="_blank">&copy; <b>SatellEarth</b></a> with <a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       accessToken: '9DzG45EZHJkwSzBFKZSTA8IGmGruF13fwwiMUEQRlx7Hc6ZsS8j4kIi1PCBFCvab',
     })
@@ -174,6 +173,7 @@ export class MapComponent implements OnInit,OnDestroy {
         break;
       case 'Disaster (HD)':
         DisasterJawgHdTileLayer.addTo(this.mapDetail);
+        break;
       default:
         DisasterJawgTileLayer.addTo(this.mapDetail);
     }
@@ -193,11 +193,11 @@ export class MapComponent implements OnInit,OnDestroy {
 
   limitMap(xMin: number,yMin: number,xMax: number,yMax: number){
 		//South-West
-		var southWest = L.latLng(xMin,yMin);
+		const southWest = L.latLng(xMin,yMin);
 		//North-East
-		var northEast = L.latLng(xMax,yMax);
+		const northEast = L.latLng(xMax,yMax);
 		//All map size
-		var bounds = L.latLngBounds(southWest, northEast);
+		const bounds = L.latLngBounds(southWest, northEast);
 		this.mapDetail.setMaxBounds(bounds);
 		return this.mapDetail;
   }
@@ -302,15 +302,20 @@ export class MapComponent implements OnInit,OnDestroy {
 
   selectMapZone(zone: string){
 
-    var bound;
+    let bound;
+    let box;
 
     switch(zone){
       case "METROPOLE":
         //FRANCE METROPOLITAINE
-        var box = [-6.113481,41.934978,10.307773,51.727030];
+        box = [-6.113481,41.934978,10.307773,51.727030];
         bound = L.latLngBounds(L.latLng(box[3], box[2]),L.latLng(box[1], box[0]))
         this.mapDetail.fitBounds(bound);
+        break;
       default:
+        box = [-90,41.934978,10.307773,51.727030];
+        bound = L.latLngBounds(L.latLng(box[3], box[2]),L.latLng(box[1], box[0]))
+        this.mapDetail.fitBounds(bound);
     }
   }
 

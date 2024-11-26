@@ -1,0 +1,12 @@
+<div id="map-disaster" class="main-panel">
+    <app-map [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
+    <app-disaster-detail #detail></app-disaster-detail>
+    <div class="alea-choice">
+        <div class="btn" (click)="this.getEarthquakes()">
+            <img src="/assets/images/markers/med-earthquake.svg" />
+        </div>
+        <div class="btn" (click)="this.getFloods()">
+            <img src="/assets/images/markers/flood.svg"/>
+        </div>
+    </div>
+</div>

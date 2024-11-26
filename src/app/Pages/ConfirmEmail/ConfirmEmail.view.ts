@@ -2,13 +2,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
+import { ToastrService } from 'src/app/Shared/Services/toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './ConfirmEmail.view.html',
-  styleUrls: ['./ConfirmEmail.view.css']
+  templateUrl: './ConfirmEmail.view.html'
 })
 export class ConfirmEmailView {
 
@@ -16,6 +15,7 @@ export class ConfirmEmailView {
   appName: string = this.env.settings.appName;
   message = '';
   error = '';
+  errorMessage = '';
   token = '';
   loading = true;
   resendForm: FormGroup;
@@ -49,6 +49,10 @@ export class ConfirmEmailView {
     this.router.navigateByUrl('/login');
   }
 
+  get mailFormField() {
+    return this.resendForm.get('mail');
+  }
+
   resend(): void {
     if (this.resendForm.invalid) return;
     this.loading = true;
@@ -58,7 +62,7 @@ export class ConfirmEmailView {
         this.loading = false;
         // redirection ou message de succès
         this.router.navigateByUrl('/');
-        this.toastrService.success(`Un nouvel email de confirmation vient d'être envoyé à ${mail}`);
+        this.toastrService.success('Email envoyé',`Un nouvel email de confirmation vient d'être envoyé à <b>${mail}</b>`);
       },
       error: (err) => {
         this.loading = false;

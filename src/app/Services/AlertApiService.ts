@@ -26,7 +26,11 @@ export class AlertApiService {
     }
 
     createAlert(alert: Alert){
-      return this.http.post(API_URL + '/alert/create', alert, this.httpOptions);
+      return this.http.post<Alert>(API_URL + '/alert/create', alert, this.httpOptions);
+    }
+
+    editAlert(alert: Alert){
+      return this.http.put<Alert>(API_URL + '/alert/edit', alert, this.httpOptions);
     }
 
     getUserAlerts(): Observable<Alert[]> {

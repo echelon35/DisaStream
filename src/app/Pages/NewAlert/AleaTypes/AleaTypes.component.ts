@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
-import { ToastrService } from "ngx-toastr";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { PublicApiService } from "src/app/Services/PublicApi.service";
+import { ToastrService } from "src/app/Shared/Services/toastr.service";
 
 class AleaVM {
     alea: Alea;
@@ -23,37 +23,10 @@ class AleaCategoryVM {
 @Component({
     selector: "app-alea-types",
     templateUrl: './AleaTypes.component.html',
-    styleUrls: ['./AleaTypes.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AleaTypesComponent implements OnInit, OnDestroy {
 
-    public aleaType: Alea[] = [
-        {
-            name: "seisme",
-            id: 1,
-            label: 'Séisme',
-        },
-        {
-            name: "cyclone",
-            id: 2,
-            label: 'Cyclone'
-        },
-        {
-            name: "inondation",
-            id: 3,
-            label: 'Inondation'
-        },
-        {
-            name: "eruption",
-            id: 4,
-            label: 'Eruption'
-        },
-        {
-            name: "Bolide",
-            id: 5,
-            label: 'Bolide'
-        }
-    ]
     public categories: AleaCategoryVM[] = [];
     public selectedAleaTypes: Alea[] = [];
 
@@ -124,21 +97,6 @@ export class AleaTypesComponent implements OnInit, OnDestroy {
             }
         }))
         this.aleaChange.emit(this.selectedAleaTypes);
-    }
-    
-    nextStep(){
-        if(this.selectedAleaTypes.length > 0){
-            this.complete()
-            this.completeStep.emit("mail-step");
-        }
-        else{
-            this.toastrService.error('Vous devez selectionner au moins un type d\'aléa');
-        }
-    }
-
-    previousStep(){
-        this.complete()
-        this.completeStep.emit("where-step");
     }
 
     selectAlea(alea: AleaVM){
