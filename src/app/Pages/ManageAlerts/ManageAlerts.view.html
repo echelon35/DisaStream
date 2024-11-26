@@ -4,7 +4,7 @@
             <h2 class="text-2xl/7 font-bold text-white sm:truncate sm:text-3xl sm:tracking-tight">Vos alertes</h2>
         </div>
         <div class="mt-4 flex md:ml-4 md:mt-0">
-            <button (click)="router.navigateByUrl('/dashboard/alert/new')" type="button" class="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Créer</button>
+            <button (click)="router.navigateByUrl('/dashboard/alert/new')" type="button" class="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Créer une alerte</button>
         </div>
     </div>
     <ul role="list" class="ml-3 mr-3 divide-y divide-gray-100">
@@ -88,6 +88,12 @@
                     <dd class="text-sm/6 text-gray-400">240</dd>
                 </div>
             </dl>
+        </li>
+        <li *ngIf="alerts.length === 0" class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap">
+            <span class="text-white">Vous n'avez pas encore créé d'alerte</span>
+        </li>
+        <li *ngIf="alerts.length === 0" class="flex flex-wrap items-center justify-between gap-x-6 gap-y-4 py-5 sm:flex-nowrap">
+            <button (click)="router.navigateByUrl('/dashboard/alert/new')" type="button" class="inline-flex items-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Créer ma première alerte</button>
         </li>
     </ul>
 </div>
