@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
-import { ToastrService } from 'src/app/Shared/Services/toastr.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment';
 

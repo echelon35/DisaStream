@@ -4,7 +4,7 @@ import { Alert } from 'src/app/Model/Alert';
 import { Country } from 'src/app/Model/Country';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
-import { ToastrService } from 'src/app/Shared/Services/toastr.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 
 class AlertVm extends Alert {

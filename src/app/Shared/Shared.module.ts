@@ -3,8 +3,8 @@ import { CommonModule } from "@angular/common";
 import { Footer } from "./Components/Footer/Footer.component";
 import { RouterModule } from "@angular/router";
 import { StepperComponent } from "./Components/Stepper/Stepper.component";
-import { ToastrComponent } from "./Components/Toastr/toastr.component";
-import { SpinnerComponent } from "./Components/Spinner/spinner.component";
+import { ToastrComponent } from "./Components/Toastr/Toastr.component";
+import { SpinnerComponent } from "./Components/Spinner/Spinner.component";
 
 @NgModule({
   declarations: [
