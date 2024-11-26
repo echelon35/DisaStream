@@ -9,7 +9,7 @@ import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
-import { ToastrService } from "src/app/Shared/Services/toastr.service";
+import { ToastrService } from "src/app/Shared/Services/Toastr.service";
 import { AddMailAlert } from "src/app/Modals/AddMailAlert/AddMailAlert.modal";
 import { AleaCategoryDto } from "src/app/DTO/AleaCategory.dto";
 import { PublicApiService } from "src/app/Services/PublicApi.service";

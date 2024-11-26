@@ -1,9 +1,9 @@
 
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MailAlert } from 'src/app/Model/MailAlert';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
-import { ToastrService } from 'src/app/Shared/Services/toastr.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({

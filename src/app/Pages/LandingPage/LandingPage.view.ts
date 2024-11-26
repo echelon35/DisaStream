@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
-import { ToastrService } from 'src/app/Shared/Services/toastr.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
   templateUrl: './LandingPage.view.html',

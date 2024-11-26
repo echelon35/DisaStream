@@ -27,7 +27,7 @@ import { DisasterView } from './Pages/DisasterView/disaster.view';
 import { DisasterApiService } from './Services/DisasterApiService';
 import { MarkerService } from './Map/Services/marker.service';
 import { GraphQLModule } from './graphql.module';
-import { ToastrService } from './Shared/Services/toastr.service';
+import { ToastrService } from './Shared/Services/Toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
 import { PipeModule } from './PipeModule/pipe.module';
 

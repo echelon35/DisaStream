@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TokenDto } from 'src/app/DTO/token.dto';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
-import { ToastrService } from 'src/app/Shared/Services/toastr.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
   templateUrl: './Login.view.html'

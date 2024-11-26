@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
-import { ToastrContent, ToastrService, ToastrType } from "../../Services/Toastr.service";
+import { ToastrContent, ToastrService, ToastrType } from "../../Services/Toastr.service"
 
 @Component({
     selector: 'app-toastr',

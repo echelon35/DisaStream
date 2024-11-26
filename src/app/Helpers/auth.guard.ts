@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthentificationApi } from '../Services/AuthentificationApi.service';
-import { ToastrService } from '../Shared/Services/toastr.service';
+import { ToastrService } from '../Shared/Services/Toastr.service';
 
 @Injectable({ providedIn: 'root' })
 export class IsUserSignedIn  {

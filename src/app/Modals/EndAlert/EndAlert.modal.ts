@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, inject, Input } from "@angular/core";
 import { Alert } from "src/app/Model/Alert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
-import { ToastrService } from "src/app/Shared/Services/toastr.service";
+import { ToastrService } from "src/app/Shared/Services/Toastr.service";
 
 @Component({
     selector: "app-end-alert-modal",
