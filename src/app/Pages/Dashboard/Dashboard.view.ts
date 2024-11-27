@@ -100,7 +100,7 @@ export class DashboardView implements OnInit {
         const currentDate = new Date(periods[i].perioditem);
         this.lineChartData.labels.push(currentDate.toLocaleDateString('fr'));
         // this.lineChartData.datasets[0].data.push(periods[i].count)
-        this.lineChartData.datasets[0].data.push(Math.random() * 100)
+        this.lineChartData.datasets[0].data.push(periods[i].count)
       }
       this.chart?.update();
     })
