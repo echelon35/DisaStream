@@ -12,6 +12,7 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   isAuth = false;
+  isSidebarOpen = false;
 
   constructor(private route: ActivatedRoute,
     public router: Router, private authenticationApi: AuthentificationApi, private userApiService: UserApiService, private toastrService: ToastrService){
@@ -30,5 +31,9 @@ export class LandingPageView {
     else if(mail){
       this.toastrService.success(`Inscription réalisée avec succès.`,`Un mail de confirmation vient de vous être envoyé à <b>${mail}</b>.`);
     }
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarOpen = !this.isSidebarOpen;
   }
 }
