@@ -18,6 +18,7 @@ export class ManageAlertsView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   alerts: AlertVm[] = [];
   displayedColumns: string[] = ['edit','type','name','createdAt','updatedAt','delete']
+  loading = true;
 
   constructor(private readonly alertApiService: AlertApiService, 
     private readonly toastrService: ToastrService, 
@@ -34,6 +35,7 @@ export class ManageAlertsView {
           al.country = country;
         })
       })
+      this.loading = false;
     })
   }
 

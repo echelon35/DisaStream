@@ -1,15 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 
 @Component({
   templateUrl: './Dashboard.view.html',
   standalone: true,
-  imports: [BaseChartDirective],
+  imports: [BaseChartDirective, SharedModule, CommonModule],
 })
 export class DashboardView implements OnInit {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
+  loading = true;
 
   public lineChartData: ChartConfiguration['data'] = {
     datasets: [
@@ -103,6 +106,7 @@ export class DashboardView implements OnInit {
         this.lineChartData.datasets[0].data.push(periods[i].count)
       }
       this.chart?.update();
+      this.loading = false;
     })
   }
 }
