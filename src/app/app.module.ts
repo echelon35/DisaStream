@@ -30,6 +30,7 @@ import { GraphQLModule } from './graphql.module';
 import { ToastrService } from './Shared/Services/Toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
 import { PipeModule } from './PipeModule/pipe.module';
+import { SendAdviceView } from './Pages/SendAdvice/SendAdvice.view';
 
 @NgModule({ declarations: [
         App,
@@ -43,6 +44,7 @@ import { PipeModule } from './PipeModule/pipe.module';
         UserProfileComponent,
         ConfirmEmailView,
         ConfirmAssociationView,
+        SendAdviceView
     ],
     bootstrap: [App], imports: [BrowserModule,
         CommonModule,

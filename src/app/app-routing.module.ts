@@ -14,6 +14,7 @@ import { FinalScreenView } from './Pages/FinalScreen/FinalScreen.component';
 import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssociation.view';
 import { DisasterView } from './Pages/DisasterView/disaster.view';
+import { SendAdviceView } from './Pages/SendAdvice/SendAdvice.view';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -30,6 +31,7 @@ const routes: Routes = [
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
   { path: 'disasters', component: DisasterView },
+  { path: 'advice', component: SendAdviceView },
 ];
 
 @NgModule({
