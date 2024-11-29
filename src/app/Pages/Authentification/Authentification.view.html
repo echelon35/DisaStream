@@ -15,13 +15,6 @@
             <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-6">
 
               <div class="text-red-400 text-sm" *ngIf="errorMessage">{{ errorMessage }}</div>
-              <div class="text-red-400 text-sm" *ngIf="passwordFormField?.dirty">
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('^(?=.*[A-Z])')}">At least one uppercase letter is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[a-z])')}">At least one lowercase letter is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(.*[0-9].*)')}">At least one digit is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[!@#$%^&*])')}">At least one special character is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('.{8,}')}">At least 8 characters long.</span>
-              </div>
 
                 <div class="mt-2">
                     <input placeholder="Pseudo" formControlName="username" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
@@ -29,6 +22,14 @@
 
                 <div class="mt-2">
                   <input placeholder="Email" formControlName="mail" type="email" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
+                </div>
+
+                <div class="text-red-400 text-sm" *ngIf="passwordFormField?.dirty">
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('^(?=.*[A-Z])')}">At least one uppercase letter is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[a-z])')}">At least one lowercase letter is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(.*[0-9].*)')}">At least one digit is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[!@#$%^&*])')}">At least one special character is required.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('.{8,}')}">At least 8 characters long.</span>
                 </div>
 
                 <div class="mt-2">
