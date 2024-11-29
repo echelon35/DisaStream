@@ -30,6 +30,7 @@ import { GraphQLModule } from './graphql.module';
 import { ToastrService } from './Shared/Services/Toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
 import { PipeModule } from './PipeModule/pipe.module';
+import { StripeService } from './Services/StripeService';
 
 @NgModule({ declarations: [
         App,
@@ -61,6 +62,7 @@ import { PipeModule } from './PipeModule/pipe.module';
         ToastrService,
         PublicApiService,
         DisasterApiService,
+        StripeService,
         MarkerService,
         ShapeService,
         provideCharts(withDefaultRegisterables()),
