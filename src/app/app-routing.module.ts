@@ -20,7 +20,6 @@ const routes: Routes = [
   { path: 'auth', component: AuthenticationView },
   { path: 'login', component: LoginView },
   { path: 'password/reset', component: ForgotPasswordView },
-  { path: '404', component: PageNotFoundView },
   { path: 'profile', component: UserProfileComponent },
   { path: 'confirm-email', component: ConfirmEmailView },
   { path: 'confirm-association', component: ConfirmAssociationView },
@@ -30,6 +29,7 @@ const routes: Routes = [
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
   { path: 'disasters', component: DisasterView },
+  { path: '**', pathMatch: 'full', component: PageNotFoundView },
 ];
 
 @NgModule({

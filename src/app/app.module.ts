@@ -65,6 +65,5 @@ import { StripeService } from './Services/StripeService';
         StripeService,
         MarkerService,
         ShapeService,
-        provideCharts(withDefaultRegisterables()),
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
+        provideCharts(withDefaultRegisterables()), provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }

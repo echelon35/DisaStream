@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
@@ -6,13 +6,15 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
   templateUrl: './LandingPage.view.html',
-  styleUrls: ['./LandingPage.view.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   isAuth = false;
   isSidebarOpen = false;
+
+  isFeaturePictureVisible = false;
+  @ViewChild("featurePicture") featurePicture: ElementRef;
 
   constructor(private route: ActivatedRoute,
     public router: Router, private authenticationApi: AuthentificationApi, private userApiService: UserApiService, private toastrService: ToastrService){
@@ -35,5 +37,11 @@ export class LandingPageView {
 
   toggleSidebar(): void {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll() {
+    const y = this.featurePicture?.nativeElement?.getBoundingClientRect()?.y;
+    this.isFeaturePictureVisible = y < 550;
   }
 }
