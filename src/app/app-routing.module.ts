@@ -14,11 +14,15 @@ import { FinalScreenView } from './Pages/FinalScreen/FinalScreen.component';
 import { ConfirmEmailView } from './Pages/ConfirmEmail/ConfirmEmail.view';
 import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssociation.view';
 import { DisasterView } from './Pages/DisasterView/disaster.view';
+import { PricingView } from './Pages/Pricing/Pricing.view';
+import { FAQView } from './Pages/FAQ/FAQ.view';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
   { path: 'auth', component: AuthenticationView },
   { path: 'login', component: LoginView },
+  { path: 'price', component: PricingView },
+  { path: 'faq', component: FAQView },
   { path: 'password/reset', component: ForgotPasswordView },
   { path: 'profile', component: UserProfileComponent },
   { path: 'confirm-email', component: ConfirmEmailView },
@@ -28,7 +32,7 @@ const routes: Routes = [
   { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
-  { path: 'disasters', component: DisasterView },
+  { path: 'dashboard/map', component: DisasterView },
   { path: '**', pathMatch: 'full', component: PageNotFoundView },
 ];
 

@@ -17,8 +17,9 @@
           </button>
         </div>
         <div class="hidden lg:flex lg:gap-x-12">
-          <a href="#product" class="text-sm/6 font-semibold text-white">Product</a>
-          <a href="#pricing" class="text-sm/6 font-semibold text-white">Pricing</a>
+          <a href="#product" class="text-sm/6 font-semibold text-white">Produit</a>
+          <a href="#pricing" class="text-sm/6 font-semibold text-white">Prix</a>
+          <a href="#faq" class="text-sm/6 font-semibold text-white">FAQ</a>
         </div>
         @if(isAuth){
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
@@ -27,7 +28,7 @@
         }
         @else{
           <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="/login" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+            <a href="/login" class="text-sm/6 font-semibold text-white">Connexion <span aria-hidden="true">&rarr;</span></a>
           </div>
         }
       </nav>
@@ -57,11 +58,12 @@
           <div class="mt-6 flow-root">
             <div class="-my-6 divide-y divide-gray-500/25">
               <div class="space-y-2 py-6">
-                <a href="#product" (click)="toggleSidebar()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Product</a>
-                <a href="#pricing" (click)="toggleSidebar()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Pricing</a>
+                <a href="#product" (click)="toggleSidebar()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Produit</a>
+                <a href="#pricing" (click)="toggleSidebar()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">Prix</a>
+                <a href="#faq" (click)="toggleSidebar()" class="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800">FAQ</a>
               </div>
               <div class="py-6">
-                <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800">Log in</a>
+                <a href="/login" class="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800">Connexion</a>
               </div>
             </div>
           </div>
@@ -78,11 +80,11 @@
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
             <div class="text-center">
-              <h1 class="text-balance text-5xl font-semibold tracking-tight text-white sm:text-7xl">Stay tuned with nature</h1>
-              <p class="mt-8 text-pretty text-lg font-medium text-gray-400 sm:text-xl/8">Be informed of disasters all around the world. <br>Everywhere. Everytime.</p>
+              <h1 class="text-balance text-5xl font-semibold tracking-tight text-white sm:text-7xl">Le lien entre la nature et votre bureau</h1>
+              <p class="mt-8 text-pretty text-lg font-medium text-gray-400 sm:text-xl/8">Restez connectés à la nature.<br>Partout. Tout le temps.</p>
               <div class="mt-10 flex items-center justify-center gap-x-6">
-                <a href="/auth" class="rounded-md bg-indigo-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Get started</a>
-                <a href="/#product" class="text-sm/6 font-semibold text-white">Learn more <span aria-hidden="true">→</span></a>
+                <a href="/auth" class="rounded-md bg-indigo-700 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400">Commencer</a>
+                <a href="/#product" class="text-sm/6 font-semibold text-white">En savoir plus <span aria-hidden="true">→</span></a>
               </div>
             </div>
           </div>
@@ -100,14 +102,14 @@
         </div>
       </div>
   
-      <!-- Feature section -->
+      <!-- Product section -->
       <div id="product" class="mt-32 sm:mt-56">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-4xl text-center">
-            <h2 class="text-base/7 font-semibold text-indigo-400">Product</h2>
-            <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">Why DisaStream ?</p>
+            <h2 class="text-base/7 font-semibold text-indigo-400">Produit</h2>
+            <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">Pourquoi Disastream ?</p>
           </div>
-          <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-400 sm:text-xl/8">Disastream is the only web app that allows you to receive notifications from nature itself.</p>
+          <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-400 sm:text-xl/8">Disastream est la seule application qui vous permet de recevoir des notifications de la nature elle-même.</p>
         </div>
         <div class="relative overflow-hidden pt-16">
           <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -128,63 +130,66 @@
                   <path fill-rule="evenodd" d="M5.5 17a4.5 4.5 0 0 1-1.44-8.765 4.5 4.5 0 0 1 8.302-3.046 3.5 3.5 0 0 1 4.504 4.272A4 4 0 0 1 15 17H5.5Zm3.75-2.75a.75.75 0 0 0 1.5 0V9.66l1.95 2.1a.75.75 0 1 0 1.1-1.02l-3.25-3.5a.75.75 0 0 0-1.1 0l-3.25 3.5a.75.75 0 1 0 1.1 1.02l1.95-2.1v4.59Z" clip-rule="evenodd" />
                 </svg> -->
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8 6-3-6-3v10"/><path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12"/><path d="m6.49 12.85 11.02 6.3"/><path d="M17.51 12.85 6.5 19.15"/></svg>
-                Monitor an area...
+                Surveillez une zone...
               </dt>
-              <dd class="inline">Want to monitor a specific location on the globe? Of course you can.</dd>
+              <dd class="inline">Vous voulez surveillez un coin spécifique du globe ? Vous pouvez.</dd>
             </div>
             <div class="relative pl-9">
               <dt class="inline font-semibold text-gray-200">
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                ...Or the entire world
+                ...Ou le monde entier
               </dt>
-              <dd class="inline">Because we can also want to know what's happening everywhere.</dd>
+              <dd class="inline">Parce que c'est toujours intéressant de savoir ce qu'il se passe ailleurs.</dd>
             </div>
             <div class="relative pl-9">
               <dt class="inline font-semibold text-gray-200">
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>
-                Four hazards available now.
+                4 aléas disponibles dès à présent
               </dt>
-              <dd class="inline">More later. Get notified when new types are availables.</dd>
+              <dd class="inline">Plus ultérieurement. Soyez notifiés quand ils seront disponibles.</dd>
             </div>
             <div class="relative pl-9">
               <dt class="inline font-semibold text-gray-200">
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.106 5.553a2 2 0 0 0 1.788 0l3.659-1.83A1 1 0 0 1 21 4.619v12.764a1 1 0 0 1-.553.894l-4.553 2.277a2 2 0 0 1-1.788 0l-4.212-2.106a2 2 0 0 0-1.788 0l-3.659 1.83A1 1 0 0 1 3 19.381V6.618a1 1 0 0 1 .553-.894l4.553-2.277a2 2 0 0 1 1.788 0z"/><path d="M15 5.764v15"/><path d="M9 3.236v15"/></svg>
-                Beautiful maps.
+                De belles cartes
               </dt>
-              <dd class="inline">Because it's always easier to visualize on a map, we dit it.</dd>
+              <dd class="inline">Parce qu'une belle carte vaut plus qu'un long discours.</dd>
             </div>
             <div class="relative pl-9">
               <dt class="inline font-semibold text-gray-200">
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
-                Notifications everywhere.
+                Des notifications où que vous soyez
               </dt>
-              <dd class="inline">Configure and receive your alerts, no matter where you are.</dd>
+              <dd class="inline">Configurez et recevez vos alertes par mail.</dd>
             </div>
             <div class="relative pl-9">
               <dt class="inline font-semibold text-gray-200">
                 <svg class="absolute left-1 top-1 size-5 text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17V9"/><path d="M18 17v-3"/><path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M8 17V5"/></svg>
-                Graphics
+                Graphiques
               </dt>
-              <dd class="inline">Retrieve some statistics about your alerts.</dd>
+              <dd class="inline">Visualisez des statistiques intéressantes sur vos alertes.</dd>
             </div>
           </dl>
         </div>
       </div>
 
+      <!-- Feature section -->
+
+      <!-- Pricing section -->
       <div id="pricing" class="py-24 sm:py-32 mt-32">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div class="mx-auto max-w-4xl text-center">
-            <h2 class="text-base/7 font-semibold text-indigo-400">Pricing</h2>
-            <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">Prices adapted to each need</p>
+            <h2 class="text-base/7 font-semibold text-indigo-400">Prix</h2>
+            <p class="mt-2 text-balance text-5xl font-semibold tracking-tight text-white sm:text-6xl">Des prix adaptés à chaque besoin</p>
           </div>
-          <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-400 sm:text-xl/8">Choose the offer that best suits your needs or the needs of your business.</p>
+          <p class="mx-auto mt-6 max-w-2xl text-pretty text-center text-lg font-medium text-gray-400 sm:text-xl/8">Choisissez l'offre la plus approprié à vos besoins ou à votre business.</p>
       
           <!-- xs to lg -->
           <div class="mx-auto mt-12 max-w-md space-y-8 sm:mt-16 lg:hidden">
             <section class="p-8">
-              <h3 id="tier-basic" class="text-sm/6 font-semibold text-white">Basic</h3>
+              <h3 id="tier-basic" class="text-sm/6 font-semibold text-white">Basique</h3>
               <p class="mt-2 flex items-baseline gap-x-1">
-                <span class="text-4xl font-semibold text-white">Free</span>
+                <span class="text-4xl font-semibold text-white">Gratuit</span>
               </p>
               <ul role="list" class="mt-10 space-y-4 text-sm/6 text-white">
                 <li>
@@ -193,7 +198,7 @@
                       <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                       </svg>
-                      <span> Customizable alerts on a country of your choice </span>
+                      <span> Alertes customisables sur le pays de votre choix </span>
                       <span class="text-sm/6 text-gray-400">(2)</span>
                     </li>
                     <li class="flex gap-x-3">
@@ -201,7 +206,7 @@
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                       </svg>
                       <span>
-                        One hazard available for each alert
+                        Un aléa par alerte
                       </span>
                     </li>
                     <li class="flex gap-x-3">
@@ -209,7 +214,7 @@
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                       </svg>
                       <span>
-                        Interactive map to visualize reported hazards
+                        Carte interactive pour visualiser le résultat de vos alertes
                       </span>
                     </li>
                     <li class="flex gap-x-3">
@@ -217,7 +222,7 @@
                         <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                       </svg>
                       <span>
-                        Receiving alerts by email
+                        Recevez vos alertes par mail
                       </span>
                     </li>
                   </ul>
@@ -225,32 +230,32 @@
               </ul>
             </section>
             <section class="rounded-xl bg-white/5 p-8 ring-1 ring-inset ring-white/10">
-              <h3 id="tier-growth" class="text-sm/6 font-semibold text-white">Premium pack</h3>
+              <h3 id="tier-growth" class="text-sm/6 font-semibold text-white">Pack premium</h3>
               <p class="mt-2 flex items-baseline gap-x-1">
                 <span class="text-4xl font-semibold text-white">3,99€</span>
-                <span class="text-sm font-semibold text-gray-300">/month</span>
+                <span class="text-sm font-semibold text-gray-300">/mois</span>
               </p>
-              <a href="#" aria-describedby="tier-growth" class="mt-8 block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Buy plan</a>
+              <button (click)="subscribe()" aria-describedby="tier-growth" class="mt-8 block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Souscrire</button>
               <ul role="list" class="mt-10 space-y-4 text-sm/6 text-white">
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> Customizable alerts on a country of your choice </span>
+                  <span> Alertes customisables sur le pays de votre choix </span>
                   <span class="text-sm/6 text-gray-400">(8)</span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> All hazards available for each alert </span>
+                  <span> Tous les aléas disponibles pour chaque alerte </span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Interactive map to visualize reported hazards
+                    Carte interactive pour visualiser le résultat de vos alertes
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -266,7 +271,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Monthly reports
+                    Rapports mensuels
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -274,38 +279,38 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Receiving alerts by email
+                    Recevez vos alertes par mail
                   </span>
                 </li>
               </ul>
             </section>
             <section class="p-8">
-              <h3 id="tier-scale" class="text-sm/6 font-semibold text-white">Pro pack</h3>
+              <h3 id="tier-scale" class="text-sm/6 font-semibold text-white">Pack Pro</h3>
               <p class="mt-2 flex items-baseline gap-x-1">
                 <span class="text-4xl font-semibold text-white">399€</span>
-                <span class="text-sm font-semibold text-gray-300">/month</span>
+                <span class="text-sm font-semibold text-gray-300">/mois</span>
               </p>
-              <a href="#" aria-describedby="tier-scale" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Buy plan</a>
+              <a href="#" aria-describedby="tier-scale" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Souscrire</a>
               <ul role="list" class="mt-10 space-y-4 text-sm/6 text-white">
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> Customizable alerts on a the area of your choice or the entire world </span>
+                  <span> Alertes customisables sur la zone de votre choix ou le monde entier </span>
                   <span class="text-sm/6 text-gray-400">(30)</span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> All hazards available for each alert </span>
+                  <span> Tous les aléas disponibles pour chaque alerte </span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Interactive map to visualize reported hazards
+                    Carte interactive pour visualiser le résultat de vos alertes
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -321,7 +326,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Monthly and custom reports
+                    Rapports mensuels et personnalisés
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -329,7 +334,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    10 team members
+                    Gérez 10 comptes dans la même équipe
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -337,7 +342,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Receiving alerts by email, rss or API
+                    Recevez vos alertes par mail, flux rss ou API
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -345,38 +350,38 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Archives access
+                    Accès aux archives
                   </span>
                 </li>
               </ul>
             </section>
             <section class="p-8">
-              <h3 id="tier-scale" class="text-sm/6 font-semibold text-white">God pack</h3>
+              <h3 id="tier-scale" class="text-sm/6 font-semibold text-white">Pack Ultime</h3>
               <p class="mt-2 flex items-baseline gap-x-1">
                 <span class="text-4xl font-semibold text-white">699€</span>
-                <span class="text-sm font-semibold text-gray-300">/month</span>
+                <span class="text-sm font-semibold text-gray-300">/mois</span>
               </p>
-              <a href="#" aria-describedby="tier-scale" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Buy plan</a>
+              <a href="#" aria-describedby="tier-scale" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Souscrire</a>
               <ul role="list" class="mt-10 space-y-4 text-sm/6 text-white">
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> Customizable alerts of the locations of your choice, or the entire world </span>
-                  <span class="text-sm/6 text-gray-400">(Unlimited)</span>
+                  <span> Alertes customisables sur la zone de votre choix ou le monde entier </span>
+                  <span class="text-sm/6 text-gray-400">(Illimité)</span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
-                  <span> All hazards available for each alert </span>
+                  <span> Tous les aléas disponibles pour chaque alerte </span>
                 </li>
                 <li class="flex gap-x-3">
                   <svg class="h-6 w-5 flex-none text-lime-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Interactive map to visualize reported hazards
+                    Carte interactive pour visualiser le résultat de vos alertes
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -392,7 +397,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Monthly and custom reports
+                    Rapports mensuels et personnalisés
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -400,7 +405,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Unlimited team members
+                    Membres illimités
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -408,7 +413,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Receiving alerts by email, rss or API
+                    Recevez vos alertes par mail, flux RSS ou API
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -416,7 +421,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Archives access
+                    Accès aux archives
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -424,7 +429,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    Grouping alerts
+                    Possibilités de grouper des alertes
                   </span>
                 </li>
                 <li class="flex gap-x-3">
@@ -432,7 +437,7 @@
                     <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd" />
                   </svg>
                   <span>
-                    CSV imports of areas
+                    Imports CSV de points d'intérêts à surveiller
                   </span>
                 </li>
               </ul>
@@ -449,7 +454,7 @@
               </div>
               <table class="w-full table-fixed border-separate border-spacing-x-8 text-left">
                 <caption class="sr-only">
-                  Pricing plan comparison
+                  Comparaison des plans
                 </caption>
                 <colgroup>
                   <col class="w-1/5">
@@ -462,75 +467,75 @@
                   <tr>
                     <td></td>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <h3 id="tier-basic" class="text-lg/8 font-semibold text-white">Basic</h3>
+                      <h3 id="tier-basic" class="text-lg/8 font-semibold text-white">Basique</h3>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <h3 id="tier-premium" class="text-lg/8 font-semibold text-indigo-400">Premium pack</h3>
+                      <h3 id="tier-premium" class="text-lg/8 font-semibold text-indigo-400">Pack Premium</h3>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <h3 id="tier-pro" class="text-lg/8 font-semibold text-white">Pro pack</h3>
+                      <h3 id="tier-pro" class="text-lg/8 font-semibold text-white">Pack Pro</h3>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <h3 id="tier-god" class="text-lg/8 font-semibold text-white">God pack</h3>
+                      <h3 id="tier-god" class="text-lg/8 font-semibold text-white">Pack Ultime</h3>
                     </th>
                   </tr>
                   <tr>
                     <td></td>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">For those planning a trip to another country.</p>
+                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">Pour ceux qui planfient un voyage dans un autre pays.</p>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">For nature enthusiasts who want to stay informed.</p>
+                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">Pour les passionnés qui veulent rester en veille.</p>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">For companies that need to be notified first after an event.</p>
+                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">Pour les entreprises qui veulent être averties avant tout le monde.</p>
                     </th>
                     <th scope="col" class="px-6 pt-6 xl:px-8 xl:pt-8">
-                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">For businesses that need to monitor multiple, highly specific locations.</p>
+                      <p class="mt-4 text-sm/6 text-gray-400 mb-2">Pour les entreprises avec de grosses équipes, qui ont besoin de surveiller des zones très précises.</p>
                     </th>
                   </tr>
                 </thead>
                 <tbody>
                   <!-- Prices -->
                   <tr>
-                    <th scope="row"><span class="sr-only">Price</span></th>
+                    <th scope="row"><span class="sr-only">Prix</span></th>
                     <td class="px-6 pt-2 xl:px-8">
                       <div class="flex items-baseline gap-x-1 text-white">
-                        <span class="text-4xl font-semibold">Free</span>
+                        <span class="text-4xl font-semibold">Gratuit</span>
                       </div>
                     </td>
                     <td class="px-6 pt-2 xl:px-8">
                       <div class="flex items-baseline gap-x-1 text-white">
                         <span class="text-4xl font-semibold">3,99€</span>
-                        <span class="text-sm/6 font-semibold">/month</span>
+                        <span class="text-sm/6 font-semibold">/mois</span>
                       </div>
-                      <a href="#" class="mt-8 block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Buy plan</a>
+                      <button (click)="subscribe()" class="w-full mt-8 block rounded-md bg-indigo-500 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Souscrire</button>
                     </td>
                     <td class="px-6 pt-2 xl:px-8">
                       <div class="flex items-baseline gap-x-1 text-white">
                         <span class="text-4xl font-semibold">399€</span>
-                        <span class="text-sm/6 font-semibold">/month</span>
+                        <span class="text-sm/6 font-semibold">/mois</span>
                       </div>
-                      <a href="#" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Buy plan</a>
+                      <a href="#" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Souscrire</a>
                     </td>
                     <td class="px-6 pt-2 xl:px-8">
                       <div class="flex items-baseline gap-x-1 text-white">
                         <span class="text-4xl font-semibold">699€</span>
-                        <span class="text-sm/6 font-semibold">/month</span>
+                        <span class="text-sm/6 font-semibold">/mois</span>
                       </div>
-                      <a href="#" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Buy plan</a>
+                      <a href="#" class="mt-8 block rounded-md bg-white/10 px-3 py-2 text-center text-sm/6 font-semibold text-white hover:bg-white/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Souscrire</a>
                     </td>
                   </tr>
                   <tr>
                     <th scope="colgroup" colspan="4" class="pb-4 pt-8 text-sm/6 font-semibold text-white">
-                      Features
+                      Fonctionnalités
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/10"></div>
                     </th>
                   </tr>
                   <!--Alerts -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Alerts
+                      Alertes
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -543,51 +548,51 @@
                       <div class="text-center text-sm/6 text-gray-300">30</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Unlimited</div>
+                      <div class="text-center text-sm/6 text-gray-300">Illimitées</div>
                     </td>
                   </tr>
                   <!--Hazards -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Hazards type
+                      Types de risques
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">One per alert</div>
+                      <div class="text-center text-sm/6 text-gray-300">Un par alerte au choix</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">All</div>
+                      <div class="text-center text-sm/6 text-gray-300">Tous</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">All</div>
+                      <div class="text-center text-sm/6 text-gray-300">Tous</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">All</div>
+                      <div class="text-center text-sm/6 text-gray-300">Tous</div>
                     </td>
                   </tr>
                   <!--Alert types -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Alert types
+                      Types d'alertes
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Country only</div>
+                      <div class="text-center text-sm/6 text-gray-300">Pays seulement</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Country only</div>
+                      <div class="text-center text-sm/6 text-gray-300">Pays seulement</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Country, custom or world</div>
+                      <div class="text-center text-sm/6 text-gray-300">Pays, zone personnalisée ou monde entier</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Country, custom or world</div>
+                      <div class="text-center text-sm/6 text-gray-300">Pays, zone personnalisée ou monde entier</div>
                     </td>
                   </tr>
                   <!--Team members -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Team members
+                      Equipe (membres)
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -600,7 +605,7 @@
                       <div class="text-center text-sm/6 text-gray-300">10</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Unlimited</div>
+                      <div class="text-center text-sm/6 text-gray-300">Illimités</div>
                     </td>
                   </tr>
       
@@ -613,7 +618,7 @@
                   <!--Interactive map -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Interactive map to visualize reported hazards
+                      Carte interactive pour visualiser les évènements
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -644,7 +649,7 @@
                   <!--Dashboard -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Dashboard
+                      Dashboard avec statistiques
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -675,7 +680,7 @@
                   <!--Monthly reports -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Monthly reports
+                      Rapports mensuels
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -706,7 +711,7 @@
                   <!--Custom reports -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Custom reports
+                      Rapports personnalisés
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -737,14 +742,14 @@
 
                   <tr>
                     <th scope="colgroup" colspan="4" class="pb-4 pt-16 text-sm/6 font-semibold text-white">
-                      Monitoring
+                      Surveillance
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/10"></div>
                     </th>
                   </tr>
                   <!-- Alert format -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Reception mode
+                      Mode de réception
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -754,16 +759,16 @@
                       <div class="text-center text-sm/6 text-gray-300">Mail</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Mail, RSS or API</div>
+                      <div class="text-center text-sm/6 text-gray-300">Mail, RSS ou API</div>
                     </td>
                     <td class="px-6 py-4 xl:px-8">
-                      <div class="text-center text-sm/6 text-gray-300">Mail, RSS or API</div>
+                      <div class="text-center text-sm/6 text-gray-300">Mail, RSS ou API</div>
                     </td>
                   </tr>
                   <!-- Alert grouping -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Alert grouping
+                      Groupes d'alertes
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -794,7 +799,7 @@
                   <!-- Import CSV -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      CSV Import of areas to monitor
+                      Import CSV de points d'intérêts
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -832,7 +837,7 @@
                   <!--Archives access -->
                   <tr>
                     <th scope="row" class="py-4 text-sm/6 font-normal text-white">
-                      Get archives access
+                      Accès aux archives
                       <div class="absolute inset-x-8 mt-4 h-px bg-white/5"></div>
                     </th>
                     <td class="px-6 py-4 xl:px-8">
@@ -866,6 +871,66 @@
           </div>
         </div>
       </div>
+
+      <!-- FAQ section -->
+      <div id="faq" class="mt-32">
+        <div class="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+          <div class="mx-auto max-w-4xl divide-y divide-white/10">
+            <h2 class="text-4xl font-semibold tracking-tight text-white sm:text-5xl">⚡ Foire aux questions</h2>
+            <dl class="mt-10 space-y-6 divide-y divide-white/10">
+              <div *ngFor="let faq of faqs; let i = index" class="pt-6">
+                <dt>
+                  <!-- Expand/collapse question button -->
+                  <button
+                    type="button"
+                    class="flex w-full items-start justify-between text-left text-white"
+                    (click)="toggleFaq(i)"
+                    [attr.aria-controls]="'faq-' + i"
+                    [attr.aria-expanded]="faq.open"
+                  >
+                    <span class="text-base font-semibold">{{ faq.question }}</span>
+                    <span class="ml-6 flex h-7 items-center">
+                      <!-- Icon when question is collapsed -->
+                      <svg
+                        *ngIf="!faq.open"
+                        class="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+                      </svg>
+                      <!-- Icon when question is expanded -->
+                      <svg
+                        *ngIf="faq.open"
+                        class="w-6 h-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+                      </svg>
+                    </span>
+                  </button>
+                </dt>
+                <dd
+                  [id]="'faq-' + i"
+                  class="overflow-hidden transition-all duration-300 ease-in-out"
+                  [ngClass]="{ 'max-h-0': !faq.open, 'max-h-screen': faq.open }"
+                >
+                  <p class="mt-2 pr-12 text-base text-gray-300" [innerHtml]="faq.answer"></p>
+                </dd>
+              </div>
+            </dl>
+            
+          </div>
+        </div>
+      </div>
+      
       
     </main>
   
@@ -878,23 +943,23 @@
             <div class="md:grid md:grid-cols-2 md:gap-8">
             </div>
             <div class="md:grid md:grid-cols-2 md:gap-8">
-              <!-- <div>
-                <h3 class="text-sm/6 font-semibold text-white">Company</h3>
+              <div>
+                <h3 class="text-sm/6 font-semibold text-white">Disastream</h3>
                 <ul role="list" class="mt-6 space-y-4">
                   <li>
-                    <a href="#" class="text-sm/6 text-gray-400 hover:text-white">About</a>
+                    <a href="#" class="text-sm/6 text-gray-400 hover:text-white">A propos</a>
                   </li>
                   <li>
-                    <a href="#" class="text-sm/6 text-gray-400 hover:text-white">Blog</a>
+                    <a href="/price" class="text-sm/6 text-gray-400 hover:text-white">Prix</a>
                   </li>
                   <li>
-                    <a href="#" class="text-sm/6 text-gray-400 hover:text-white">Jobs</a>
+                    <a href="/faq" class="text-sm/6 text-gray-400 hover:text-white">FAQ</a>
                   </li>
-                  <li>
+                  <!--<li>
                     <a href="#" class="text-sm/6 text-gray-400 hover:text-white">Press</a>
-                  </li>
+                  </li> -->
                 </ul>
-              </div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -902,3 +967,4 @@
     </footer>
   </div>
   
+  <app-free-modal #free></app-free-modal>

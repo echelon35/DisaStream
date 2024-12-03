@@ -7,10 +7,11 @@ import { DisasterDetailComponent } from './DisasterDetail/disaster-detail.compon
 import { MapModule } from '../Map/map.module';
 import { SharedModule } from '../Shared/Shared.module';
 import { EndAlertComponent } from './EndAlert/EndAlert.modal';
+import { FreeModeComponent } from './FreeMode/FreeMode.modal';
 
 @NgModule({
-    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent],
+    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent],
     imports: [CommonModule, FormsModule, MapModule, SharedModule, ReactiveFormsModule],
-    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent],
+    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent],
 })
 export class ModalsModule { }

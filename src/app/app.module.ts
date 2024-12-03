@@ -31,6 +31,8 @@ import { ToastrService } from './Shared/Services/Toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
 import { PipeModule } from './PipeModule/pipe.module';
 import { StripeService } from './Services/StripeService';
+import { PricingView } from './Pages/Pricing/Pricing.view';
+import { FAQView } from './Pages/FAQ/FAQ.view';
 
 @NgModule({ declarations: [
         App,
@@ -43,9 +45,12 @@ import { StripeService } from './Services/StripeService';
         ManageAlertsView,
         UserProfileComponent,
         ConfirmEmailView,
+        PricingView,
+        FAQView,
         ConfirmAssociationView,
     ],
-    bootstrap: [App], imports: [BrowserModule,
+    bootstrap: [App], 
+    imports: [BrowserModule,
         CommonModule,
         FormsModule,
         MapModule,
@@ -57,7 +62,7 @@ import { StripeService } from './Services/StripeService';
         BrowserAnimationsModule,
         HttpClientModule,
         GraphQLModule], 
-        providers: [SeoService,
+    providers: [SeoService,
         AuthentificationApi,
         ToastrService,
         PublicApiService,
