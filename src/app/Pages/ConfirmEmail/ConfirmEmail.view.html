@@ -20,7 +20,7 @@
                 <form class="space-y-6" [formGroup]="resendForm" (ngSubmit)="resend()">
                     <input placeholder="Email" formControlName="mail" type="email" required  class="mt-2 block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
                     <div class="text-red-400 text-sm" *ngIf="mailFormField?.invalid">
-                        <span class="block">Invalid mail format.</span>
+                        <span class="block">Format de mail invalide.</span>
                     </div>
                     <button class="rounded-md bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-white/20">Renvoyer un lien</button>
                 </form>

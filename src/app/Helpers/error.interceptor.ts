@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 //L'intercepteur d'erreur intercepte les réponses http de l'API pour vérifier s'il y a eu des erreurs. 
 //S'il y a une réponse 401 non autorisée, l'utilisateur est automatiquement déconnecté de l'application, 
@@ -16,13 +16,11 @@ export class ErrorInterceptor implements HttpInterceptor {
         return next.handle(request).pipe(catchError(err => {
 
             if(err.error){
-                const error = err.error.message || err.statusText;
+                // const error = err.error.message || err.statusText;
 
-                // if(err.status == 404){
-                //     this.router.navigate(['/404']).then(() => {
-                //         console.log("");
-                //     });
-                // }
+                if(err.status == 404){
+                    this.router.navigate(['/404']);
+                }
                 
                 // return throwError(error);
             }

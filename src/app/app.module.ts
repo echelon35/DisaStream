@@ -30,6 +30,9 @@ import { GraphQLModule } from './graphql.module';
 import { ToastrService } from './Shared/Services/Toastr.service';
 import { ShapeService } from './Map/Services/shape.service';
 import { PipeModule } from './PipeModule/pipe.module';
+import { StripeService } from './Services/StripeService';
+import { PricingView } from './Pages/Pricing/Pricing.view';
+import { FAQView } from './Pages/FAQ/FAQ.view';
 
 @NgModule({ declarations: [
         App,
@@ -42,9 +45,12 @@ import { PipeModule } from './PipeModule/pipe.module';
         ManageAlertsView,
         UserProfileComponent,
         ConfirmEmailView,
+        PricingView,
+        FAQView,
         ConfirmAssociationView,
     ],
-    bootstrap: [App], imports: [BrowserModule,
+    bootstrap: [App], 
+    imports: [BrowserModule,
         CommonModule,
         FormsModule,
         MapModule,
@@ -56,13 +62,13 @@ import { PipeModule } from './PipeModule/pipe.module';
         BrowserAnimationsModule,
         HttpClientModule,
         GraphQLModule], 
-        providers: [SeoService,
+    providers: [SeoService,
         AuthentificationApi,
         ToastrService,
         PublicApiService,
         DisasterApiService,
+        StripeService,
         MarkerService,
         ShapeService,
-        provideCharts(withDefaultRegisterables()),
-        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }, provideHttpClient(withInterceptorsFromDi())] })
+        provideCharts(withDefaultRegisterables()), provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
