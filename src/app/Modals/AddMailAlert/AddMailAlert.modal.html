@@ -1,5 +1,5 @@
-<div (click)="this.close()" class="absolute top-0 left-0 z-modal-bg bg-gray-300 w-dvw h-dvh opacity-60" *ngIf="isVisible" ></div>
-<div *ngIf="isVisible" class="z-modal absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow sm:rounded-lg">
+<div (click)="this.close()" class="fixed top-0 left-0 z-modal-bg bg-gray-300 w-dvw h-dvh opacity-60" *ngIf="isVisible" ></div>
+<div *ngIf="isVisible" class="z-modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow sm:rounded-lg w-96">
     <div class="px-4 py-5 sm:p-6">
       <h3 class="text-base font-semibold text-gray-900">Ajouter un membre d'équipe</h3>
       <div class="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">

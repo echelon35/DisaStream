@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FreeModeComponent } from 'src/app/Modals/FreeMode/FreeMode.modal';
+import { ProPacksComponent } from 'src/app/Modals/ProPacks/ProPacks.modal';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
@@ -13,6 +14,9 @@ export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   isAuth = false;
   isSidebarOpen = false;
+
+  //Change detector to update component manually
+  private cd = inject(ChangeDetectorRef)
 
   faqs = [
     {
@@ -80,6 +84,7 @@ export class LandingPageView {
   isFeaturePictureVisible = false;
   @ViewChild("featurePicture") featurePicture: ElementRef;
   @ViewChild("free") freeModal: FreeModeComponent;
+  @ViewChild("pro") proPackModal: ProPacksComponent;
 
   constructor(private route: ActivatedRoute,
     public router: Router, 
@@ -118,7 +123,19 @@ export class LandingPageView {
   }
 
   subscribe(){
-    console.log(this.freeModal);
     this.freeModal?.toggleVisible();
+    this.updateComponent();
   }
+
+  subscribePro(){
+    this.proPackModal?.open();
+    this.updateComponent();
+  }
+
+  /**
+   * Update view
+   */
+    updateComponent(){
+      this.cd.markForCheck();
+    }
 }

@@ -8,10 +8,11 @@ import { MapModule } from '../Map/map.module';
 import { SharedModule } from '../Shared/Shared.module';
 import { EndAlertComponent } from './EndAlert/EndAlert.modal';
 import { FreeModeComponent } from './FreeMode/FreeMode.modal';
+import { ProPacksComponent } from './ProPacks/ProPacks.modal';
 
 @NgModule({
-    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent],
+    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent],
     imports: [CommonModule, FormsModule, MapModule, SharedModule, ReactiveFormsModule],
-    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent],
+    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent],
 })
 export class ModalsModule { }
