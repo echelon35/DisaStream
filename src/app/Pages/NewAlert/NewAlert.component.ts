@@ -407,7 +407,7 @@ export class NewAlertView {
     }
 
     createAlert(){
-      this.endAlertModal?.open();
+
       if(this.formGroup.value.name != null){
         this.alert.name = this.formGroup.value.name;
       }
@@ -424,7 +424,6 @@ export class NewAlertView {
         return;
       }
 
-      console.log(this.alert);
       this.endAlertModal?.open();
       this.endAlertModal?.createAlert();
 
