@@ -39,13 +39,25 @@ export class ManageAlertsView {
     })
   }
 
-  // edit(id: number){
-  //   this.router.navigateByUrl('/dashboard/alert/edit?id=' + id);
-  // }
+  disableAlert(id: number){
+    this.alertApiService.activateAlert(id,false).subscribe(() => {
+      this.toastrService.info('Alerte désactivée');
+      this.getAlerts();
+    });
+  }
+
+  activateAlert(id: number){
+    this.alertApiService.activateAlert(id,true).subscribe(() => {
+      this.toastrService.info('Alerte activée');
+      this.getAlerts();
+    });
+  }
 
   deleteAlert(id: number){
-    this.alertApiService.deleteAlert(id).subscribe((message) => this.toastrService.info(message));
-    this.getAlerts();
+    this.alertApiService.deleteAlert(id).subscribe((message) => {
+      this.toastrService.info(message);
+      this.getAlerts();
+    });
   }
 
 

@@ -19,26 +19,62 @@ export class FAQView {
     },
     {
       question: "En quoi Disastream peut-il aider mon business ?",
-      answer: `Certains métiers nécessitent par nature une information rapide et fiable. En ce sens, Disastream peut vous aider en vous
-      fournissant une information de qualité en un temps record.
-      <br>
-      <ul class="list-disc">
-        <li><b>Vous étiez déjà abonné à des sources utilisées par Disastream ?</b> Disastream centralise tout, plus besoin de jongler entres les onglets.</li>
-        <li><b>Vous avez besoin de surveiller des lieux particuliers ?</b> Importez votre liste, on s'occupe du reste.</li>
-        <li><b>Vous manquiez d'outils pour visualiser les données ?</b> Disastream vous les mets à disposition.</li>
+      answer: `<p>Certains métiers nécessitent par nature une information rapide et fiable. En ce sens, Disastream peut vous aider en vous
+      fournissant une information de qualité en un temps record.</p>
+      <ul role="list" class="mt-2">
+        <li class="my-1"><b class="text-indigo-400">Vous étiez déjà abonné à des sources utilisées par Disastream ?</b> Disastream centralise tout, plus besoin de jongler entres les onglets.</li>
+        <li class="my-1"><b class="text-indigo-400">Vous avez besoin de surveiller des lieux particuliers ?</b> Importez votre liste, on s'occupe du reste.</li>
+        <li class="my-1"><b class="text-indigo-400">Vous manquiez d'outils pour visualiser les données ?</b> Disastream vous les mets à disposition.</li>
       </ul>`,
       open: false,
     },
     {
       question: "Quels sont les évènements surveillés par Disastream ?",
-      answer: `A l'heure actuelle, Disastream surveille quatre typologies d'évènements :
-      <ul>
-        <li>Cyclones & typhons</li>
-        <li>Eruptions volcaniques</li>
-        <li>Inondations</li>
-        <li>Séismes</li>
+      answer: `<p>A l'heure actuelle, Disastream surveille quatre typologies d'évènements :</p>
+
+      <ul role="list" class="mt-2">
+        <li>
+          <div class="flex items-center gap-x-3">
+            <div class="flex-none">
+              <div class="size-6">🌀</div>
+            </div>
+            <h2 class="min-w-0 text-sm/6 font-semibold text-white">
+            Cyclones & typhons
+            </h2>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center gap-x-3">
+            <div class="flex-none">
+              <div class="size-6">🌋</div>
+            </div>
+            <h2 class="min-w-0 text-sm/6 font-semibold text-white">
+              Eruptions volcaniques
+            </h2>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center gap-x-3">
+            <div class="flex-none">
+              <div class="size-6">💧</div>
+            </div>
+            <h2 class="min-w-0 text-sm/6 font-semibold text-white">
+            Inondations
+            </h2>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center gap-x-3">
+            <div class="flex-none">
+              <div class="size-6">🌏</div>
+            </div>
+            <h2 class="min-w-0 text-sm/6 font-semibold text-white">
+            Séismes
+            </h2>
+          </div>
+        </li>
       </ul>
-      Beaucoup d'autres sont déjà prévues, n'hésitez pas à vous abonner à la newsletter pour en savoir plus !
+      <p class="mt-2">Beaucoup d'autres sont déjà prévues, n'hésitez pas à vous abonner à la newsletter pour en savoir plus !</p>
       `,
       open: false,
     },
@@ -55,7 +91,9 @@ export class FAQView {
     {
       question: "Pourquoi je reçois certains évènements longtemps après ?",
       answer: `Certaines sources nous alertent parfois d'un évènement longtemps après sa survenue. Cela s'explique car la saisie au sein de la source peut 
-      parfois être réalisée par des humains et prendre du temps à la vérification. Toutefois, les utilisateurs sont majoritairement avertis dans les minutes voire les
+      parfois être réalisée par des humains et prendre du temps à la vérification. 
+      De notre côté nous faisons le maximum pour que l'information vous parvienne au plus vite.
+      Les utilisateurs sont majoritairement avertis dans les minutes voire les
       heures qui suivent un évènement.`,
       open: false,
     },

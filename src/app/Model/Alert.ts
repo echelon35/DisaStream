@@ -12,4 +12,5 @@ export class Alert {
     createdAt: Date;
     updatedAt: Date;
     countryId: number | null;
+    isActivate: boolean;
 }

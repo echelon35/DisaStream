@@ -59,4 +59,8 @@ export class AlertApiService {
     deleteAlert(alertId: number){
       return this.http.delete<string>(API_URL + '/alert/delete/' + alertId, this.httpOptions);
     }
+
+    activateAlert(alertId: number, activation: boolean){
+      return this.http.put<string>(API_URL + '/alert/activate/' + alertId + '?isActivate=' + activation, {}, this.httpOptions);
+    }
 }
