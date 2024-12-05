@@ -25,16 +25,23 @@ export class MarkerService {
    */
   makeEarthquakeMarkers(map: L.Map, layer: L.LayerGroup, earthquake:Earthquake, cluster: L.MarkerClusterGroup | null, clickableMarker: boolean, addOnCluster = true): void{
 
-    if(earthquake != undefined && map != undefined){
-        const lon = earthquake.point.coordinates[0];
-        const lat = earthquake.point.coordinates[1];
+    if(earthquake != null && map != null){
+        const lon = earthquake?.point?.coordinates[0];
+        const lat = earthquake?.point?.coordinates[1];
         const latlng = [lat,lon];
         const marker = this.apparenceEarthquake(earthquake,latlng);
 
-        // if(clickableMarker){
-        //   var popup = this.popupService.makeSeismePopup(earthquake);
-        //   marker.bindPopup(popup,{closeButton: false, closeOnClick: true, className: ""});
-        // }
+        if(clickableMarker){
+          marker.on('click',() => {
+
+            if(lon && lat){
+              map.flyTo([lat,lon], 5, {animate: true})
+            }
+
+            this.detailService.setDisasterDetail(earthquake);
+            this.detailService.show();
+          })
+        }
 
         if(addOnCluster && cluster != null){
           marker.addTo(cluster!);
@@ -45,7 +52,6 @@ export class MarkerService {
           layer.addTo(map);
         }
 
-      
     }
 
   }
@@ -65,37 +71,49 @@ export class MarkerService {
           const lat = flood.point.coordinates[1];
           const latlng = [lat,lon];
           const marker = this.apparenceFlood(flood,latlng);
-  
-          // if(clickableMarker){
-          //   var popup = this.popupService.makeSeismePopup(earthquake);
-          //   marker.bindPopup(popup,{closeButton: false, closeOnClick: true, className: ""});
-          // }
-        marker.on('click',() => {
-          this.detailService.setDisasterDetail(flood);
-        })
 
-        //Surface de l'inondation
-        if(flood.surface != null){
-          const flSurface = L.geoJSON(flood.surface);
-          flSurface.setStyle({
-            color: '#00C0FF',
-            weight: 2
-          })
-          flSurface.setZIndex(4)
-          flSurface.addTo(map);
+          if(clickableMarker){
+            marker.on('click',() => {
 
-          // layer.addTo(map);
-        }
-        // else{
+              const lon = flood.point.coordinates[0];
+              const lat = flood.point.coordinates[1];
+              if(flood.surface){
+                const flSurface = L.geoJSON(flood.surface);
+                map.flyToBounds(flSurface.getBounds(), { duration: 3 })
+              }
+              else{
+                  if(lon && lat){
+                      map.setView([lat,lon],5, { animate: true });
+                  }
+              }
+
+              this.detailService.setDisasterDetail(flood);
+              this.detailService.show();
+            })
+          }
+
+          //Surface de l'inondation
+          if(flood.surface != null){
+            const flSurface = L.geoJSON(flood.surface);
+            flSurface.setStyle({
+              color: '#00C0FF',
+              weight: 2
+            })
+            flSurface.setZIndex(4)
+            flSurface.addTo(layer);
+
+            // layer.addTo(map);
+          }
+
           if(addOnCluster && cluster != null){
             marker.addTo(cluster!);
             cluster!.addTo(map);
-          }
-          else{
-            marker.addTo(layer);
             layer.addTo(map);
           }
-        // }
+          else{
+            marker?.addTo(layer);
+            layer?.addTo(map);
+          }
   
         
       }
@@ -196,10 +214,6 @@ export class MarkerService {
     
       return marker;
     
-  }
-
-  apparenceArea(feature){
-
   }
 
 }

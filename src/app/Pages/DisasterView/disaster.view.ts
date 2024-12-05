@@ -1,18 +1,17 @@
 import { Component, ViewChild } from "@angular/core";
-import { Apollo, gql } from "apollo-angular";
 import L from "leaflet";
 import 'leaflet.markerclusterv2';
+import { catchError, finalize, of, tap } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
 import { Earthquake } from "src/app/Model/Earthquake";
 import { Flood } from "src/app/Model/Flood";
 import { AlertApiService } from "src/app/Services/AlertApiService";
-// import { LoaderService } from "src/app/Services/Loader.service";
+import { DisasterApiService } from "src/app/Services/DisasterApiService";
 
 @Component({
     templateUrl: './disaster.view.html',
-    styleUrls: ['./disaster.view.css']
   })
 export class DisasterView {
 
@@ -20,14 +19,35 @@ export class DisasterView {
     disastersLayer?: L.LayerGroup;
     alertsLayer?: L.LayerGroup;
     alerts: Alert[];
+    selectedAleaType: string;
+    loading = false;
+
     protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, maxClusterRadius: 40 });
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
 
-    constructor(private readonly apollo: Apollo,
+    constructor(
       private readonly markerService: MarkerService,
+      private readonly disasterApiService: DisasterApiService,
       private readonly alertApiService: AlertApiService
     ){
 
+    }
+
+    selectAlea(type: string){
+      this.selectedAleaType = type;
+      this.resetAleaLayer();
+      switch(type){
+        case 'earthquake':
+          this.getEarthquakes();
+          break;
+        case 'flood':
+          this.getFloods();
+          break;
+        case 'hurricane':
+          break;
+        case 'eruption':
+          break;
+      }
     }
 
     getAreas(){
@@ -45,80 +65,89 @@ export class DisasterView {
     }
 
     getEarthquakes(){
-      this.resetAleaLayer();
+      this.loading = true;
 
-      // this.loaderService.isLoading.next(true);
-      // this.loaderService.loadingPhrase.next("Ecoute des ondes sismiques en cours...")
-      this.apollo.watchQuery<any>({
-        query: gql`
-          {
-            earthquakes {
-              id,
-              premier_releve,
-              dernier_releve,
-              point
-            }
-          }
-        `
-      }).valueChanges.subscribe(gql => {
+      this.disasterApiService.searchEarthquakes()
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+          this.loading = false;
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          this.loading = false;
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+          this.loading = false;
+        })
+      )
+      .subscribe((gql) => {
+        if (!gql) return;
         const eqs = gql.data;
-        console.log(eqs);
         eqs.earthquakes.forEach(item => {
           const eq = new Earthquake();
           eq.copyInto(item);
-          this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, eq, this.cluster,false,true)
-        })
-        // this.loaderService.isLoading.next(true);
-      })
+          this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, eq, this.cluster,true,true);
+        });
+      });
+
     }
 
     getFloods(){
-      this.resetAleaLayer();
+      this.loading = true;
 
-      // this.loaderService.isLoading.next(true);
-      // this.loaderService.loadingPhrase.next("Ecoute des ondes sismiques en cours...")
-      this.apollo.watchQuery<any>({
-        query: gql`
-          {
-            floods {
-              id,
-              premier_releve,
-              dernier_releve,
-              point,
-              surface
-            }
-          }
-        `
-      }).valueChanges.subscribe(gql => {
+      this.disasterApiService.searchFloods()
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+          this.loading = false;
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          this.loading = false;
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+          this.loading = false;
+        })
+      )
+      .subscribe(gql => {
+        if(!gql) return;
         const fls = gql.data;
         console.log(fls);
         fls.floods.forEach(item => {
           const fl = new Flood();
           fl.copyInto(item);
-          this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!,fl, this.cluster,false,true)
+          this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!,fl, this.cluster,true,true)
         })
-        // this.loaderService.isLoading.next(true);
       })
     }
 
-  /**
-   * Reset la couche des aléas sur la carte
-   */
-  resetAleaLayer(){
-    console.log(this.disastersLayer);
-    if(this.disastersLayer != undefined){
-      this.cluster.clearLayers();
-      this.disastersLayer.clearLayers();
+    /**
+     * Reset la couche des aléas sur la carte
+     */
+    resetAleaLayer(){
+      if(this.disastersLayer != undefined){
+        this.cluster.clearLayers();
+        this.disastersLayer.clearLayers();
+      }
     }
-  }
 
-  /**
-   * Receive layer from the map component
-   * @param layer 
-   */
+    /**
+     * Receive layer from the map component
+     * @param layer 
+     */
     receiveLayer(layer: L.LayerGroup) {
       this.disastersLayer = new L.LayerGroup();
-      this.getFloods();
     }
 
     receiveMap(map: L.Map) {

@@ -1,7 +1,5 @@
 import { Component } from "@angular/core";
 import L from "leaflet";
-import { MarkerService } from "src/app/Map/Services/marker.service";
-import { Flood } from "src/app/Model/Flood";
 import { DetailService } from "src/app/Services/DetailService";
 
 @Component({
@@ -11,23 +9,17 @@ import { DetailService } from "src/app/Services/DetailService";
 })
 export class DisasterDetailComponent {
     disaster$ = this.detailService.disasterDetail$;
+    visible$ = this.detailService.visible$;
     detailMap: L.Map;
     detailLayer: L.LayerGroup;
+    mapReceived = false;
 
-    constructor(private detailService: DetailService, private markerService: MarkerService){
-        this.detailLayer = new L.LayerGroup();
+    constructor(private detailService: DetailService){
+        
     }
 
-    receiveMap(map: L.Map){
-        this.detailMap = map;
-        this.disaster$.subscribe(item => {
-            if(item != null && this.detailMap != null){
-                const lng = item?.point.coordinates[0];
-                const lat = item?.point.coordinates[1];
-                this.markerService.makeFloodMarkers(this.detailMap, this.detailLayer, item as Flood, null, false, false)
-                this.detailMap.setView([lat,lng],5);
-            }
-        })
+    close(){
+        this.detailService.hide();
     }
 
 }
