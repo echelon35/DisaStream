@@ -75,6 +75,58 @@ export class DetailService {
       })
       break;
 
+      case 'eruption': 
+
+      this.disasterApiService
+      .searchEruptionById(disaster.id)
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+        })
+      )
+      .subscribe(gql => {
+        if(!gql) return;
+        const vo = gql.data?.eruption;
+        this.disasterDetailSubject?.next(vo);        
+      })
+      break;
+
+      case 'hurricane': 
+
+      this.disasterApiService
+      .searchHurricaneById(disaster.id)
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+        })
+      )
+      .subscribe(gql => {
+        if(!gql) return;
+        const hu = gql.data?.hurricane;
+        this.disasterDetailSubject?.next(hu);        
+      })
+      break;
+
     }
   }
 

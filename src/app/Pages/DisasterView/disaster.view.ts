@@ -6,7 +6,9 @@ import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
 import { Earthquake } from "src/app/Model/Earthquake";
+import { Eruption } from "src/app/Model/Eruption";
 import { Flood } from "src/app/Model/Flood";
+import { Hurricane } from "src/app/Model/Hurricane";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { DisasterApiService } from "src/app/Services/DisasterApiService";
 
@@ -22,7 +24,7 @@ export class DisasterView {
     selectedAleaType: string;
     loading = false;
 
-    protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, maxClusterRadius: 40 });
+    protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, animate: true, animateAddingMarkers: true, maxClusterRadius: 10 });
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
 
     constructor(
@@ -44,8 +46,10 @@ export class DisasterView {
           this.getFloods();
           break;
         case 'hurricane':
+          this.getHurricanes();
           break;
         case 'eruption':
+          this.getEruptions();
           break;
       }
     }
@@ -98,6 +102,41 @@ export class DisasterView {
 
     }
 
+    getEruptions(){
+      this.loading = true;
+
+      this.disasterApiService.searchEruptions()
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+          this.loading = false;
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          this.loading = false;
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+          this.loading = false;
+        })
+      )
+      .subscribe((gql) => {
+        console.log(gql);
+        if (!gql) return;
+        const vos = gql.data;
+        vos.eruptions.forEach(item => {
+          const vo = new Eruption();
+          vo.copyInto(item);
+          this.markerService.makeEruptionMarkers(this.disastersMap!, this.disastersLayer!, vo, this.cluster,true,true);
+        });
+      });
+
+    }
+
     getFloods(){
       this.loading = true;
 
@@ -128,6 +167,40 @@ export class DisasterView {
           const fl = new Flood();
           fl.copyInto(item);
           this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!,fl, this.cluster,true,true)
+        })
+      })
+    }
+
+    getHurricanes(){
+      this.loading = true;
+
+      this.disasterApiService.searchHurricanes()
+      .pipe(
+        tap(() => {
+          // Le succès est traité ici
+          console.log("Requête réussie.");
+          this.loading = false;
+        }),
+        catchError((error) => {
+          // Gestion des erreurs
+          console.error("Erreur lors de la requête :", error);
+          this.loading = false;
+          return of(null); // Retourne un observable vide pour continuer
+        }),
+        finalize(() => {
+          // Cela sera toujours exécuté, même en cas d'erreur
+          console.log("Finalisation");
+          this.loading = false;
+        })
+      )
+      .subscribe(gql => {
+        if(!gql) return;
+        const hus = gql.data;
+        console.log(hus);
+        hus.hurricanes.forEach(item => {
+          const hu = new Hurricane();
+          hu.copyInto(item);
+          this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!,hu, this.cluster,true,true)
         })
       })
     }

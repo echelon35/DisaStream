@@ -64,7 +64,10 @@
                 </svg>
               </span>
             </label>
-            <label aria-label="Eruption" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
+            <label 
+            [class.ring]="this.selectedAleaType === 'eruption'"
+            [class.ring-offset-1]="this.selectedAleaType === 'eruption'"
+            aria-label="Eruption" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
               <input type="radio" name="color-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
