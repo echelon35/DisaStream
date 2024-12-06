@@ -6,6 +6,11 @@ export interface IEarthquake extends IDisaster {
 
 export class Earthquake extends Disaster implements IEarthquake {
     magnitude = 0;
+
+    constructor(){
+        super();
+        this.type = 'earthquake';
+    }
     
     copyInto(obj: IEarthquake){
         super.copyInto(obj)

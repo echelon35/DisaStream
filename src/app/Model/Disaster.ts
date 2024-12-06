@@ -1,4 +1,5 @@
 import { Point } from "geojson";
+import { Source } from "./Source";
 
 export interface IDisaster {
     id: number;
@@ -16,6 +17,10 @@ export class Disaster implements IDisaster {
     point: Point;
     createdAt: Date;
     updatedAt: Date;
+
+    source: Source;
+
+    type: string;
     
     copyInto(obj: IDisaster){
         if(obj){

@@ -1,27 +1,80 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { environment } from "src/environments/environment";
-import { Earthquake } from "../Model/Earthquake";
-import { Observable } from "rxjs";
-
-const env = environment;
-const API_URL = `${env.settings.disasterapi}`;
+import { Apollo, gql } from "apollo-angular";
 
 @Injectable({
     providedIn: 'root'
 })
 export class DisasterApiService {
-    private httpOptions = {};
 
-    constructor(private http: HttpClient){
-        this.httpOptions = {
-            headers: new HttpHeaders({ 
-              'Content-Type': 'application/json', 
-            })
-          };
+    constructor(private readonly apollo: Apollo){
+
     }
 
-    getEarthquakes(): Observable<Earthquake[]> {
-        return this.http.get<Earthquake[]>(API_URL + '/alert', this.httpOptions)
+    searchEarthquakes(){
+        return this.apollo.watchQuery<any>({
+            query: gql`
+              {
+                earthquakes {
+                  id,
+                  point
+                }
+              }
+            `
+          }).valueChanges;
     }
+
+    searchFloods(){
+        return this.apollo.watchQuery<any>({
+            query: gql`
+              {
+                floods {
+                  id,
+                  premier_releve,
+                  dernier_releve,
+                  point,
+                  surface
+                }
+              }
+            `
+          }).valueChanges;
+    }
+
+    searchFloodById(id: number){
+        return this.apollo.watchQuery<any>({
+            query: gql`
+              {
+                flood(id:${id}) {
+                  id,
+                  premier_releve,
+                  dernier_releve,
+                  point,
+                  surface,
+                  source {
+                    name
+                  }
+                }
+              }
+            `
+        }).valueChanges;
+    }
+
+    searchEarthquakeById(id: number){
+      return this.apollo.watchQuery<any>({
+          query: gql`
+            {
+              earthquake(id:${id}) {
+                id,
+                premier_releve,
+                dernier_releve,
+                point,
+                magnitude,
+                source {
+                  name
+                }
+              }
+            }
+          `
+      }).valueChanges;
+  }
+
 }
