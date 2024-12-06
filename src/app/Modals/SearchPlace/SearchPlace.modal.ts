@@ -75,6 +75,9 @@ export class SearchPlace implements OnInit {
     chooseTown(town: Place){
       this.selectedTown = town;
       this.locationZoom(town.boundingbox);
+      if(town.name != null){
+        this.filterPlace = town.name!;
+      }
       this.close();
     }
 
@@ -87,9 +90,6 @@ export class SearchPlace implements OnInit {
     @HostListener('click')
     clickIn() {
       this.wasInside = true;
-      if(!this.isVisible){
-        this.show();
-      }
     }
 
     @HostListener('document:click')
@@ -115,12 +115,10 @@ export class SearchPlace implements OnInit {
       provider.search({ query: this.filterPlace }).then((res) => {
           this.townList = [];
           this.show();
-          console.log(res);
           res.filter(item => item.raw.type != null && this.acceptedTypes.find(element => element == item.raw.type)).forEach(cursor => {
             const thisPlace = new Place();
             thisPlace.copyFromOpenStreetmapProvider(cursor);
             this.townList.push(thisPlace);
-            console.log(thisPlace);
           })
           this.updateComponent();
           this.loading = false;

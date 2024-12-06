@@ -1,16 +1,17 @@
-<div class="z-map w-full h-full relative">
-    <div id="map-disaster" class="z-map w-full h-full">
-        <app-map [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
+<div class="z-map w-full h-dvh relative">
+    <div id="map-disaster" class="z-map w-full h-dvh">
+        <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
     </div>
     <app-disaster-detail #detail></app-disaster-detail>
-    <div class="z-on-map-1 absolute bottom-10 left-2/4 grid-cols-4 gap-4 w-stretch">
-        <div class="mt-6 flex items-center space-x-3">
+    <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-2 p-3 grid-cols-4 gap-4 w-stretch bg-gray-900 rounded-md">
+        <div class="flex items-center space-x-3">
+            <p class="text-white text-sm">Aléas</p>
             <label 
             [class.ring]="this.selectedAleaType === 'earthquake'"
             [class.ring-offset-1]="this.selectedAleaType === 'earthquake'"
             aria-label="Green" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-green-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
                 <input type="radio" name="color-choice" value="Green" class="sr-only" (click)="selectAlea('earthquake')">
-                <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -top-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
+                <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="53.655" height="36.748" viewBox="0 0 53.655 36.748">
                     <path id="Tracé_164" data-name="Tracé 164" d="M118.662,153.4l-4.915,8.078-4.212-14.3-4.844,14.647-2.036-17.59-.28-.022H100.1l-1.94,13.849L95.709,137H93.095l-2.3,26.6-2.919-27.24h-2.5l-2.725,27.651-1.933-12.183H78.33l-2.14,8.144L73.1,154.7l-7.091,5.2,1.168,2.352,5.08-4.063,4.984,8.419,1.9-7.94L82,170.652h1.612l2.917-25.635,2.84,28.091h2.379l2.831-23.128,2.176,18.343,2.317.069,2.176-14.168,1.755,13.962,2.316-.067,4.212-12.731,3.37,11.841,6.761-11.466Z" transform="translate(-66.011 -136.36)" fill="#b54b2a"/>
@@ -22,7 +23,7 @@
             [class.ring-offset-1]="this.selectedAleaType === 'hurricane'"
             class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-purple-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="color-choice" value="Purple" class="sr-only" (click)="selectAlea('hurricane')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -top-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="20.582" height="18.44" viewBox="0 0 20.582 18.44">
                     <g id="cyclone" transform="translate(0)">
@@ -41,7 +42,7 @@
             [class.ring-offset-1]="this.selectedAleaType === 'flood'"
             class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-1 text-blue-700 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Flood" class="sr-only" (click)="selectAlea('flood')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -top-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 group-hover:border-red/10 bg-current">
                 <svg class="size-6 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.925" height="49.468" viewBox="0 0 45.925 49.468">
                     <defs>
@@ -65,7 +66,7 @@
             </label>
             <label aria-label="Eruption" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
               <input type="radio" name="color-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -top-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-0.5" xmlns="http://www.w3.org/2000/svg" width="39.644" height="39.883" viewBox="0 0 39.644 39.883">
                     <g id="eruption" transform="translate(0)">
@@ -87,7 +88,7 @@
                 </svg>
               </span>
             </label>
-          </div>
+        </div>
     </div>
     <div *ngIf="this.loading" class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
         <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>

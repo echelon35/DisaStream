@@ -1,4 +1,4 @@
-<div id="map-new-area" class="z-map w-full h-full">
+<div id="map-new-area" class="z-map w-full h-dvh">
   <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-new-area'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true" [locationBox]="locationBox"></app-map>
 </div>
 <button [class.opacity-0]="panelVisible" [class.opacity-100]="!panelVisible" (click)="showPanel()" class="z-on-map-1 absolute top-20 right-0 inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-on-map-1 transform transition ease-in-out duration-500 hover:bg-indigo-300">
@@ -50,36 +50,26 @@
                 Zone (monde par défaut)
               </label>
               <div class="sm:col-span-2">
-                <div *ngIf="this.alert.areas == null" class="flex items-center text-blue-500 cursor-pointer hover:text-blue-400">
-                  <svg class="size-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                  <p (click)="drawPolygon()" class="text-sm ml-3">
-                    Envie de surveiller une zone précise ? Cliquez-ici et dessinez là sur la carte
-                  </p>
-                </div>
-                <div *ngIf="this.alert.areas == null" class="mt-2 flex items-center text-red-500 cursor-pointer hover:text-red-400">
-                  <svg class="size-6"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-                  <p (click)="showCountries()" class="text-sm ml-3">
-                    Envie de surveiller un pays ? Clicquez-ici pour sélectionner le pays à surveiller
-                  </p>
-                </div>
-                <div *ngIf="this.alert.areas != null && !this.alert.isCountryShape" class="flex items-center text-blue-500 cursor-pointer hover:text-blue-400">
-                  <svg class="size-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                  <p (click)="this.editArea()" class="text-sm ml-3">
-                    Editer la zone
-                  </p>
-                </div>
-                <div *ngIf="this.alert.areas != null && this.alert.isCountryShape" class="mt-2 flex items-center text-blue-500 cursor-pointer hover:text-blue-400">
-                  <svg class="size-6"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-                  <p (click)="showCountries()" class="text-sm ml-3">
-                    Envie de sélectionner un autre pays ?
-                  </p>
-                </div>
-                <div *ngIf="this.alert.areas != null" class="mt-2 flex items-center text-red-500 cursor-pointer hover:text-red-400">
-                  <svg class="size-6" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                  <p (click)="this.deleteArea()" class="text-sm ml-3">
-                    Supprimer la zone
-                  </p>
-                </div>
+                <button *ngIf="this.alert.areas == null" (click)="drawPolygon()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                  Tracer une zone à surveiller
+                </button>
+                <button *ngIf="this.alert.areas == null" (click)="showCountries()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-2 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+                  <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                  Choisir un pays à surveiller
+                </button>
+                <button *ngIf="this.alert.areas != null && !this.alert.isCountryShape" (click)="this.editArea()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                  Editer la zone
+                </button>
+                <button *ngIf="this.alert.areas != null && this.alert.isCountryShape" (click)="showCountries()" type="button" class="mx-1 inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                  Envie de sélectionner un autre pays ?
+                </button>
+                <button *ngIf="this.alert.areas != null" (click)="this.deleteArea()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                  Supprimer la zone
+                </button>
                 <app-search-place-modal [areaMap]="areaMap"></app-search-place-modal>
               </div>
             </div>

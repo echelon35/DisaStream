@@ -87,7 +87,6 @@ export class NewAlertView {
         this.alertApiService.getAlertById(id).subscribe({
           next: (alert) => {
 
-            console.log(alert);
             this.alert = alert;
 
             //feed area
