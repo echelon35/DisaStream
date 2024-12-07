@@ -2,16 +2,54 @@
     <div id="map-disaster" class="z-map w-full h-dvh">
         <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
     </div>
-    <app-disaster-detail #detail></app-disaster-detail>
-    <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-2 p-3 grid-cols-4 gap-4 w-stretch bg-gray-900 rounded-md">
-        <div class="flex items-center space-x-3">
-            <p class="text-white text-sm">Aléas</p>
+    <!-- Menu -->
+    <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-0 p-3 grid-cols-4 gap-4 w-full bg-blue-950 rounded-md flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+          <label 
+          [class.ring]="this.panel === 'alea'"
+          [class.ring-offset-1]="this.panel === 'alea'"
+          aria-label="Alea" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+            <input type="radio" name="panel-choice" value="Alea" class="sr-only" (click)="selectPanel('alea')">
+            <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Aléas</span>
+            <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
+              <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>              
+            </span>
+          </label>
+          <label 
+          [class.ring]="this.panel === 'filters'"
+          [class.ring-offset-1]="this.panel === 'filters'"
+          aria-label="Filters" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+            <input type="radio" name="panel-choice" value="Filters" class="sr-only" (click)="selectPanel('filters')">
+            <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Filtres</span>
+            <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
+              <svg class="size-5 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
+            </span>
+          </label>
+          <label 
+          [class.ring]="this.panel === 'area'"
+          [class.ring-offset-1]="this.panel === 'area'"
+          aria-label="Area" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+            <input type="radio" name="panel-choice" value="Area" class="sr-only" (click)="selectPanel('area')">
+            <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Zones</span>
+            <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
+              <svg class="size-5 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 8 6-3-6-3v10"/><path d="m8 11.99-5.5 3.14a1 1 0 0 0 0 1.74l8.5 4.86a2 2 0 0 0 2 0l8.5-4.86a1 1 0 0 0 0-1.74L16 12"/><path d="m6.49 12.85 11.02 6.3"/><path d="M17.51 12.85 6.5 19.15"/></svg>
+            </span>
+          </label>
+      </div>
+      <app-search-place-modal [areaMap]="disastersMap"></app-search-place-modal>
+    </div>
+
+    <!-- PANELS -->
+
+    <!-- Alea panel selection-->
+    <div [class.hidden]="this.panel !== 'alea'" [class.block]="this.panel === 'alea'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 w-auto rounded-md flex flex-col">
+      <div class="flex flex-col items-center">
             <label 
             [class.ring]="this.selectedAleaType === 'earthquake'"
             [class.ring-offset-1]="this.selectedAleaType === 'earthquake'"
-            aria-label="Green" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-green-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
-                <input type="radio" name="color-choice" value="Green" class="sr-only" (click)="selectAlea('earthquake')">
-                <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
+            aria-label="Earthquake" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-green-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+                <input type="radio" name="alea-choice" value="Earthquake" class="sr-only" (click)="selectAlea('earthquake')">
+                <span class="text-sm rounded-lg absolute opacity-0 md:group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="53.655" height="36.748" viewBox="0 0 53.655 36.748">
                     <path id="Tracé_164" data-name="Tracé 164" d="M118.662,153.4l-4.915,8.078-4.212-14.3-4.844,14.647-2.036-17.59-.28-.022H100.1l-1.94,13.849L95.709,137H93.095l-2.3,26.6-2.919-27.24h-2.5l-2.725,27.651-1.933-12.183H78.33l-2.14,8.144L73.1,154.7l-7.091,5.2,1.168,2.352,5.08-4.063,4.984,8.419,1.9-7.94L82,170.652h1.612l2.917-25.635,2.84,28.091h2.379l2.831-23.128,2.176,18.343,2.317.069,2.176-14.168,1.755,13.962,2.316-.067,4.212-12.731,3.37,11.841,6.761-11.466Z" transform="translate(-66.011 -136.36)" fill="#b54b2a"/>
@@ -21,9 +59,9 @@
             <label aria-label="Hurricane" 
             [class.ring]="this.selectedAleaType === 'hurricane'"
             [class.ring-offset-1]="this.selectedAleaType === 'hurricane'"
-            class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-purple-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
-              <input type="radio" name="color-choice" value="Purple" class="sr-only" (click)="selectAlea('hurricane')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
+            class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-purple-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+              <input type="radio" name="alea-choice" value="Hurricane" class="sr-only" (click)="selectAlea('hurricane')">
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="20.582" height="18.44" viewBox="0 0 20.582 18.44">
                     <g id="cyclone" transform="translate(0)">
@@ -40,9 +78,9 @@
             <label aria-label="Flood" 
             [class.ring]="this.selectedAleaType === 'flood'"
             [class.ring-offset-1]="this.selectedAleaType === 'flood'"
-            class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-1 text-blue-700 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
+            class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-1 text-blue-700 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Flood" class="sr-only" (click)="selectAlea('flood')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 group-hover:border-red/10 bg-current">
                 <svg class="size-6 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="45.925" height="49.468" viewBox="0 0 45.925 49.468">
                     <defs>
@@ -67,9 +105,9 @@
             <label 
             [class.ring]="this.selectedAleaType === 'eruption'"
             [class.ring-offset-1]="this.selectedAleaType === 'eruption'"
-            aria-label="Eruption" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
-              <input type="radio" name="color-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
-              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
+            aria-label="Eruption" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
+              <input type="radio" name="alea-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
+              <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
               <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current">
                 <svg class="size-6 mx-auto my-0.5" xmlns="http://www.w3.org/2000/svg" width="39.644" height="39.883" viewBox="0 0 39.644 39.883">
                     <g id="eruption" transform="translate(0)">
@@ -91,9 +129,51 @@
                 </svg>
               </span>
             </label>
-        </div>
+      </div>
     </div>
+
+    <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/80 w-full lg:w-4/12 overflow-auto">
+      <fieldset>
+        <legend class="sr-only">Alerts</legend>
+        <p class="mt-2 mb-3 pl-2 text-gray-400 font-bold">Mes alertes</p>
+        <div class="space-y-3">
+          <div class="flex gap-3 px-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <input [checked]="allVisible" id="allAreas" (click)="showAllAlertOnMap()" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                  <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <div class="text-sm/6">
+              <label for="allAreas" class="font-bold text-white cursor-pointer hover:text-blue-500">Toutes</label>
+            </div>
+          </div>
+          <div *ngFor="let alert of alerts" class="flex gap-3 px-3 ml-3">
+            <div class="flex h-6 shrink-0 items-center">
+              <div class="group grid size-4 grid-cols-1">
+                <input [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                  <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+            <div class="text-sm/6">
+              <label for="{{alert?.alert?.name}}" class="font-medium text-white cursor-pointer hover:text-blue-500">{{alert?.alert?.name}}</label>
+            </div>
+          </div>
+        </div>
+      </fieldset>      
+    </div>
+
+    <!-- Disaster detail panel -->
+    <app-disaster-detail #detail></app-disaster-detail>
+
+    <!-- Loader -->
     <div *ngIf="this.loading" class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
-        <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>
+      <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>
     </div>
 </div>

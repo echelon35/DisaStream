@@ -292,7 +292,7 @@ export class MarkerService {
    * @param layer 
    * @param alert
    */
-  makeAlertShapes(map: L.Map, layer: L.LayerGroup, alert: Alert): void{
+  makeAlertShapes(map: L.Map, layer: L.LayerGroup, alert: Alert): L.LayerGroup | null {
 
       if(alert != undefined && map != undefined && alert.areas != null){
 
@@ -305,8 +305,12 @@ export class MarkerService {
         areaSurface.setZIndex(4)
         areaSurface.addTo(layer);
         layer.addTo(map);
+
+        return areaSurface;
         
       }
+
+      return null;
   
   }
 

@@ -12,6 +12,12 @@ import { Hurricane } from "src/app/Model/Hurricane";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { DisasterApiService } from "src/app/Services/DisasterApiService";
 
+class AlertVm {
+  alert: Alert;
+  layer: L.LayerGroup;
+  visible: boolean;
+}
+
 @Component({
     templateUrl: './disaster.view.html',
   })
@@ -20,9 +26,14 @@ export class DisasterView {
     disastersMap?: L.Map;
     disastersLayer?: L.LayerGroup;
     alertsLayer?: L.LayerGroup;
-    alerts: Alert[];
+    alerts: AlertVm[];
     selectedAleaType: string;
     loading = false;
+    panel = '';
+    layersDisplayed: L.LayerGroup[];
+    allLayers: L.LayerGroup[];
+
+    allVisible = true;
 
     protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, animate: true, animateAddingMarkers: true, maxClusterRadius: 10 });
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
@@ -52,20 +63,71 @@ export class DisasterView {
           this.getEruptions();
           break;
       }
+      this.hidePanels()
+    }
+
+    selectPanel(type: string){
+      if(this.panel === type){
+        this.hidePanels();
+      }
+      else{
+        this.panel = type;
+      }
     }
 
     getAreas(){
       this.alertsLayer?.clearLayers();
+      this.alerts = [];
       this.alertApiService.getUserAlerts().subscribe((alerts) => {
-        this.alerts = alerts;
-        console.log(this.alerts);
+
         //La zone de l'alerte ne doit s'afficher que si :
         //- L'utilisateur a souhaité l'afficher via la case à cocher
         //- L'alerte concerne le type d'aléa affiché
-        this.alerts.filter(i => i.areas != null).forEach(item => {
-          this.markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item)
+        alerts.filter(i => i.areas != null).forEach(item => {
+          const alertVm = new AlertVm();
+          alertVm.alert = item;
+          const layer = this.markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item);
+          if(layer != null){
+            alertVm.layer = layer;
+          }
+          alertVm.visible = true;
+          this.alerts.push(alertVm);
         })
       })
+    }
+
+    hidePanels(){
+      this.panel = '';
+    }
+
+    showAllAlertOnMap(){
+      if(this.allVisible) {
+        this.alerts.forEach(item => {
+          if(this.alertsLayer!.hasLayer(item.layer)) {
+            this.alertsLayer!.removeLayer(item.layer);
+          }
+          item.visible = false;
+        });
+        this.allVisible = false;
+      } else {
+        this.alerts.forEach(item => {
+          if(!this.alertsLayer!.hasLayer(item.layer)) {
+            this.alertsLayer!.addLayer(item.layer);
+          }
+          item.visible = true;
+        });
+        this.allVisible = true;
+      }
+    }
+
+    showAlertOnMap(alertVm: AlertVm){
+      if(this.alertsLayer!.hasLayer(alertVm?.layer)) {
+          this.alertsLayer!.removeLayer(alertVm?.layer);
+          alertVm.visible = false;
+      } else {
+        this.alertsLayer!.addLayer(alertVm?.layer);
+        alertVm.visible = true;
+      }
     }
 
     getEarthquakes(){
