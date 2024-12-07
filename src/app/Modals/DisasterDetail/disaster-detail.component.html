@@ -29,14 +29,12 @@
                   <div class="relative flex space-x-3">
                     <div>
                       <span class="flex size-8 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white">
-                        <svg class="size-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M10 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM3.465 14.493a1.23 1.23 0 0 0 .41 1.412A9.957 9.957 0 0 0 10 18c2.31 0 4.438-.784 6.131-2.1.43-.333.604-.903.408-1.41a7.002 7.002 0 0 0-13.074.003Z" />
-                        </svg>
+                        <svg class="size-5 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-2.48a2 2 0 0 0-1.93 1.46l-2.35 8.36a.25.25 0 0 1-.48 0L9.24 2.18a.25.25 0 0 0-.48 0l-2.35 8.36A2 2 0 0 1 4.49 12H2"/></svg>
                       </span>
                     </div>
                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                       <div>
-                        <p class="text-sm text-gray-500">Premier relevé par <a *ngIf="disaster.source" href="#" class="font-medium text-gray-900">{{disaster.source.name}}</a></p>
+                        <p class="text-sm text-gray-500">Premier relevé par <a *ngIf="disaster.source" href="{{disaster.source.address}}" class="font-medium text-gray-900">{{disaster.source.name}}</a></p>
                       </div>
                       <div class="whitespace-nowrap text-right text-sm text-gray-500">
                         <time datetime="">{{ disaster.premier_releve | date:"d MMMM y 'à' H:mm" }}</time>
@@ -51,9 +49,7 @@
                   <div class="relative flex space-x-3">
                     <div>
                       <span class="flex size-8 items-center justify-center rounded-full bg-blue-500 ring-8 ring-white">
-                        <svg class="size-5 text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
-                          <path d="M1 8.25a1.25 1.25 0 1 1 2.5 0v7.5a1.25 1.25 0 1 1-2.5 0v-7.5ZM11 3V1.7c0-.268.14-.526.395-.607A2 2 0 0 1 14 3c0 .995-.182 1.948-.514 2.826-.204.54.166 1.174.744 1.174h2.52c1.243 0 2.261 1.01 2.146 2.247a23.864 23.864 0 0 1-1.341 5.974C17.153 16.323 16.072 17 14.9 17h-3.192a3 3 0 0 1-1.341-.317l-2.734-1.366A3 3 0 0 0 6.292 15H5V8h.963c.685 0 1.258-.483 1.612-1.068a4.011 4.011 0 0 1 2.166-1.73c.432-.143.853-.386 1.011-.814.16-.432.248-.9.248-1.388Z" />
-                        </svg>
+                        <svg class="size-6 p-0.5 pt-1 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
                       </span>
                     </div>
                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
@@ -67,7 +63,7 @@
                   </div>
                 </div>
               </li>
-              <li>
+              <li *ngIf="disaster.premier_releve !== disaster.dernier_releve">
                 <div class="relative pb-8">
                   <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true"></span>
                   <div class="relative flex space-x-3">

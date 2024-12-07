@@ -5,15 +5,18 @@ import { catchError, finalize, of, tap } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
+import { Country } from "src/app/Model/Country";
 import { Earthquake } from "src/app/Model/Earthquake";
 import { Eruption } from "src/app/Model/Eruption";
 import { Flood } from "src/app/Model/Flood";
 import { Hurricane } from "src/app/Model/Hurricane";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { DisasterApiService } from "src/app/Services/DisasterApiService";
+import { GeographyApiService } from "src/app/Services/GeographyApi.service";
 
 class AlertVm {
   alert: Alert;
+  country?: Country;
   layer: L.LayerGroup;
   visible: boolean;
 }
@@ -41,7 +44,8 @@ export class DisasterView {
     constructor(
       private readonly markerService: MarkerService,
       private readonly disasterApiService: DisasterApiService,
-      private readonly alertApiService: AlertApiService
+      private readonly alertApiService: AlertApiService,
+      private readonly geographyService: GeographyApiService
     ){
 
     }
@@ -86,6 +90,9 @@ export class DisasterView {
         alerts.filter(i => i.areas != null).forEach(item => {
           const alertVm = new AlertVm();
           alertVm.alert = item;
+          this.geographyService.getCountryById(item.countryId!).subscribe(country => {
+            alertVm.country = country;
+          })
           const layer = this.markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item);
           if(layer != null){
             alertVm.layer = layer;
