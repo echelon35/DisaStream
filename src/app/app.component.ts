@@ -24,6 +24,20 @@ export class App implements OnInit {
 
   constructor(public route: Router, private authenticationService: AuthentificationApi){
     this.isAuthenticated = this.authenticationService.getToken() != null;
+    if(this.isAuthenticated){
+      this.authenticationService.checkExpiration().subscribe(
+        (val) => { 
+          if(val){
+            console.log('Token valide')
+          }
+        },
+        (err) => {
+          if(err.status === 401){
+            this.authenticationService.logOutExpires();
+          }
+        }
+      )
+    }
   }
 
   ngOnInit() {

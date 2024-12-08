@@ -90,9 +90,11 @@ export class DisasterView {
         alerts.filter(i => i.areas != null).forEach(item => {
           const alertVm = new AlertVm();
           alertVm.alert = item;
-          this.geographyService.getCountryById(item.countryId!).subscribe(country => {
-            alertVm.country = country;
-          })
+          if(item.countryId){
+            this.geographyService.getCountryById(item.countryId!).subscribe(country => {
+              alertVm.country = country;
+            })
+          }
           const layer = this.markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item);
           if(layer != null){
             alertVm.layer = layer;

@@ -67,6 +67,16 @@ export class AuthentificationApi {
         window.location.href = '/';
     }
 
+    public logOutExpires() {
+        window.localStorage.removeItem(TOKEN_KEY);
+        window.localStorage.removeItem(AVATAR_KEY);
+        window.localStorage.removeItem(FIRSTNAME_KEY);
+        window.localStorage.removeItem(LASTNAME_KEY);
+        window.localStorage.removeItem(USERNAME_KEY);
+        const error = 'Votre session a expiré, veuillez-vous reconnecter.';
+        window.location.href = `/login?error=${encodeURI(error)}`;
+    }
+
     public login(userDto: UserLoginDto): Observable<TokenDto>{
         return this.http.post<TokenDto>(API_URL + '/auth/login',userDto,this.httpOptions)
     }
@@ -93,5 +103,15 @@ export class AuthentificationApi {
 
     public confirmAssociation(token: string){
         return this.http.get<User>(API_URL + '/auth/confirm-association?token=' + token,this.httpOptions)
+    }
+
+    public checkExpiration(){
+        const httpOptions = {
+            headers: new HttpHeaders({ 
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${this.getToken()}`
+            })
+        };
+        return this.http.get<boolean>(API_URL + '/auth/expiration',httpOptions);
     }
 }
