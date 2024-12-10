@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { DeleteConfirmModal } from 'src/app/Modals/DeleteConfirm/DeleteConfirm.modal';
 import { Alert } from 'src/app/Model/Alert';
 import { Country } from 'src/app/Model/Country';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
@@ -19,6 +20,8 @@ export class ManageAlertsView {
   alerts: AlertVm[] = [];
   displayedColumns: string[] = ['edit','type','name','createdAt','updatedAt','delete']
   loading = true;
+
+  @ViewChild('deleteConfirmModal') deleteConfirmModal?: DeleteConfirmModal;
 
   constructor(private readonly alertApiService: AlertApiService, 
     private readonly toastrService: ToastrService, 
@@ -53,11 +56,9 @@ export class ManageAlertsView {
     });
   }
 
-  deleteAlert(id: number){
-    this.alertApiService.deleteAlert(id).subscribe((message) => {
-      this.toastrService.info(message);
-      this.getAlerts();
-    });
+  deleteAlert(alert: Alert){
+    this.deleteConfirmModal!.alert = alert;
+    this.deleteConfirmModal!.open();
   }
 
 

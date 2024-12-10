@@ -9,10 +9,11 @@ import { SharedModule } from '../Shared/Shared.module';
 import { EndAlertComponent } from './EndAlert/EndAlert.modal';
 import { FreeModeComponent } from './FreeMode/FreeMode.modal';
 import { ProPacksComponent } from './ProPacks/ProPacks.modal';
+import { DeleteConfirmModal } from './DeleteConfirm/DeleteConfirm.modal';
 
 @NgModule({
-    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent],
+    declarations: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent, DeleteConfirmModal],
     imports: [CommonModule, FormsModule, MapModule, SharedModule, ReactiveFormsModule],
-    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent],
+    exports: [SearchPlace, AddMailAlert, DisasterDetailComponent, EndAlertComponent, FreeModeComponent, ProPacksComponent, DeleteConfirmModal],
 })
 export class ModalsModule { }
