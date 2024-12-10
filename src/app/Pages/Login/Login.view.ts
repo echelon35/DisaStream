@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TokenDto } from 'src/app/DTO/token.dto';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
+import { Picture, RandomPictureService } from 'src/app/Shared/Services/RandomPicture.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
@@ -14,13 +15,17 @@ export class LoginView {
 
   showLogin = true;
   loginForm: FormGroup;
+  picture: Picture;
 
   constructor(private seoService: SeoService, 
     private readonly authService: AuthentificationApi, 
+    private readonly RandomPictureService: RandomPictureService,
     private readonly toastrService: ToastrService,
     private readonly router: Router,
     private route: ActivatedRoute,
     private fb: FormBuilder) { 
+
+      this.picture = this.RandomPictureService.getPictureRandom();
 
       const error = this.route.snapshot.queryParamMap.get('error');
       if(error){

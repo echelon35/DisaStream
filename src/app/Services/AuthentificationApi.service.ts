@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { CreateUserDto } from "../DTO/CreateUser.dto";
 import { User } from "../Model/User";
 import { TokenDto } from "../DTO/token.dto";
+import { ChangePasswordDto } from "../DTO/ChangePassword.dto";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -113,5 +114,13 @@ export class AuthentificationApi {
             })
         };
         return this.http.get<boolean>(API_URL + '/auth/expiration',httpOptions);
+    }
+
+    public forgotPassword(mail: string){
+        return this.http.post<boolean>(API_URL + '/auth/forgot-password?mail=' + mail,this.httpOptions);
+    }
+
+    public changePassword(changePasswordDto: ChangePasswordDto){
+        return this.http.post<boolean>(API_URL + '/auth/change-password',changePasswordDto,this.httpOptions);
     }
 }

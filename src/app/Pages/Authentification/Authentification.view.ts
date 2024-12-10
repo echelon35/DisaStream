@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
-import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { Picture, RandomPictureService } from 'src/app/Shared/Services/RandomPicture.service';
 import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment';
 
@@ -19,12 +19,15 @@ export class AuthenticationView {
   appName: string = this.env.settings.appName;
   registerForm: FormGroup;
   errorMessage = '';
+  picture: Picture;
 
   constructor(private route: Router,
     private seoService: SeoService, 
-    private authentificationApi: AuthentificationApi, 
-    private toastrService: ToastrService, 
+    private randomPictureService: RandomPictureService,
+    private authentificationApi: AuthentificationApi,
     private fb: FormBuilder) { 
+
+    this.picture = this.randomPictureService.getPictureRandom();
 
     //Redirect if already connected
     if(this.authentificationApi.isAuthenticated()){

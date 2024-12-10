@@ -1,4 +1,7 @@
 <div class="flex min-h-full bg-gray-900">
+  <div class="absolute ml-10 mt-6">
+    <a href="/" class="text-sm/6 font-semibold text-white hover:text-indigo-400"><span class="pr-2" aria-hidden="true">&larr;</span> Retour à l'accueil</a>
+  </div>
     <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
@@ -27,11 +30,11 @@
                 </div>
 
                 <div class="text-red-400 text-sm" *ngIf="passwordFormField?.dirty">
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('^(?=.*[A-Z])')}">At least one uppercase letter is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[a-z])')}">At least one lowercase letter is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(.*[0-9].*)')}">At least one digit is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[!@#$%^&*])')}">At least one special character is required.</span>
-                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('.{8,}')}">At least 8 characters long.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('^(?=.*[A-Z])')}">Au moins une majuscule.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[a-z])')}">Au moins une minuscule.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(.*[0-9].*)')}">Au moins un chiffre.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('(?=.*[!@#$%^&*])')}">Au moins un caractère spécial.</span>
+                  <span class="block" [ngClass]="{'text-cyan-500': passwordFormField?.value?.match('.{8,}')}">Au moins 8 caractères.</span>
                 </div>
 
                 <div class="mt-2">
@@ -56,7 +59,7 @@
                 </div>
   
               <div>
-                <button type="submit" [disabled]="registerForm.invalid" class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Inscription</button>
+                <button type="submit" [disabled]="registerForm.invalid" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Inscription</button>
               </div>
             </form>
           </div>
@@ -87,6 +90,10 @@
       </div>
     </div>
     <div class="relative hidden w-0 flex-1 lg:block">
-      <img class="absolute inset-0 size-full object-cover" src="https://disastream.s3.eu-west-3.amazonaws.com/background/fireball.jpg" alt="">
+      <img class="absolute inset-0 size-full object-cover"  src="{{this.picture.path}}" alt="{{this.picture.alt}}">
+      <a href="{{this.picture.authorLink}}" class="text-sm/7 text-gray-400 absolute bottom-0 right-2 hover:text-indigo-400">
+        © {{this.picture.author}}
+        <span class="sr-only">Crédit photo : {{this.picture.author}}</span>
+      </a>
     </div>
 </div>

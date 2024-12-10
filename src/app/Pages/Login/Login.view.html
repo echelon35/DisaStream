@@ -1,4 +1,7 @@
 <div class="flex min-h-full bg-gray-900">
+  <div class="absolute ml-10 mt-6">
+    <a href="/" class="text-sm/6 font-semibold text-white hover:text-indigo-400"><span class="pr-2" aria-hidden="true">&larr;</span> Retour à l'accueil</a>
+  </div>
     <div class="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
       <div class="mx-auto w-full max-w-sm lg:w-96">
         <div>
@@ -21,9 +24,12 @@
                 <div class="mt-2">
                   <input placeholder="Mot de passe" formControlName="password" type="password" autocomplete="current-password" required  class="block w-full rounded-md border-0 bg-white/5 py-1.5 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6">
                 </div>
+                <p class="mt-2 text-sm/6 text-gray-500">
+                  <a href="/forgot-password" class="font-semibold text-indigo-400 hover:text-indigo-300">Mot de passe oublié ?</a>
+                </p>
   
               <div>
-                <button type="submit" [disabled]="loginForm.invalid" (click)="this.connect()" class="flex w-full justify-center rounded-md bg-indigo-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
+                <button type="submit" [disabled]="loginForm.invalid" (click)="this.connect()" class="flex w-full justify-center rounded-md bg-indigo-400 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 disabled:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Connexion</button>
               </div>
             </form>
           </div>
@@ -54,6 +60,10 @@
       </div>
     </div>
     <div class="relative hidden w-0 flex-1 lg:block">
-      <img class="absolute inset-0 size-full object-cover" src="https://disastream.s3.eu-west-3.amazonaws.com/background/instability.jpg" alt="">
+      <img class="absolute inset-0 size-full object-cover"  src="{{this.picture.path}}" alt="{{this.picture.alt}}">
+      <a href="{{this.picture.authorLink}}" class="text-sm/7 text-gray-400 absolute bottom-0 right-2 hover:text-indigo-400">
+        © {{this.picture.author}}
+        <span class="sr-only">Crédit photo : {{this.picture.author}}</span>
+      </a>
     </div>
 </div>

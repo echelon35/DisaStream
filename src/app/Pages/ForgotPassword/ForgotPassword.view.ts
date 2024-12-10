@@ -1,29 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
-  templateUrl: './ForgotPassword.view.html',
-  styleUrls: ['./ForgotPassword.view.css']
+  templateUrl: './ForgotPassword.view.html'
 })
 export class ForgotPasswordView implements OnInit {
 
-  forgotForm!: UntypedFormGroup;
+  forgotForm: FormGroup;
   loading = false;
   submitted = false;
+  token = '';
+  message = '';
   
   constructor(protected authApiService: AuthentificationApi,
-    private formBuilder: UntypedFormBuilder,
-    private router: Router) { }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.forgotForm.controls; }
+  private toastrService: ToastrService,
+  private fb: FormBuilder) {}
 
   ngOnInit(): void {
-    this.forgotForm = this.formBuilder.group({
+    this.forgotForm = this.fb.group({
       mail: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
     });
   }
 
@@ -34,17 +31,15 @@ export class ForgotPasswordView implements OnInit {
       return;
     }
 
-    // this.disasterApiService.forgotPassword(this.f.mail.value).subscribe(
-    //   data => {
-    //     this.loading = false;
-    //     this.router.navigate(['/']);
-    //     this.toastrService.success(`Un mail vient d'être envoyé à l'adresse ${this.f.mail.value}`);
-    //   },
-    //   err => {
-    //     this.loading = false;
-    //     this.toastrService.error(err.error.error);
-    //   }
-    // )
+    this.authApiService.forgotPassword(this.forgotForm?.value?.mail).subscribe({
+        next: () => {
+          this.message = `Un lien de réinitialisation vient de vous être envoyé à l'adresse ${this.forgotForm?.value?.mail}`;
+        },
+        error: (e) => {
+          this.toastrService.error(`Erreur lors de l'envoi du lien de réinitialisation`, e?.error?.message)
+        },
+    });
+
   }
 
 }

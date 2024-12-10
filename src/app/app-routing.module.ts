@@ -16,6 +16,7 @@ import { ConfirmAssociationView } from './Pages/ConfirmAssociation/ConfirmAssoci
 import { DisasterView } from './Pages/DisasterView/disaster.view';
 import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
+import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
 
 const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'login', component: LoginView },
   { path: 'price', component: PricingView },
   { path: 'faq', component: FAQView },
-  { path: 'password/reset', component: ForgotPasswordView },
+  { path: 'forgot-password', component: ForgotPasswordView },
+  { path: 'change-password', component: ChangePasswordView },
   { path: 'profile', component: UserProfileComponent },
   { path: 'confirm-email', component: ConfirmEmailView },
   { path: 'confirm-association', component: ConfirmAssociationView },

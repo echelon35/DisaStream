@@ -6,6 +6,7 @@ import { LandingPageView } from './Pages/LandingPage/LandingPage.view';
 import { SeoService } from './Services/Seo.service';
 import { AuthenticationView } from './Pages/Authentification/Authentification.view';
 import { ForgotPasswordView } from './Pages/ForgotPassword/ForgotPassword.view';
+import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ErrorInterceptor } from './Helpers/error.interceptor';
@@ -48,6 +49,7 @@ import { FAQView } from './Pages/FAQ/FAQ.view';
         PricingView,
         FAQView,
         ConfirmAssociationView,
+        ChangePasswordView
     ],
     bootstrap: [App], 
     imports: [BrowserModule,
