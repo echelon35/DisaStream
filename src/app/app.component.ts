@@ -1,13 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { User } from './Model/User';
+import { selectIsAuthenticated, selectUser } from './Store/Selectors/user.selector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
 })
-export class App implements OnInit {
+export class App {
 
   env = environment;
   appName: string = this.env.settings.appName;
@@ -16,35 +20,33 @@ export class App implements OnInit {
   firstname: string | null = null;
   lastname: string | null = null;
   username: string | null = null;
+
+  user$: Observable<User | null>;
+  isAuthenticated$: Observable<boolean>;
   
   title = this.appName;
-  isAuthenticated = false;
 
   isSidebarOpen = false;
 
-  constructor(public route: Router, private authenticationService: AuthentificationApi){
-    this.isAuthenticated = this.authenticationService.getToken() != null;
-    if(this.isAuthenticated){
-      this.authenticationService.checkExpiration().subscribe(
-        (val) => { 
-          if(val){
-            console.log('Token valide')
+  constructor(public route: Router, private authenticationService: AuthentificationApi, private store: Store){
+    this.user$ = this.store.select(selectUser);
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+    this.isAuthenticated$.subscribe(isAuth => {
+      if(isAuth){
+        this.authenticationService.checkExpiration().subscribe(
+          (val) => { 
+            if(val){
+              console.log('Token valide')
+            }
+          },
+          (err) => {
+            if(err.status === 401){
+              this.authenticationService.logOutExpires();
+            }
           }
-        },
-        (err) => {
-          if(err.status === 401){
-            this.authenticationService.logOutExpires();
-          }
-        }
-      )
-    }
-  }
-
-  ngOnInit() {
-    this.userAvatarUrl = localStorage.getItem('avatarUrl');
-    this.firstname = localStorage.getItem('firstname');
-    this.lastname = localStorage.getItem('lastname');
-    this.username = localStorage.getItem('username');
+        )
+      }
+    })
   }
 
   toggleSidebar(): void {

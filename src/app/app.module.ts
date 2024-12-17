@@ -34,6 +34,13 @@ import { PipeModule } from './PipeModule/pipe.module';
 import { StripeService } from './Services/StripeService';
 import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
+import { MetaReducer, StoreModule } from '@ngrx/store';
+import { userReducer } from './Store/Reducer/user.reducer';
+import { localStorageSync } from 'ngrx-store-localstorage';
+
+export function localStorageSyncReducer(reducer: any): any {
+    return localStorageSync({keys: ['user'], rehydrate: true })(reducer);
+}
 
 @NgModule({ declarations: [
         App,
@@ -63,7 +70,10 @@ import { FAQView } from './Pages/FAQ/FAQ.view';
         ModalsModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        GraphQLModule], 
+        GraphQLModule,
+        StoreModule.forRoot({
+            user: userReducer
+        },{ metaReducers: [localStorageSyncReducer] })], 
     providers: [SeoService,
         AuthentificationApi,
         ToastrService,

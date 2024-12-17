@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { FreeModeComponent } from 'src/app/Modals/FreeMode/FreeMode.modal';
 import { ProPacksComponent } from 'src/app/Modals/ProPacks/ProPacks.modal';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
 
 @Component({
   templateUrl: './LandingPage.view.html',
@@ -12,8 +15,8 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 })
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
-  isAuth = false;
   isSidebarOpen = false;
+  isAuthenticated$: Observable<boolean>;
 
   //Change detector to update component manually
   private cd = inject(ChangeDetectorRef)
@@ -128,14 +131,15 @@ export class LandingPageView {
     public router: Router, 
     private authenticationApi: AuthentificationApi, 
     private userApiService: UserApiService,
+    private store: Store,
     private toastrService: ToastrService){
     const token = this.route.snapshot.queryParamMap.get('access_token');
     const mail = this.route.snapshot.queryParamMap.get('mail');
-    this.isAuth = this.authenticationApi.isAuthenticated();
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
     if(token){
       this.authenticationApi.saveToken(token);
-      this.userApiService.getSummaryInfos().subscribe((a) => {
-        authenticationApi.saveSummary(a.avatar,a.firstname, a.lastname, a.username);
+      this.userApiService.getSummaryInfos().subscribe((user) => {
+        this.authenticationApi.storeUser(user);
         this.router.navigate(['/dashboard/alerts/manage']).then(() => {
           window.location.reload();
         });

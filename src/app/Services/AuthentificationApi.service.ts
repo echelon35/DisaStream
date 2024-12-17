@@ -7,22 +7,21 @@ import { CreateUserDto } from "../DTO/CreateUser.dto";
 import { User } from "../Model/User";
 import { TokenDto } from "../DTO/token.dto";
 import { ChangePasswordDto } from "../DTO/ChangePassword.dto";
+import { Store } from "@ngrx/store";
+import { loginUser, logoutUser } from "../Store/Actions/user.action";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
 const TOKEN_KEY = 'auth-token';
-const AVATAR_KEY = 'avatarUrl';
-const FIRSTNAME_KEY = 'firstname';
-const LASTNAME_KEY = 'lastname';
-const USERNAME_KEY = 'username';
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthentificationApi {
     private httpOptions = {};
+    public user: User;
 
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient, private store: Store){
         this.httpOptions = {
             headers: new HttpHeaders({ 
               'Content-Type': 'application/json', 
@@ -43,15 +42,8 @@ export class AuthentificationApi {
         window.localStorage.setItem(TOKEN_KEY, token);
     }
 
-    public saveSummary(avatarPath: string, firstname: string, lastname: string, username: string): void {
-        window.localStorage.removeItem(AVATAR_KEY);
-        window.localStorage.removeItem(FIRSTNAME_KEY);
-        window.localStorage.removeItem(LASTNAME_KEY);
-        window.localStorage.removeItem(USERNAME_KEY);
-        localStorage.setItem(AVATAR_KEY, avatarPath || '');
-        localStorage.setItem(FIRSTNAME_KEY, firstname || '');
-        localStorage.setItem(LASTNAME_KEY, lastname || '');
-        localStorage.setItem(USERNAME_KEY, username || '');
+    public storeUser(user: User): void {
+        this.store.dispatch(loginUser({ user }))
     }
     
     public getToken(): string | null {
@@ -60,20 +52,12 @@ export class AuthentificationApi {
     }
 
     public logOut() {
-        window.localStorage.removeItem(TOKEN_KEY);
-        window.localStorage.removeItem(AVATAR_KEY);
-        window.localStorage.removeItem(FIRSTNAME_KEY);
-        window.localStorage.removeItem(LASTNAME_KEY);
-        window.localStorage.removeItem(USERNAME_KEY);
+        this.store.dispatch(logoutUser())
         window.location.href = '/';
     }
 
     public logOutExpires() {
-        window.localStorage.removeItem(TOKEN_KEY);
-        window.localStorage.removeItem(AVATAR_KEY);
-        window.localStorage.removeItem(FIRSTNAME_KEY);
-        window.localStorage.removeItem(LASTNAME_KEY);
-        window.localStorage.removeItem(USERNAME_KEY);
+        this.store.dispatch(logoutUser())
         const error = 'Votre session a expiré, veuillez-vous reconnecter.';
         window.location.href = `/login?error=${encodeURI(error)}`;
     }
@@ -82,9 +66,9 @@ export class AuthentificationApi {
         return this.http.post<TokenDto>(API_URL + '/auth/login',userDto,this.httpOptions)
     }
 
-    isAuthenticated(): boolean {
-        return localStorage.getItem(TOKEN_KEY) != null;
-    }
+    // isAuthenticated(): boolean {
+    //     return localStorage.getItem(TOKEN_KEY) != null;
+    // }
 
     public resend(mail: string): Observable<string>{
         return this.http.post<string>(API_URL + '/auth/resend-confirmation-email?mail=' + mail,this.httpOptions);
