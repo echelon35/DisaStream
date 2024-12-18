@@ -1,7 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
+import { Store } from "@ngrx/store";
 import L from "leaflet";
 import 'leaflet.markerclusterv2';
-import { catchError, finalize, of, tap } from "rxjs";
+import { Observable, catchError, finalize, of, tap } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
@@ -13,6 +14,14 @@ import { Hurricane } from "src/app/Model/Hurricane";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { DisasterApiService } from "src/app/Services/DisasterApiService";
 import { GeographyApiService } from "src/app/Services/GeographyApi.service";
+import { selectEarthquakes } from "src/app/Store/Selectors/earthquakes.selector";
+import { selectEruptions } from "src/app/Store/Selectors/eruptions.selector";
+import { selectFloods } from "src/app/Store/Selectors/floods.selector";
+import { selectHurricanes } from "src/app/Store/Selectors/hurricanes.selector";
+import * as EarthquakeActions from '../../Store/Actions/earthquakes.actions';
+import * as EruptionActions from '../../Store/Actions/eruptions.actions';
+import * as FloodsActions from '../../Store/Actions/floods.actions';
+import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
 
 class AlertVm {
   alert: Alert;
@@ -36,6 +45,12 @@ export class DisasterView {
     layersDisplayed: L.LayerGroup[];
     allLayers: L.LayerGroup[];
 
+    earthquakes$: Observable<Earthquake[]>;
+    eruptions$: Observable<Eruption[]>;
+    floods$: Observable<Flood[]>;
+    hurricanes$: Observable<Hurricane[]>;
+    error$: Observable<any>;
+
     allVisible = true;
 
     protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, animate: true, animateAddingMarkers: true, maxClusterRadius: 10 });
@@ -45,9 +60,17 @@ export class DisasterView {
       private readonly markerService: MarkerService,
       private readonly disasterApiService: DisasterApiService,
       private readonly alertApiService: AlertApiService,
-      private readonly geographyService: GeographyApiService
+      private readonly geographyService: GeographyApiService,
+      private store: Store
     ){
-
+      this.earthquakes$ = this.store.select(selectEarthquakes);
+      this.eruptions$ = this.store.select(selectEruptions);
+      this.floods$ = this.store.select(selectFloods);
+      this.hurricanes$ = this.store.select(selectHurricanes);
+      this.store.dispatch(EarthquakeActions.loadEarthquakesGeography());
+      this.store.dispatch(EruptionActions.loadEruptionsGeography());
+      this.store.dispatch(FloodsActions.loadFloodsGeography());
+      this.store.dispatch(HurricanesActions.loadHurricanesGeography());
     }
 
     selectAlea(type: string){
@@ -141,138 +164,58 @@ export class DisasterView {
 
     getEarthquakes(){
       this.loading = true;
-
-      this.disasterApiService.searchEarthquakes()
-      .pipe(
-        tap(() => {
-          // Le succès est traité ici
-          console.log("Requête réussie.");
-          this.loading = false;
-        }),
-        catchError((error) => {
-          // Gestion des erreurs
-          console.error("Erreur lors de la requête :", error);
-          this.loading = false;
-          return of(null); // Retourne un observable vide pour continuer
-        }),
-        finalize(() => {
-          // Cela sera toujours exécuté, même en cas d'erreur
-          console.log("Finalisation");
-          this.loading = false;
-        })
-      )
-      .subscribe((gql) => {
-        if (!gql) return;
-        const eqs = gql.data;
-        eqs.earthquakes.forEach(item => {
+      this.earthquakes$.subscribe((data: any) => {
+        console.log(data);
+        if (!data) return;
+        data?.earthquakes.forEach(item => {
           const eq = new Earthquake();
           eq.copyInto(item);
           this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, eq, this.cluster,true,true);
         });
-      });
-
+        this.loading = false;
+      })
     }
 
     getEruptions(){
       this.loading = true;
-
-      this.disasterApiService.searchEruptions()
-      .pipe(
-        tap(() => {
-          // Le succès est traité ici
-          console.log("Requête réussie.");
-          this.loading = false;
-        }),
-        catchError((error) => {
-          // Gestion des erreurs
-          console.error("Erreur lors de la requête :", error);
-          this.loading = false;
-          return of(null); // Retourne un observable vide pour continuer
-        }),
-        finalize(() => {
-          // Cela sera toujours exécuté, même en cas d'erreur
-          console.log("Finalisation");
-          this.loading = false;
-        })
-      )
-      .subscribe((gql) => {
-        console.log(gql);
-        if (!gql) return;
-        const vos = gql.data;
-        vos.eruptions.forEach(item => {
-          const vo = new Eruption();
-          vo.copyInto(item);
-          this.markerService.makeEruptionMarkers(this.disastersMap!, this.disastersLayer!, vo, this.cluster,true,true);
+      this.eruptions$.subscribe((data: any) => {
+        console.log(data);
+        if (!data) return;
+        data?.eruptions?.forEach(item => {
+          const er = new Eruption();
+          er.copyInto(item);
+          this.markerService.makeEruptionMarkers(this.disastersMap!, this.disastersLayer!, er, this.cluster,true,true);
         });
-      });
+        this.loading = false;
+      })
 
     }
 
     getFloods(){
       this.loading = true;
-
-      this.disasterApiService.searchFloods()
-      .pipe(
-        tap(() => {
-          // Le succès est traité ici
-          console.log("Requête réussie.");
-          this.loading = false;
-        }),
-        catchError((error) => {
-          // Gestion des erreurs
-          console.error("Erreur lors de la requête :", error);
-          this.loading = false;
-          return of(null); // Retourne un observable vide pour continuer
-        }),
-        finalize(() => {
-          // Cela sera toujours exécuté, même en cas d'erreur
-          console.log("Finalisation");
-          this.loading = false;
-        })
-      )
-      .subscribe(gql => {
-        if(!gql) return;
-        const fls = gql.data;
-        console.log(fls);
-        fls.floods.forEach(item => {
+      this.floods$.subscribe((data: any) => {
+        console.log(data);
+        if (!data) return;
+        data?.floods?.forEach(item => {
           const fl = new Flood();
           fl.copyInto(item);
-          this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!,fl, this.cluster,true,true)
-        })
+          this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, fl, this.cluster,true,true);
+        });
+        this.loading = false;
       })
     }
 
     getHurricanes(){
       this.loading = true;
-
-      this.disasterApiService.searchHurricanes()
-      .pipe(
-        tap(() => {
-          // Le succès est traité ici
-          console.log("Requête réussie.");
-          this.loading = false;
-        }),
-        catchError((error) => {
-          // Gestion des erreurs
-          console.error("Erreur lors de la requête :", error);
-          this.loading = false;
-          return of(null); // Retourne un observable vide pour continuer
-        }),
-        finalize(() => {
-          // Cela sera toujours exécuté, même en cas d'erreur
-          console.log("Finalisation");
-          this.loading = false;
-        })
-      )
-      .subscribe(gql => {
-        if(!gql) return;
-        const hus = gql.data;
-        console.log(hus);
-        hus.hurricanes.forEach(item => {
+      this.hurricanes$.subscribe((data: any) => {
+        console.log(data);
+        if (!data) return;
+        data?.hurricanes?.forEach(item => {
           const hu = new Hurricane();
           hu.copyInto(item);
-          this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!,hu, this.cluster,true,true)
-        })
+          this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, hu, this.cluster,true,true);
+        });
+        this.loading = false;
       })
     }
 
