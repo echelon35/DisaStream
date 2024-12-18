@@ -1,5 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Apollo, gql } from "apollo-angular";
+import { map } from "rxjs";
+import { Earthquake } from "../Model/Earthquake";
+import { Eruption } from "../Model/Eruption";
+import { Flood } from "../Model/Flood";
+import { Hurricane } from "../Model/Hurricane";
 
 @Injectable({
     providedIn: 'root'
@@ -10,8 +15,8 @@ export class DisasterApiService {
 
     }
 
-    searchEarthquakes(){
-        return this.apollo.watchQuery<any>({
+    searchEarthquakes() {
+        return this.apollo.watchQuery<Earthquake[]>({
             query: gql`
               {
                 earthquakes {
@@ -20,11 +25,11 @@ export class DisasterApiService {
                 }
               }
             `
-          }).valueChanges;
+          }).valueChanges.pipe(map(result => result?.data))
     }
 
     searchEruptions(){
-      return this.apollo.watchQuery<any>({
+      return this.apollo.watchQuery<Eruption[]>({
           query: gql`
             {
               eruptions {
@@ -34,11 +39,11 @@ export class DisasterApiService {
               }
             }
           `
-        }).valueChanges;
+        }).valueChanges.pipe(map(result => result?.data));
     }
 
     searchHurricanes(){
-      return this.apollo.watchQuery<any>({
+      return this.apollo.watchQuery<Hurricane[]>({
           query: gql`
             {
               hurricanes {
@@ -51,11 +56,11 @@ export class DisasterApiService {
               }
             }
           `
-        }).valueChanges;
+        }).valueChanges.pipe(map(result => result?.data));
     }
 
     searchFloods(){
-        return this.apollo.watchQuery<any>({
+        return this.apollo.watchQuery<Flood[]>({
             query: gql`
               {
                 floods {
@@ -67,7 +72,7 @@ export class DisasterApiService {
                 }
               }
             `
-          }).valueChanges;
+          }).valueChanges.pipe(map(result => result?.data));
     }
 
     searchHurricaneById(id: number){
