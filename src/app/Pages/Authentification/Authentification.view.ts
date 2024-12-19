@@ -2,10 +2,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
 import { Picture, RandomPictureService } from 'src/app/Shared/Services/RandomPicture.service';
+import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
 import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment';
 
@@ -20,19 +23,24 @@ export class AuthenticationView {
   registerForm: FormGroup;
   errorMessage = '';
   picture: Picture;
+  isAuthenticated$: Observable<boolean>;
 
   constructor(private route: Router,
     private seoService: SeoService, 
     private randomPictureService: RandomPictureService,
     private authentificationApi: AuthentificationApi,
+    private store: Store,
     private fb: FormBuilder) { 
 
     this.picture = this.randomPictureService.getPictureRandom();
 
     //Redirect if already connected
-    if(this.authentificationApi.isAuthenticated()){
-      this.route.navigateByUrl('/dashboard');
-    }
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+    this.isAuthenticated$.subscribe((isAuth) => {
+      if(isAuth){
+        this.route.navigateByUrl('/dashboard');
+      }
+    })
 
     this.seoService.generateTags("S'authentifier sur SatellEarth","Inscrivez-vous sur SatellEarth pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
 

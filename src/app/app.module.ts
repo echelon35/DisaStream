@@ -34,6 +34,22 @@ import { PipeModule } from './PipeModule/pipe.module';
 import { StripeService } from './Services/StripeService';
 import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
+import { StoreModule } from '@ngrx/store';
+import { userReducer } from './Store/Reducer/user.reducer';
+import { localStorageSync } from 'ngrx-store-localstorage';
+import { EffectsModule } from '@ngrx/effects';
+import { earthquakeReducer } from './Store/Reducer/earthquakes.reducer';
+import { EarthquakesEffects } from './Store/Effects/earthquakes.effects';
+import { eruptionsReducer } from './Store/Reducer/eruptions.reducer';
+import { EruptionsEffects } from './Store/Effects/eruptions.effects';
+import { floodsReducer } from './Store/Reducer/floods.reducer';
+import { FloodsEffects } from './Store/Effects/floods.effects';
+import { hurricaneReducer } from './Store/Reducer/hurricanes.reducer';
+import { HurricanesEffects } from './Store/Effects/hurricanes.effects';
+
+export function localStorageSyncReducer(reducer: any): any {
+    return localStorageSync({keys: ['user'], rehydrate: true })(reducer);
+}
 
 @NgModule({ declarations: [
         App,
@@ -63,7 +79,15 @@ import { FAQView } from './Pages/FAQ/FAQ.view';
         ModalsModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        GraphQLModule], 
+        GraphQLModule,
+        StoreModule.forRoot({
+            user: userReducer,
+            earthquakes: earthquakeReducer,
+            eruptions: eruptionsReducer,
+            floods: floodsReducer,
+            hurricanes: hurricaneReducer,
+        },{ metaReducers: [localStorageSyncReducer] }),
+        EffectsModule.forRoot([EarthquakesEffects, EruptionsEffects, FloodsEffects, HurricanesEffects])], 
     providers: [SeoService,
         AuthentificationApi,
         ToastrService,

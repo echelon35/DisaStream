@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthentificationApi } from "src/app/Services/AuthentificationApi.service";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { selectIsAuthenticated } from "src/app/Store/Selectors/user.selector";
 
 @Component({
     templateUrl: './Pricing.view.html',
@@ -10,10 +12,10 @@ import { AuthentificationApi } from "src/app/Services/AuthentificationApi.servic
 export class PricingView {
   isSidebarOpen = false;
   isAuth = false;
+  isAuthenticated$: Observable<boolean>;
 
-  constructor(private authenticationApi: AuthentificationApi,
-    public router: Router){
-      this.isAuth = this.authenticationApi.isAuthenticated();
+  constructor(public router: Router, private store: Store){
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
   }
 
   toggleSidebar(): void {

@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthentificationApi } from "src/app/Services/AuthentificationApi.service";
+import { Store } from "@ngrx/store";
+import { Observable } from "rxjs";
+import { selectIsAuthenticated } from "src/app/Store/Selectors/user.selector";
 
 @Component({
     templateUrl: './FAQ.view.html',
@@ -9,7 +11,7 @@ import { AuthentificationApi } from "src/app/Services/AuthentificationApi.servic
 })
 export class FAQView {
   isSidebarOpen = false;
-  isAuth = false;
+  isAuthenticated$: Observable<boolean>;
   faqs = [
     {
       question: "A qui s'adresse Disastream ?",
@@ -111,9 +113,8 @@ export class FAQView {
     },
   ];
 
-  constructor(private authenticationApi: AuthentificationApi,
-    public router: Router){
-      this.isAuth = this.authenticationApi.isAuthenticated();
+  constructor(public router: Router, private store: Store){
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
   }
 
   toggleFaq(index: number): void {

@@ -18,16 +18,12 @@
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
       </div>
-      @if(isAuth){
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/dashboard" class="text-sm/6 font-semibold text-white">Dashboard <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      }
-      @else{
-        <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/login" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
-        </div>
-      }
+      <div *ngIf="(isAuthenticated$ | async)" class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="/dashboard" class="text-sm/6 font-semibold text-white">Dashboard <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <div *ngIf="(isAuthenticated$ | async) === false" class="hidden lg:flex lg:flex-1 lg:justify-end">
+        <a href="/login" class="text-sm/6 font-semibold text-white">Log in <span aria-hidden="true">&rarr;</span></a>
+      </div>
     </nav>
     <div 
     [class.opacity-100]="isSidebarOpen"

@@ -1,4 +1,4 @@
-@if(isAuthenticated && (this.route.url.startsWith('/dashboard') || this.route.url.startsWith('/profile'))){
+@if((isAuthenticated$ | async) && (this.route.url.startsWith('/dashboard') || this.route.url.startsWith('/profile'))){
     <div>
         <div class="relative z-sidebar lg:hidden" role="dialog" aria-modal="true">
           <div class="fixed inset-0 bg-gray-900/80 transition-opacity ease-linear duration-300"
@@ -90,17 +90,17 @@
                   </ul>
                 </li>
                 <li class="mt-auto mb-10 ml-4">
-                    <a href="/profile" class="group block shrink-0">
+                    <a href="/profile" *ngIf="(user$ | async) as user" class="group block shrink-0">
                         <div class="flex items-center">
                           <div>
-                            <img class="inline-block size-9 rounded-full" alt="avatar de {{firstname}}" title="avatar de {{firstname}}" src="{{this.userAvatarUrl}}" />
+                            <img class="inline-block size-9 rounded-full" alt="avatar de {{user.firstname}}" title="avatar de {{user.firstname}}" src="{{user.avatar}}" />
                           </div>
                           <div class="ml-3">
-                            @if(username){
-                                <p class="text-sm font-medium text-white group-hover:text-white">{{username | titlecase}}</p>
+                            @if(user.username){
+                                <p class="text-sm font-medium text-white group-hover:text-white">{{user.username | titlecase}}</p>
                             }
                             @else{
-                                <p class="text-sm font-medium text-white group-hover:text-white">{{firstname | titlecase}} {{lastname | uppercase}}</p>
+                                <p class="text-sm font-medium text-white group-hover:text-white">{{user.firstname | titlecase}} {{user.lastname | uppercase}}</p>
                             }
                             <p class="text-xs font-medium text-gray-500 group-hover:text-indigo-400">Mon profil</p>
                           </div>
@@ -120,17 +120,17 @@
             </svg>
           </button>
           <div class="flex-1 text-sm/6 font-semibold text-white"></div>
-          <a href="/profile" class="group block shrink-0">
+          <a href="/profile" *ngIf="(user$ | async) as user" class="group block shrink-0">
             <div class="flex items-center">
               <div>
-                <img class="inline-block size-9 rounded-full" alt="avatar de {{firstname}}" title="avatar de {{firstname}}" src="{{this.userAvatarUrl}}" />
+                <img class="inline-block size-9 rounded-full" alt="avatar de {{user.firstname}}" title="avatar de {{user.firstname}}" src="{{user.avatar}}" />
               </div>
               <div class="ml-3">
                 @if(username){
-                    <p class="text-sm font-medium text-white group-hover:text-white">{{username | titlecase}}</p>
+                    <p class="text-sm font-medium text-white group-hover:text-white">{{user.username | titlecase}}</p>
                 }
                 @else{
-                    <p class="text-sm font-medium text-white group-hover:text-white">{{firstname | titlecase}} {{lastname | uppercase}}</p>
+                    <p class="text-sm font-medium text-white group-hover:text-white">{{user.firstname | titlecase}} {{user.lastname | uppercase}}</p>
                 }
                 <p class="text-xs font-medium text-gray-500 group-hover:text-indigo-400">Mon profil</p>
               </div>
