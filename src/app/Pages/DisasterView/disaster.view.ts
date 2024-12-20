@@ -2,7 +2,7 @@ import { Component, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
 import L from "leaflet";
 import 'leaflet.markerclusterv2';
-import { Observable, catchError, finalize, of, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
@@ -22,6 +22,7 @@ import * as EarthquakeActions from '../../Store/Actions/earthquakes.actions';
 import * as EruptionActions from '../../Store/Actions/eruptions.actions';
 import * as FloodsActions from '../../Store/Actions/floods.actions';
 import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
+import { ActivatedRoute } from "@angular/router";
 
 class AlertVm {
   alert: Alert;
@@ -61,8 +62,10 @@ export class DisasterView {
       private readonly disasterApiService: DisasterApiService,
       private readonly alertApiService: AlertApiService,
       private readonly geographyService: GeographyApiService,
-      private store: Store
+      private store: Store,
+      private route: ActivatedRoute, 
     ){
+
       this.earthquakes$ = this.store.select(selectEarthquakes);
       this.eruptions$ = this.store.select(selectEruptions);
       this.floods$ = this.store.select(selectFloods);
@@ -241,5 +244,22 @@ export class DisasterView {
       this.disastersMap = map;
       this.alertsLayer = new L.LayerGroup();
       this.getAreas();
+
+        // //Retrieve only the disaster required
+        // if(this.route.snapshot.queryParamMap.get('id') != null){
+        //   const disastreamId = this.route.snapshot.queryParamMap.get('id');
+        //   const type = disastreamId?.split('-')[0];
+        //   const strid = disastreamId?.split('-')[1];
+        //   const id = parseInt(strid!);
+        //   switch(type){
+        //     case 'eq':
+        //       this.disasterApiService.searchEarthquakeById(id).subscribe(item => {
+        //         this.
+        //       })
+        //       break;
+        //     case 'fl':
+        //       break;
+        //   }
+        // }
     }
 }

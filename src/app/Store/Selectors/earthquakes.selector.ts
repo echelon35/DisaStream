@@ -6,7 +6,7 @@ export const selectEarthquakeState =
 
 export const selectEarthquakes = createSelector(
   selectEarthquakeState,
-  (state) => state.earthquakes
+  (state) => state.entities
 );
 
 export const selectError = createSelector(

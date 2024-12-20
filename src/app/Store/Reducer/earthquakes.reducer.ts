@@ -1,27 +1,24 @@
 import { createReducer, on } from '@ngrx/store';
+import { earthquakeAdapter, initialEarthquakeState } from '../Adapters/earthquake.adapter';
 import * as EarthquakeActions from '../Actions/earthquakes.actions';
-import { Earthquake } from 'src/app/Model/Earthquake';
-
-export interface EarthquakeState {
-  earthquakes: Earthquake[];
-  error: any;
-}
-
-export const initialState: EarthquakeState = {
-  earthquakes: [],
-  error: null,
-};
 
 export const earthquakeReducer = createReducer(
-  initialState,
+  initialEarthquakeState,
+  
+  // Action pour indiquer le début du chargement
   on(EarthquakeActions.loadEarthquakesGeography, (state) => ({
     ...state,
-    error: null,
   })),
-  on(EarthquakeActions.loadEarthquakesGeographySuccess, (state, { earthquakes }) => ({
-    ...state,
-    earthquakes,
-  })),
+  
+  // Action pour charger les Earthquakes
+  on(EarthquakeActions.loadEarthquakesGeographySuccess, (state, { earthquakes }) => 
+    earthquakeAdapter.setAll(earthquakes, {
+      ...state,
+      error: null,
+    })
+  ),
+  
+  // Action pour gérer une erreur
   on(EarthquakeActions.loadEarthquakesGeographyFailure, (state, { error }) => ({
     ...state,
     error,

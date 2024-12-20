@@ -12,5 +12,5 @@ export const loadEarthquakesGeographySuccess = createAction(
 
 export const loadEarthquakesGeographyFailure = createAction(
   '[Earthquake API] Load Earthquakes Failure for map',
-  props<{ error: any }>()
+  props<{ error: null | string }>()
 );
