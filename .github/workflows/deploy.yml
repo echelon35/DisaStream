@@ -40,10 +40,10 @@ jobs:
 
     - name: Clear old front-end
       run: |
-        ssh root@${{ secrets.SERVER_URL }} "rm -r /opt/disastream || true && mkdir -p /opt/disastream"
+        ssh ${{ secrets.USER }}@${{ secrets.SERVER_URL }} "rm -r /opt/disastream || true && mkdir -p /opt/disastream"
 
     - name: Deploy new front-end to server
       run: |
-        scp -r ./dist/disastream/browser/* root@${{ secrets.SERVER_URL }}:/opt/disastream
+        scp -r ./dist/disastream/browser/* ${{ secrets.USER }}@${{ secrets.SERVER_URL }}:/opt/disastream
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
