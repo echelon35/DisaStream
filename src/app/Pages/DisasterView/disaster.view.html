@@ -1,5 +1,5 @@
 <div class="z-map w-full h-dvh relative">
-    <div id="map-disaster" class="z-map w-full h-dvh">
+    <div id="map-disaster" class="z-map w-full h-[calc(100%-3.5rem)] top-[3.5rem]">
         <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
     </div>
     <!-- Menu -->
@@ -132,6 +132,7 @@
       </div>
     </div>
 
+    <!-- Alert panel -->
     <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/80 w-full lg:w-4/12 overflow-auto">
       <fieldset>
         <legend class="sr-only">Alerts</legend>
@@ -154,7 +155,7 @@
           <div *ngFor="let alert of alerts" class="flex gap-3 px-3 ml-3">
             <div class="flex h-6 shrink-0 items-center">
               <div class="group grid size-4 grid-cols-1">
-                <input [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                <input [disabled]="alert.alert.areas === null" [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
                 <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
                   <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -218,12 +219,18 @@
                   <g>
                   </g>
               </svg>
-              <label for="{{alert?.alert?.name}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <label for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <button (click)="this.selectAlert(alert?.alert)" class="ml-3 text-red-500" >
+                Détail
+              </button>
             </div>
           </div>
         </div>
       </fieldset>      
     </div>
+
+    <!-- Alert detail panel -->
+    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="selectPanel('area')" (disastersToDisplay$)="displayDisasters($event)" (zoom$)="zoomOnAlert($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>

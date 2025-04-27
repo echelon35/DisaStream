@@ -6,6 +6,9 @@ import { Alert } from "../Model/Alert";
 import { Observable } from "rxjs";
 import { MailAlert } from "../Model/MailAlert";
 import { StatisticsOnPeriodDTO } from "../DTO/StatisticsOnPeriod.dto";
+import { Disaster } from "../Model/Disaster";
+import { HistoryDisaster } from "../DTO/HistoryDisaster.dto";
+import { DisasterAlertDto } from "../DTO/DisasterAlertDto";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -35,6 +38,10 @@ export class AlertApiService {
 
     getUserAlerts(): Observable<Alert[]> {
       return this.http.get<Alert[]>(API_URL + '/alert', this.httpOptions)
+    }
+
+    getDisastersAlerts(id: number, page = 1): Observable<DisasterAlertDto> {
+      return this.http.get<DisasterAlertDto>(API_URL + `/alert/disasters/${id}?page=${page}`, this.httpOptions)
     }
 
     getAlertById(id: number): Observable<Alert> {

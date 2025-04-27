@@ -1,0 +1,86 @@
+<div class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/80 w-full lg:w-4/12 overflow-auto">
+    <div class="absolute ml-10 mt-6">
+        <a class="text-sm/6 font-semibold text-white hover:text-indigo-400 cursor-pointer" (click)="back()"><span class="pr-2" aria-hidden="true">&larr;</span> Retour</a>
+    </div>
+    <div class="mt-20 px-4 sm:px-6 lg:px-8">
+        <div class="sm:flex sm:items-center">
+          <div class="sm:flex-auto">
+              <h1 class="text-base font-semibold text-white">{{this.alert?.name}}</h1>
+          </div>
+          <div class="flex mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
+            <button (click)="this.zoom()" title="Zoom sur l'alerte" class="mr-2 block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-4"><circle cx="11" cy="11" r="8"/><line x1="21" x2="16.65" y1="21" y2="16.65"/><line x1="11" x2="11" y1="8" y2="14"/><line x1="8" x2="14" y1="11" y2="11"/></svg>
+            </button>
+            <a href="/dashboard/alert/edit?id={{alert?.id}}" class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Editer</a>
+          </div>
+        </div>
+        <div>
+          <div class="py-2">
+            <div *ngIf="!this.alert?.isActivate" class="flex items-center text-red-400">
+              <svg class="size-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.7 3A6 6 0 0 1 18 8a21.3 21.3 0 0 0 .6 5"/><path d="M17 17H3s3-2 3-9a4.67 4.67 0 0 1 .3-1.7"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="m2 2 20 20"/></svg>
+              <p>Cette alerte est actuellement désactivée</p>
+            </div>
+            <div *ngIf="this.alert?.isActivate" class="flex items-center text-green-400">
+              <svg class="size-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>
+              <p>Cette alerte est active</p>
+            </div>
+            <p class="text-sm text-indigo-400 ">{{this.count}} alertes recensées</p>
+            <p class="text-sm text-gray-400">Créée {{this.alert?.createdAt | displaydate:true:true}}</p>
+            <p class="text-sm text-gray-400">Dernière maj {{this.alert?.updatedAt | displaydate:true:true}}</p>
+          </div>
+          <div class="mt-2 text-sm text-gray-400">
+            <p class="mb-2">Destinataires : </p>
+            <span *ngFor="let mail of this.alert?.mailAlerts" 
+            title="{{mail.isVerified ? 'Mail vérifié' : 'Mail non vérifié'}}"
+            [ngClass]="{
+              'text-red-400 ring-red-400/20 bg-red-400/10': !mail.isVerified,
+              'text-green-400 ring-green-500/20 bg-green-500/10': mail.isVerified
+            }" 
+            class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset">{{mail.mail}}</span>
+          </div>
+          <div *ngIf="this.load" class="w-full mt-10 h-full text-center z-modal-bg opacity-80">
+            <app-spinner [width]="'w-24'" class="transform z-on-map-1"></app-spinner>
+          </div>
+          <div *ngIf="!this.load" class="-mx-4 mt-8 sm:-mx-0 overflow-auto">
+              <table class="min-w-full divide-y divide-gray-300">
+                <thead>
+                  <tr>
+                    <th scope="col" class="py-3.5 pr-3 pl-4 text-left text-sm font-semibold text-gray-200 sm:pl-0">Type</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-200 lg:table-cell">Localisation</th>
+                    <th scope="col" class="hidden px-3 py-3.5 text-left text-sm font-semibold text-gray-200 sm:table-cell">Premier relevé</th>
+                    <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-200">Dernier relevé</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                  <tr *ngFor="let hd of historyDisasters">
+                    <td class="w-full max-w-0 py-4 px-3 pl-4 text-sm font-medium text-indigo-400 sm:w-auto sm:max-w-none sm:pl-0">
+                      <img class="size-6" src="{{hd.pictureType}}" />
+                      <dl class="font-normal lg:hidden">
+                        <dt class="sr-only">Localisation</dt>
+                        <dd class="mt-1 truncate text-gray-400 flex items-center">
+                          <img *ngIf="hd.disaster?.iso != null" class="w-5 h-3 mr-2" src="https://flagcdn.com/{{hd.disaster?.iso | lowercase }}.svg" />
+                          {{hd.disaster?.city}}
+                        </dd>
+                        <dt class="sr-only sm:hidden">Premier relevé</dt>
+                        <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.disaster?.premier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
+                        <dt class="sr-only sm:hidden">Dernier relevé</dt>
+                        <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.disaster?.dernier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
+                      </dl>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
+                      <div class="flex items-center">
+                        <img *ngIf="hd.disaster?.iso != null" class="w-5 h-3 mr-2" src="https://flagcdn.com/{{hd.disaster?.iso | lowercase }}.svg" />
+                        {{hd.disaster?.city}}
+                      </div>
+                    </td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.disaster.premier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
+                    <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.disaster.dernier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
+                  </tr>
+                </tbody>
+              </table>     
+              <app-pagination (page$)="changePage($event)" [currentPage]="this.currentPage" [nbPage]="this.nbPage"></app-pagination>
+          </div>
+        </div>
+      </div>
+       
+</div>

@@ -21,6 +21,7 @@
           </div>
         </div>
         <div class="relative mt-6 flex-1 px-4 sm:px-6">
+          <h2 *ngIf="(title$ | async) as title" class="text-base font-semibold text-indigo-700 mb-4" id="slide-over-title">{{title}}</h2>
           <div class="flow-root">
             <ul role="list" class="-mb-8">
               <li>

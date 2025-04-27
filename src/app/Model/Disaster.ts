@@ -8,6 +8,11 @@ export interface IDisaster {
     point: Point;
     createdAt: Date;
     updatedAt: Date;
+    type: string;
+    iso: string;
+    country: string;
+    city: string;
+    cityDistance: number;
 }
 
 export class Disaster implements IDisaster {
@@ -20,6 +25,11 @@ export class Disaster implements IDisaster {
 
     source: Source;
 
+    iso: string;
+    country: string;
+    city: string;
+    cityDistance: number;
+
     type: string;
     
     copyInto(obj: IDisaster){
@@ -30,6 +40,11 @@ export class Disaster implements IDisaster {
             this.point = obj?.point;
             this.createdAt = obj?.createdAt;
             this.updatedAt = obj?.updatedAt;
+
+            this.city = obj?.city;
+            this.cityDistance = obj?.cityDistance;
+            this.country = obj?.country;
+            this.iso = obj?.iso;
         }
     }
 }

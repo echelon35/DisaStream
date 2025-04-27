@@ -1,8 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { Store } from "@ngrx/store";
-import L from "leaflet";
+import L, { FeatureGroup } from "leaflet";
 import 'leaflet.markerclusterv2';
-import { Observable, catchError, finalize, of, tap } from "rxjs";
+import { Observable } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
@@ -22,6 +22,9 @@ import * as EarthquakeActions from '../../Store/Actions/earthquakes.actions';
 import * as EruptionActions from '../../Store/Actions/eruptions.actions';
 import * as FloodsActions from '../../Store/Actions/floods.actions';
 import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
+import { DetailAlertComponent } from "./DetailAlert/DetailAlert.component";
+import { Disaster, IDisaster } from "src/app/Model/Disaster";
+import { HistoryDisaster } from "src/app/DTO/HistoryDisaster.dto";
 
 class AlertVm {
   alert: Alert;
@@ -51,10 +54,13 @@ export class DisasterView {
     hurricanes$: Observable<Hurricane[]>;
     error$: Observable<any>;
 
+    selectedAlert: Alert | undefined;
+
     allVisible = true;
 
     protected cluster = new L.MarkerClusterGroup({showCoverageOnHover: true, animate: true, animateAddingMarkers: true, maxClusterRadius: 10 });
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
+    @ViewChild('detailalert') detailAlertPanel?: DetailAlertComponent;
 
     constructor(
       private readonly markerService: MarkerService,
@@ -93,7 +99,24 @@ export class DisasterView {
       this.hidePanels()
     }
 
+    selectAlert(alert: Alert | undefined){
+      this.detailAlertPanel?.open(alert);
+      this.selectPanel("detail-alert");
+      this.zoomOnAlert(alert!);
+    }
+
+    zoomOnAlert(alert: Alert){
+      console.log(alert);
+      this.alerts.filter(a => a.alert?.areas != null).forEach(a => {
+        if(a.alert === alert){
+            //Fit on alert selected
+            this.disastersMap?.fitBounds((a.layer as FeatureGroup).getBounds());
+        }
+      })
+    }
+
     selectPanel(type: string){
+      console.log(type);
       if(this.panel === type){
         this.hidePanels();
       }
@@ -110,7 +133,7 @@ export class DisasterView {
         //La zone de l'alerte ne doit s'afficher que si :
         //- L'utilisateur a souhaité l'afficher via la case à cocher
         //- L'alerte concerne le type d'aléa affiché
-        alerts.filter(i => i.areas != null).forEach(item => {
+        alerts.forEach(item => {
           const alertVm = new AlertVm();
           alertVm.alert = item;
           if(item.countryId){
@@ -135,18 +158,22 @@ export class DisasterView {
     showAllAlertOnMap(){
       if(this.allVisible) {
         this.alerts.forEach(item => {
-          if(this.alertsLayer!.hasLayer(item.layer)) {
-            this.alertsLayer!.removeLayer(item.layer);
+          if(item.alert.areas != null){
+            if(this.alertsLayer!.hasLayer(item.layer)) {
+              this.alertsLayer!.removeLayer(item.layer);
+            }
+            item.visible = false;
           }
-          item.visible = false;
         });
         this.allVisible = false;
       } else {
         this.alerts.forEach(item => {
-          if(!this.alertsLayer!.hasLayer(item.layer)) {
-            this.alertsLayer!.addLayer(item.layer);
+          if(item.alert.areas != null){
+            if(!this.alertsLayer!.hasLayer(item.layer)) {
+              this.alertsLayer!.addLayer(item.layer);
+            }
+            item.visible = true;
           }
-          item.visible = true;
         });
         this.allVisible = true;
       }
@@ -241,5 +268,22 @@ export class DisasterView {
       this.disastersMap = map;
       this.alertsLayer = new L.LayerGroup();
       this.getAreas();
+    }
+
+    displayDisasters(disastersPoint: HistoryDisaster[]){
+      this.resetAleaLayer();
+      disastersPoint.forEach((item:HistoryDisaster) => {
+        switch(item.type){
+          case 'earthquake':
+            this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Earthquake, this.cluster,true,true);
+            break;
+          case 'flood':
+            this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Flood, this.cluster,true,true);
+            break;
+          case 'hurricane':
+            this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Hurricane, this.cluster,true,true);
+            break;
+        }
+      })
     }
 }

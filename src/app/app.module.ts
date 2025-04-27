@@ -46,6 +46,7 @@ import { floodsReducer } from './Store/Reducer/floods.reducer';
 import { FloodsEffects } from './Store/Effects/floods.effects';
 import { hurricaneReducer } from './Store/Reducer/hurricanes.reducer';
 import { HurricanesEffects } from './Store/Effects/hurricanes.effects';
+import { DetailAlertComponent } from './Pages/DisasterView/DetailAlert/DetailAlert.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({keys: ['user'], rehydrate: true })(reducer);
@@ -65,7 +66,8 @@ export function localStorageSyncReducer(reducer: any): any {
         PricingView,
         FAQView,
         ConfirmAssociationView,
-        ChangePasswordView
+        ChangePasswordView,
+        DetailAlertComponent
     ],
     bootstrap: [App], 
     imports: [BrowserModule,

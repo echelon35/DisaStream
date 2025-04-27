@@ -5,15 +5,17 @@ import { RouterModule } from "@angular/router";
 import { StepperComponent } from "./Components/Stepper/Stepper.component";
 import { ToastrComponent } from "./Components/Toastr/Toastr.component";
 import { SpinnerComponent } from "./Components/Spinner/Spinner.component";
+import { Pagination } from "./Components/Pagination/Pagination.component";
 
 @NgModule({
   declarations: [
     Footer,
     ToastrComponent,
     StepperComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    Pagination
   ],
   imports: [CommonModule, RouterModule],
-  exports: [Footer, StepperComponent, ToastrComponent, SpinnerComponent]
+  exports: [Footer, StepperComponent, ToastrComponent, SpinnerComponent, Pagination]
 })
 export class SharedModule { }

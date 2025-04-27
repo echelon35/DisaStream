@@ -40,7 +40,9 @@ export class MarkerService {
               map.flyTo([lat,lon], 5, {animate: true})
             }
 
+            console.log(earthquake);
             this.detailService.setDisasterDetail(earthquake);
+            this.detailService.setDisasterTitle(`Séisme M${earthquake.magnitude}`);
             this.detailService.show();
           })
         }
