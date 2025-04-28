@@ -7,14 +7,14 @@ export interface IFlood extends IDisaster {
 
 export class Flood extends Disaster {
     surface: Geometry;
+    frenchType = 'Inondation';
+    pictureType = '/assets/images/markers/flood.svg';
+    type = 'flood';
 
-    constructor(){
-        super();
-        this.type = 'flood';
-    }
-
-    copyInto(obj: IFlood){
-        super.copyInto(obj);
-        this.surface = obj.surface;
+    constructor(obj: IFlood){
+        super(obj);
+        if(obj){
+            this.surface = obj.surface;
+        }
     }
 }

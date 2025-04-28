@@ -1,42 +1,29 @@
 import { Disaster } from "../Model/Disaster";
+import { Earthquake } from "../Model/Earthquake";
+import { Flood } from "../Model/Flood";
+import { Hurricane } from "../Model/Hurricane";
 
 export class HistoryDisaster {
     disasterId: number;
     location: string;
     type: string;
-    city: string;
-    country: string;
-    iso: string;
-    distance: number;
     disaster: Disaster;
 
     constructor(obj) {
         Object.assign(this, obj);
-    }
-
-    get frenchType(): string {
-        switch(this.type){
-            case 'earthquake':
-                return 'seisme';
-            case 'flood':
-                return 'inondation';
-            case 'hurricane':
-                return 'cyclone';
-            default: 
-                return '';
-        }
-    }
-
-    get pictureType(): string {
-        switch(this.type){
-            case 'earthquake':
-                return '/assets/images/markers/min-earthquake.svg';
-            case 'flood':
-                return '/assets/images/markers/flood.svg';
-            case 'hurricane':
-                return '/assets/images/markers/hurricane.svg';
-            default: 
-                return '';
+        console.log(obj);
+        if(obj.disaster){
+            switch(obj.type){
+                case 'flood':
+                    this.disaster = new Flood(obj.disaster);
+                    break;
+                case 'earthquake':
+                    this.disaster = new Earthquake(obj.disaster);
+                    break;
+                case 'hurricane':
+                    this.disaster = new Hurricane(obj.disaster);
+                    break;
+            }
         }
     }
 

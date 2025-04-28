@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, output }
 import { Router } from '@angular/router';
 import { HistoryDisaster } from 'src/app/DTO/HistoryDisaster.dto';
 import { Alert } from 'src/app/Model/Alert';
+import { Disaster } from 'src/app/Model/Disaster';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
@@ -14,7 +15,8 @@ export class DetailAlertComponent {
 
   alert?: Alert;
   close$ = output<boolean>();
-  zoom$ = output<Alert>();
+  zoomAlert$ = output<Alert>();
+  zoomDisaster$ = output<Disaster>();
   disastersToDisplay$ = output<HistoryDisaster[]>();
   historyDisasters: HistoryDisaster[] = [];
   count: number = 0;
@@ -47,8 +49,12 @@ export class DetailAlertComponent {
     }
   }
 
-  zoom(){
-    this.zoom$.emit(this.alert!);
+  zoomOnAlert(){
+    this.zoomAlert$.emit(this.alert!);
+  }
+
+  zoomOnDisaster(disaster: Disaster){
+    this.zoomDisaster$.emit(disaster);
   }
 
   changePage(page: number){

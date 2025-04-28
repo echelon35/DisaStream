@@ -13,17 +13,18 @@ export class Hurricane extends Disaster {
     forecast: Geometry;
     path: Geometry;
     name: string;
+    frenchType = 'Cyclone';
+    pictureType = '/assets/images/markers/hurricane.svg';
+    type = 'hurricane';
 
-    constructor(){
-        super();
-        this.type = 'hurricane';
-    }
-
-    copyInto(obj: IHurricane){
-        super.copyInto(obj);
-        this.surface = obj.surface;
-        this.forecast = obj.forecast;
-        this.name = obj.name;
-        this.path = obj.path;
+    constructor(obj: IHurricane){
+        super(obj);
+        if(obj) {
+            this.surface = obj.surface;
+            this.forecast = obj.forecast;
+            this.name = obj.name;
+            this.path = obj.path;
+            this.title = 'Cyclone ' + this.name;
+        }
     }
 }

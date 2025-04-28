@@ -25,22 +25,22 @@ export class MarkerService {
    * @param cluster 
    * @param clickableMarker 
    */
-  makeEarthquakeMarkers(map: L.Map, layer: L.LayerGroup, earthquake:Earthquake, cluster: L.MarkerClusterGroup | null, clickableMarker: boolean, addOnCluster = true): void{
+  makeEarthquakeMarkers(map: L.Map, layer: L.LayerGroup, earthquake:Earthquake, cluster: L.MarkerClusterGroup | null, clickableMarker: boolean, addOnCluster = true, selected = false): void{
 
     if(earthquake != null && map != null){
         const lon = earthquake?.point?.coordinates[0];
         const lat = earthquake?.point?.coordinates[1];
         const latlng = [lat,lon];
-        const marker = this.apparenceEarthquake(earthquake,latlng);
+        const marker = this.apparenceEarthquake(earthquake,latlng, selected);
 
         if(clickableMarker){
           marker.on('click',() => {
+            const lon = earthquake.point.coordinates[0];
+            const lat = earthquake.point.coordinates[1];
 
             if(lon && lat){
-              map.flyTo([lat,lon], 5, {animate: true})
+                map.setView([lat,lon], undefined, { animate: true });
             }
-
-            console.log(earthquake);
             this.detailService.setDisasterDetail(earthquake);
             this.detailService.setDisasterTitle(`Séisme M${earthquake.magnitude}`);
             this.detailService.show();
@@ -82,14 +82,9 @@ export class MarkerService {
 
               const lon = flood.point.coordinates[0];
               const lat = flood.point.coordinates[1];
-              if(flood.surface){
-                const flSurface = L.geoJSON(flood.surface);
-                map.flyToBounds(flSurface.getBounds(), { duration: 3 })
-              }
-              else{
-                  if(lon && lat){
-                      map.setView([lat,lon],5, { animate: true });
-                  }
+
+              if(lon && lat){
+                  map.setView([lat,lon], undefined, { animate: true });
               }
 
               this.detailService.setDisasterDetail(flood);
@@ -143,17 +138,10 @@ export class MarkerService {
 
           if(clickableMarker){
             marker.on('click',() => {
-
               const lon = eruption.point.coordinates[0];
               const lat = eruption.point.coordinates[1];
-              if(eruption.surface){
-                const flSurface = L.geoJSON(eruption.surface);
-                map.flyToBounds(flSurface.getBounds(), { duration: 3 })
-              }
-              else{
-                  if(lon && lat){
-                      map.setView([lat,lon],5, { animate: true });
-                  }
+              if(lon && lat){
+                  map.setView([lat,lon],5, { animate: true });
               }
 
               this.detailService.setDisasterDetail(eruption);
@@ -210,14 +198,9 @@ export class MarkerService {
 
               const lon = hurricane.point.coordinates[0];
               const lat = hurricane.point.coordinates[1];
-              if(hurricane.surface){
-                const flSurface = L.geoJSON(hurricane.surface);
-                map.flyToBounds(flSurface.getBounds(), { duration: 3 })
-              }
-              else{
-                  if(lon && lat){
-                      map.setView([lat,lon],5, { animate: true });
-                  }
+
+              if(lon && lat){
+                  map.setView([lat,lon],5, { animate: true });
               }
 
               this.detailService.setDisasterDetail(hurricane);
@@ -322,13 +305,15 @@ export class MarkerService {
    * @param latlng 
    * @returns 
    */
-  apparenceEarthquake(feature,latlng): L.Marker{
+  apparenceEarthquake(feature,latlng,selected = false): L.Marker{
 
+    console.log(feature);
+    const path = (selected) ? "assets/images/markers/selected" : "assets/images/markers";
     let marker;
     if(feature.magnitude > 6.5){
       const bigIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/max-earthquake.svg",	
+        iconUrl: path + "/max-earthquake.svg",	
         iconSize:     [34, 40], // size of icon
         iconAnchor:   [17, 20], // marker position on icon
         popupAnchor:  [0, -20] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor
@@ -340,7 +325,7 @@ export class MarkerService {
     else if(feature.magnitude > 5.5){
       const mediumIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/med-earthquake.svg",	
+        iconUrl: path + "/med-earthquake.svg",	
         iconSize:     [30, 34], // size of icon
         iconAnchor:   [15, 17], // marker position on icon
         popupAnchor:  [0, -17] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor
@@ -352,7 +337,7 @@ export class MarkerService {
     else{
       const smallIcon = L.icon({
         className: 'leaflet-pulsing-icon',
-        iconUrl: "assets/images/markers/min-earthquake.svg",	
+        iconUrl: path + "/min-earthquake.svg",	
         iconSize:     [24, 28], // size of icon
         iconAnchor:   [12, 14], // marker position on icon
         popupAnchor:  [0, -14] // point depuis lequel la popup doit s'ouvrir relativement à l'iconAnchor

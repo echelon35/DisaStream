@@ -31,20 +31,26 @@ export class Disaster implements IDisaster {
     cityDistance: number;
 
     type: string;
-    
-    copyInto(obj: IDisaster){
-        if(obj){
-            this.id = obj?.id;
-            this.premier_releve = obj?.premier_releve;
-            this.dernier_releve = obj?.dernier_releve;
-            this.point = obj?.point;
-            this.createdAt = obj?.createdAt;
-            this.updatedAt = obj?.updatedAt;
+    power: string;
+    frenchType: string;
+    pictureType: string;
+    title: string;
 
-            this.city = obj?.city;
-            this.cityDistance = obj?.cityDistance;
-            this.country = obj?.country;
-            this.iso = obj?.iso;
+    constructor(obj?: IDisaster) {
+        if(obj) {
+            Object.assign(this, obj);
         }
+    }
+
+    get distanceText(): string {
+        if(this.cityDistance < 1000){
+            return this.cityDistance.toFixed(1) + ' km';
+        } else {
+            return (this.cityDistance / 1000).toFixed(1) + ' km';
+        }
+    }
+
+    get countryPicture(): string {
+        return `https://flagcdn.com/${this.iso.toLowerCase()}.svg`;
     }
 }
