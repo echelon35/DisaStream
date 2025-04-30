@@ -1,5 +1,6 @@
 import { Point } from "geojson";
 import { Source } from "./Source";
+import { DisasterFromAlertDto } from "../DTO/DisasterFromAlertDto";
 
 export interface IDisaster {
     id: number;
@@ -13,6 +14,7 @@ export interface IDisaster {
     country: string;
     city: string;
     cityDistance: number;
+    source: Source;
 }
 
 export class Disaster implements IDisaster {
@@ -36,9 +38,13 @@ export class Disaster implements IDisaster {
     pictureType: string;
     title: string;
 
-    constructor(obj?: IDisaster) {
+    constructor(obj?: DisasterFromAlertDto) {
         if(obj) {
             Object.assign(this, obj);
+            this.source = new Source({
+                name: obj.sourceName,
+                address: obj.sourceAddress
+            });
         }
     }
 

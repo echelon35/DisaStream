@@ -1,5 +1,6 @@
 import { Geometry } from "geojson";
 import { Disaster, IDisaster } from "./Disaster";
+import { DisasterFromAlertDto, DisasterFromAlertDtoHurricane } from "../DTO/DisasterFromAlertDto";
 
 export interface IHurricane extends IDisaster {
     surface: Geometry;
@@ -17,7 +18,7 @@ export class Hurricane extends Disaster {
     pictureType = '/assets/images/markers/hurricane.svg';
     type = 'hurricane';
 
-    constructor(obj: IHurricane){
+    constructor(obj: DisasterFromAlertDtoHurricane) {
         super(obj);
         if(obj) {
             this.surface = obj.surface;
