@@ -306,8 +306,6 @@ export class MarkerService {
    * @returns 
    */
   apparenceEarthquake(feature,latlng,selected = false): L.Marker{
-
-    console.log(feature);
     const path = (selected) ? "assets/images/markers/selected" : "assets/images/markers";
     let marker;
     if(feature.magnitude > 6.5){

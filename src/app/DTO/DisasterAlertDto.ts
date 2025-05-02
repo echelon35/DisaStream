@@ -1,6 +1,6 @@
-import { HistoryDisaster } from "./HistoryDisaster.dto";
+import { DisasterFromAlertDto } from "./DisasterFromAlertDto";
 
 export class DisasterAlertDto {
     count: number;
-    disasters: HistoryDisaster[];
+    disasters: DisasterFromAlertDto[];
 }

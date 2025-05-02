@@ -317,18 +317,18 @@ export class DisasterView {
       });
     }
 
-    displayDisasters(disastersPoint: HistoryDisaster[]){
+    displayDisasters(disastersPoint: Disaster[]){
       this.resetAleaLayer();
-      disastersPoint.forEach((item:HistoryDisaster) => {
+      disastersPoint.forEach((item:Disaster) => {
         switch(item.type){
           case 'earthquake':
-            this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Earthquake, this.cluster,true,true);
+            this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item as Earthquake, this.cluster,true,true);
             break;
           case 'flood':
-            this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Flood, this.cluster,true,true);
+            this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item as Flood, this.cluster,true,true);
             break;
           case 'hurricane':
-            this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item.disaster as Hurricane, this.cluster,true,true);
+            this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item as Hurricane, this.cluster,true,true);
             break;
         }
       })

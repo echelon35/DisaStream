@@ -1,5 +1,4 @@
 import { Geometry } from "geojson";
-import { Hurricane } from "../Model/Hurricane";
 
 export class DisasterFromAlertDto {
     id: number;
