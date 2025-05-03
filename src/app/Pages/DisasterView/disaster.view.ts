@@ -23,7 +23,6 @@ import * as EruptionActions from '../../Store/Actions/eruptions.actions';
 import * as FloodsActions from '../../Store/Actions/floods.actions';
 import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
 import { DetailAlertComponent } from "./DetailAlert/DetailAlert.component";
-import { HistoryDisaster } from "src/app/DTO/HistoryDisaster.dto";
 import { Disaster } from "src/app/Model/Disaster";
 
 class AlertVm {
@@ -148,7 +147,6 @@ export class DisasterView {
     }
 
     selectPanel(type: string){
-      console.log(type);
       if(this.panel === type){
         this.hidePanels();
       }

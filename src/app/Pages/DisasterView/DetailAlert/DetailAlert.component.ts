@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, output } from '@angular/core';
 import { Router } from '@angular/router';
+import { debounceTime } from 'rxjs';
 import { DisasterAlertDto } from 'src/app/DTO/DisasterAlertDto';
 import { DisasterFromAlertDtoEarthquake, DisasterFromAlertDtoEruption, DisasterFromAlertDtoFlood, DisasterFromAlertDtoHurricane } from 'src/app/DTO/DisasterFromAlertDto';
 import { Alert } from 'src/app/Model/Alert';
@@ -10,6 +11,7 @@ import { Flood } from 'src/app/Model/Flood';
 import { Hurricane } from 'src/app/Model/Hurricane';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import $ from 'jquery';
 
 interface Filter {
   name: string;
@@ -31,6 +33,7 @@ export class DetailAlertComponent {
   historyDisasters: Disaster[] = [];
   count = 0;
   load = false;
+  expandPanel = false;
 
   currentFilter = 'premier_releve';
   currentOrder = 'ASC';
@@ -42,6 +45,11 @@ export class DetailAlertComponent {
     { name: 'country', order: 'ASC' },
     { name: 'city', order: 'ASC' }
   ];
+  filterCountry = '';
+  filterCity = '';
+  now = new Date();
+  filterFrom = new Date(this.now.setFullYear(this.now.getDate() - 100));
+  filterTo = this.now;
 
   //Pagination
   currentPage = 1;
@@ -60,6 +68,44 @@ export class DetailAlertComponent {
   back(){
     this.alert = undefined;
     this.close$.emit(true);
+  }
+
+  expand(expand: boolean){
+    this.expandPanel = expand;
+  }
+
+  searchCity(){
+    this.changePage(1);
+  }
+
+  clearCity(){
+    this.filterCity = '';
+    this.changePage(1);
+  }
+
+  searchCountry(){
+    this.changePage(1);
+  }
+
+  clearCountry(){
+    this.filterCountry = '';
+    this.changePage(1);
+  }
+
+  searchFrom(event: any){
+    if(event.target.value.length > 0){
+      this.filterFrom = new Date(event.target.value as string);
+      console.log(this.filterFrom);
+      this.changePage(1);
+    }
+  }
+
+  searchTo(event: any){
+    if(event.target.value.length > 0){
+      this.filterTo = new Date(event.target.value as string);
+      console.log(this.filterTo);
+      this.changePage(1);
+    }
   }
 
   open(alert: Alert | undefined){
@@ -102,7 +148,7 @@ export class DetailAlertComponent {
   changePage(page: number){
       this.load = true;
       this.historyDisasters = [];
-      this.alertApiService.getDisastersAlerts(this.alert!.id, page, this.currentFilter, this.currentOrder).subscribe((dAlertDto:DisasterAlertDto) => {
+      this.alertApiService.getDisastersAlerts(this.alert!.id, page, this.currentFilter, this.currentOrder, this.filterCountry, this.filterCity).subscribe((dAlertDto:DisasterAlertDto) => {
         dAlertDto.disasters.forEach(d => {
           switch (d.type) {
             case 'earthquake':
@@ -127,6 +173,7 @@ export class DetailAlertComponent {
         this.nbPage = Math.ceil(this.count / this.limit);
 
         this.updateComponent()
+        $("#filterCountry").trigger("focus");
       });
   }
 

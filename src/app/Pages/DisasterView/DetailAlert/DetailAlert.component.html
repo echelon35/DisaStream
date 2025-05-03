@@ -1,8 +1,10 @@
-<div class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-y-auto">
-    <div class="absolute ml-10 mt-6">
-        <a class="text-sm/6 font-semibold text-white hover:text-indigo-400 cursor-pointer" (click)="back()"><span class="pr-2" aria-hidden="true">&larr;</span> Retour</a>
-    </div>
-    <div class="mt-20 px-4 sm:px-6 lg:px-8">
+<div [ngClass]="{'lg:w-4/12': !this.expandPanel, 'lg:w-fit': this.expandPanel}" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/95 w-full overflow-y-auto">
+    <div class="mt-2 px-4 sm:px-6 lg:px-8">
+        <div class="mt-6 mb-6 flex justify-between items-center w-full">
+          <a class="text-sm/6 font-semibold text-white hover:text-indigo-400 cursor-pointer" (click)="back()"><span class="pr-2" aria-hidden="true">&larr;</span> Retour</a>
+          <svg *ngIf="!this.expandPanel" (click)="expand(true)" class="text-white cursor-pointer hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 15 6 6"/><path d="m15 9 6-6"/><path d="M21 16v5h-5"/><path d="M21 8V3h-5"/><path d="M3 16v5h5"/><path d="m3 21 6-6"/><path d="M3 8V3h5"/><path d="M9 9 3 3"/></svg>
+          <svg *ngIf="this.expandPanel" (click)="expand(false)" class="text-white cursor-pointer hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" x2="21" y1="10" y2="3"/><line x1="3" x2="10" y1="21" y2="14"/></svg>
+        </div>
         <div class="sm:flex sm:items-center">
           <div class="sm:flex-auto">
               <h1 class="text-base font-semibold text-white">{{this.alert?.name}}</h1>
@@ -24,7 +26,6 @@
               <svg class="size-4 mr-2" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/><path d="M4 2C2.8 3.7 2 5.7 2 8"/><path d="M22 8c0-2.3-.8-4.3-2-6"/></svg>
               <p>Cette alerte est active</p>
             </div>
-            <p class="text-sm text-indigo-400 ">{{this.count}} alertes recensées</p>
             <p class="text-sm text-gray-400">Créée {{this.alert?.createdAt | displaydate:true:true}}</p>
             <p class="text-sm text-gray-400">Dernière maj {{this.alert?.updatedAt | displaydate:true:true}}</p>
           </div>
@@ -42,10 +43,8 @@
             }" 
             class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset">{{mail.mail}}</span>
           </div>
-          <div *ngIf="this.load" class="w-full mt-10 h-full text-center z-modal-bg opacity-80">
-            <app-spinner [width]="'w-24'" class="transform z-on-map-1"></app-spinner>
-          </div>
-          <div *ngIf="!this.load" class="-mx-4 mt-8 sm:-mx-0">
+          <div class="-mx-4 mt-8 sm:-mx-0">
+              <p class="text-sm text-indigo-400 ">{{this.count}} aléas trouvés</p>
               <table class="min-w-full divide-y divide-gray-300">
                 <thead>
                   <tr>
@@ -131,46 +130,136 @@
                   <tr>
                     <td></td>
                     <td>
-                      <input type="text" name="name" id="name" class="bg-transparent mt-2 block w-full rounded-full px-4 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/3" placeholder="Pays">
+                      <div class="my-2 grid grid-cols-1">
+                        <input (keyup.enter)="this.searchCountry()" [(ngModel)]="this.filterCountry" type="text" name="filter-country" id="filter-country" class="col-start-1 row-start-1 block w-full rounded-md bg-transparent py-1 pr-10 pl-3 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:pr-9 sm:text-xs" placeholder="Pays">
+                        <svg *ngIf="this.filterCountry === ''" (click)="this.searchCountry()" class="hover:text-indigo-400 cursor-pointer col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-400 sm:size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                        <svg *ngIf="this.filterCountry !== ''" (click)="this.clearCountry()" class="hover:text-indigo-400 cursor-pointer col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-400 sm:size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+                      </div>
                     </td>
                     <td>
-                      <input type="text" name="name" id="name" class="bg-transparent mt-2 block w-full rounded-full px-4 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/3" placeholder="Ville">
-                    </td>
-                    <td></td>
-                    <td></td>
-                  </tr>
-                  <tr *ngFor="let hd of historyDisasters" (click)="this.zoomOnDisaster(hd)" class="hover:bg-indigo-700/20 cursor-pointer">
-                    <td class="w-full max-w-0 py-4 px-3 pl-4 text-sm font-medium text-indigo-400 sm:w-auto sm:max-w-none sm:pl-0">
-                      <div class="flex items-center">
-                        <img title="{{hd.frenchType | titlecase }}" class="size-6" src="{{hd.pictureType}}" />
-                        <span class="ml-2">{{hd.power}}</span>
+                      <div class="my-2 grid grid-cols-1">
+                        <input (keyup.enter)="this.searchCity()" [(ngModel)]="this.filterCity" type="text" name="filter-city" id="filter-city" class="col-start-1 row-start-1 block w-full rounded-md bg-transparent py-1 pr-10 pl-3 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:pr-9 sm:text-xs" placeholder="Ville">
+                        <svg *ngIf="this.filterCity === ''" (click)="this.searchCity()" class="hover:text-indigo-400 cursor-pointer col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-400 sm:size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+                        <svg *ngIf="this.filterCity !== ''" (click)="this.clearCity()" class="hover:text-indigo-400 cursor-pointer col-start-1 row-start-1 mr-3 size-5 self-center justify-self-end text-gray-400 sm:size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
                       </div>
-                      <dl class="font-normal lg:hidden">
-                        <dt class="sr-only">Localisation</dt>
-                        <dd class="mt-1 truncate text-gray-400 flex items-center">
-                          <img *ngIf="hd.iso != null" class="w-5 h-3 mr-2" src="{{hd.countryPicture}}" />
-                          {{hd.distanceText}} de {{hd.city}}
-                        </dd>
-                        <dt class="sr-only sm:hidden">Premier relevé</dt>
-                        <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.premier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
-                        <dt class="sr-only sm:hidden">Dernier relevé</dt>
-                        <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.dernier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
-                      </dl>
                     </td>
-                    <!-- <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
-                      <div class="flex items-center">
-                        {{hd.power}}
-                      </div>
-                    </td> -->
-                    <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
-                        <img title="{{hd.country}}" *ngIf="hd.iso != null" class="w-5 h-3 mx-auto" src="{{hd.countryPicture}}" />
+                    <td>
+                      <input [ngModel]="this.filterFrom" (change)="searchFrom($event)" type="date" name="filter-from" id="filter-from" class="scheme-light bg-transparent my-2 block w-full rounded-md px-3 py-1 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-xs" placeholder="Premier relevé">
                     </td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
-                        {{hd.city}} ({{hd.distanceText}})
+                    <td>
+                      <input [ngModel]="this.filterTo" (change)="searchTo($event)" type="date" name="filter-to" id="filter-to" class="scheme-dark bg-transparent my-2 block w-full rounded-md px-3 py-1 text-base text-white outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 text-xs" placeholder="Dernier relevé">
                     </td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.premier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
-                    <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.dernier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
                   </tr>
+                  <ng-container *ngIf="this.load">
+                    <tr class="max-w-md p-4 space-y-4 divide-gray-200 rounded-sm shadow-sm animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                    </tr>
+                    <tr class="max-w-md p-4 space-y-4 divide-gray-200 rounded-sm shadow-sm animate-pulse dark:divide-gray-700 md:p-6 dark:border-gray-700">
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-12"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                      <td class="py-4">
+                          <!-- <div>
+                              <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-24 mb-2.5"></div>
+                              <div class="w-32 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+                          </div> -->
+                          <div class="mx-auto h-2.5 bg-gray-300 rounded-full dark:bg-gray-700 w-20"></div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                  <ng-container *ngIf="!this.load">
+                    <tr *ngFor="let hd of historyDisasters" (click)="this.zoomOnDisaster(hd)" class="hover:bg-indigo-700/20 cursor-pointer">
+                      <td class="w-full max-w-0 py-4 px-3 pl-4 text-sm font-medium text-indigo-400 sm:w-auto sm:max-w-none sm:pl-0">
+                        <div class="flex items-center">
+                          <img title="{{hd.frenchType | titlecase }}" class="size-6" src="{{hd.pictureType}}" />
+                          <span class="ml-2">{{hd.power}}</span>
+                        </div>
+                        <dl class="font-normal lg:hidden">
+                          <dt class="sr-only">Localisation</dt>
+                          <dd class="mt-1 truncate text-gray-400 flex items-center">
+                            <img *ngIf="hd.iso != null" class="w-5 h-3 mr-2" src="{{hd.countryPicture}}" />
+                            {{hd.distanceText}} de {{hd.city}}
+                          </dd>
+                          <dt class="sr-only sm:hidden">Premier relevé</dt>
+                          <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.premier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
+                          <dt class="sr-only sm:hidden">Dernier relevé</dt>
+                          <dd class="mt-1 truncate text-gray-400 sm:hidden">{{hd.dernier_releve | 	date:'dd/MM/yyyy, H:mm'}}</dd>
+                        </dl>
+                      </td>
+                      <!-- <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
+                        <div class="flex items-center">
+                          {{hd.power}}
+                        </div>
+                      </td> -->
+                      <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
+                          <img title="{{hd.country}}" *ngIf="hd.iso != null" class="w-5 h-3 mx-auto" src="{{hd.countryPicture}}" />
+                      </td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-400 lg:table-cell">
+                          {{hd.city}} ({{hd.distanceText}})
+                      </td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.premier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
+                      <td class="hidden px-3 py-4 text-sm text-gray-400 sm:table-cell">{{hd.dernier_releve | date:'dd/MM/yyyy, H:mm'}}</td>
+                    </tr>
+                  </ng-container>
                 </tbody>
               </table>     
               <app-pagination (page$)="changePage($event)" [currentPage]="this.currentPage" [nbPage]="this.nbPage"></app-pagination>
