@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, output } from '@angular/core';
 import { Router } from '@angular/router';
-import { debounceTime } from 'rxjs';
 import { DisasterAlertDto } from 'src/app/DTO/DisasterAlertDto';
 import { DisasterFromAlertDtoEarthquake, DisasterFromAlertDtoEruption, DisasterFromAlertDtoFlood, DisasterFromAlertDtoHurricane } from 'src/app/DTO/DisasterFromAlertDto';
 import { Alert } from 'src/app/Model/Alert';
@@ -29,9 +28,12 @@ export class DetailAlertComponent {
   close$ = output<boolean>();
   zoomAlert$ = output<Alert>();
   zoomDisaster$ = output<Disaster>();
+  hoverDisaster$ = output<Disaster>();
   disastersToDisplay$ = output<Disaster[]>();
   historyDisasters: Disaster[] = [];
   count = 0;
+  counted = false;
+  allCount = 0;
   load = false;
   expandPanel = false;
 
@@ -48,8 +50,8 @@ export class DetailAlertComponent {
   filterCountry = '';
   filterCity = '';
   now = new Date();
-  filterFrom = new Date(this.now.setFullYear(this.now.getDate() - 100));
-  filterTo = this.now;
+  filterFrom = new Date('2000-01-01').toISOString().split('T').shift();
+  filterTo = new Date().toISOString().split('T').shift();
 
   //Pagination
   currentPage = 1;
@@ -63,6 +65,8 @@ export class DetailAlertComponent {
     private router: Router,
     private toastrService: ToastrService){
       this.load = true;
+      console.log(this.filterFrom);
+      console.log(this.filterTo);
   }
 
   back(){
@@ -94,16 +98,14 @@ export class DetailAlertComponent {
 
   searchFrom(event: any){
     if(event.target.value.length > 0){
-      this.filterFrom = new Date(event.target.value as string);
-      console.log(this.filterFrom);
+      this.filterFrom = event.target.value;
       this.changePage(1);
     }
   }
 
   searchTo(event: any){
     if(event.target.value.length > 0){
-      this.filterTo = new Date(event.target.value as string);
-      console.log(this.filterTo);
+      this.filterTo = event.target.value;
       this.changePage(1);
     }
   }
@@ -122,6 +124,10 @@ export class DetailAlertComponent {
 
   zoomOnDisaster(disaster: Disaster){
     this.zoomDisaster$.emit(disaster);
+  }
+
+  hoverOnDisaster(disaster: Disaster){
+    this.hoverDisaster$.emit(disaster);
   }
 
   senseOfOrder(filter: string): string {
@@ -148,7 +154,7 @@ export class DetailAlertComponent {
   changePage(page: number){
       this.load = true;
       this.historyDisasters = [];
-      this.alertApiService.getDisastersAlerts(this.alert!.id, page, this.currentFilter, this.currentOrder, this.filterCountry, this.filterCity).subscribe((dAlertDto:DisasterAlertDto) => {
+      this.alertApiService.getDisastersAlerts(this.alert!.id, page, this.currentFilter, this.currentOrder, this.filterCountry, this.filterCity, this.filterFrom, this.filterTo).subscribe((dAlertDto:DisasterAlertDto) => {
         dAlertDto.disasters.forEach(d => {
           switch (d.type) {
             case 'earthquake':
@@ -174,6 +180,11 @@ export class DetailAlertComponent {
 
         this.updateComponent()
         $("#filterCountry").trigger("focus");
+
+        if(!this.counted){
+          this.allCount = this.count;
+          this.counted = true;
+        }
       });
   }
 

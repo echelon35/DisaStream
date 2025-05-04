@@ -26,6 +26,7 @@ export class Hurricane extends Disaster {
             this.name = obj.name;
             this.path = obj.path;
             this.title = 'Cyclone ' + this.name;
+            this.power = this.name;
         }
     }
 }

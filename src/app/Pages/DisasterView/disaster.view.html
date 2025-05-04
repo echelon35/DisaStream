@@ -5,7 +5,7 @@
     <!-- Menu -->
     <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-0 p-3 grid-cols-4 gap-4 w-full bg-blue-950 rounded-md flex items-center justify-between">
       <div class="flex items-center space-x-3">
-          <label 
+          <!-- <label 
           [class.ring]="this.panel === 'alea'"
           [class.ring-offset-1]="this.panel === 'alea'"
           aria-label="Alea" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
@@ -14,8 +14,8 @@
             <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
               <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>              
             </span>
-          </label>
-          <label 
+          </label> -->
+          <!-- <label 
           [class.ring]="this.panel === 'filters'"
           [class.ring-offset-1]="this.panel === 'filters'"
           aria-label="Filters" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
@@ -24,7 +24,7 @@
             <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
               <svg class="size-5 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
             </span>
-          </label>
+          </label> -->
           <label 
           [class.ring]="this.panel === 'area'"
           [class.ring-offset-1]="this.panel === 'area'"
@@ -219,7 +219,7 @@
                   <g>
                   </g>
               </svg>
-              <label for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <label (click)="this.selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
               <button (click)="this.selectAlert(alert?.alert)" class="ml-3 text-red-500" >
                 Détail
               </button>
@@ -230,7 +230,7 @@
     </div>
 
     <!-- Alert detail panel -->
-    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)"></app-detail-alert>
+    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>
