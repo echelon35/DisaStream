@@ -29,6 +29,7 @@ export class DetailAlertComponent {
   zoomAlert$ = output<Alert>();
   zoomDisaster$ = output<Disaster>();
   hoverDisaster$ = output<Disaster>();
+  closePanel$ = output<void>();
   disastersToDisplay$ = output<Disaster[]>();
   historyDisasters: Disaster[] = [];
   count = 0;
@@ -65,8 +66,6 @@ export class DetailAlertComponent {
     private router: Router,
     private toastrService: ToastrService){
       this.load = true;
-      console.log(this.filterFrom);
-      console.log(this.filterTo);
   }
 
   back(){
@@ -76,6 +75,24 @@ export class DetailAlertComponent {
 
   expand(expand: boolean){
     this.expandPanel = expand;
+  }
+
+  disableAlert(){
+    const id = this.alert!.id;
+    this.alertApiService.activateAlert(id,false).subscribe(() => {
+      this.toastrService.info('Alerte désactivée');
+      this.alert!.isActivate = false;
+      this.updateComponent();
+    });
+  }
+
+  activateAlert(){
+    const id = this.alert!.id;
+    this.alertApiService.activateAlert(id,true).subscribe(() => {
+      this.toastrService.info('Alerte activée');
+      this.alert!.isActivate = true;
+      this.updateComponent();
+    });
   }
 
   searchCity(){
@@ -124,6 +141,11 @@ export class DetailAlertComponent {
 
   zoomOnDisaster(disaster: Disaster){
     this.zoomDisaster$.emit(disaster);
+    this.closePanel();
+  }
+
+  closePanel(){
+    this.closePanel$.emit();
   }
 
   hoverOnDisaster(disaster: Disaster){

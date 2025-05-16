@@ -36,7 +36,7 @@ export class App {
         this.authenticationService.checkExpiration().subscribe(
           (val) => { 
             if(val){
-              console.log('Token valide')
+              // console.log('Token valide')
             }
           },
           (err) => {

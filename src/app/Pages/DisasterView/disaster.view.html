@@ -230,7 +230,7 @@
     </div>
 
     <!-- Alert detail panel -->
-    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
+    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>

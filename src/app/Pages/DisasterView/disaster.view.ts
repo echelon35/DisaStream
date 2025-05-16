@@ -162,7 +162,20 @@ export class DisasterView {
       if(disaster.point != null){
           //Fit on disaster selected
           this.selectedLayer?.clearLayers();
-          this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.selectedLayer!, disaster as Earthquake, null,true,true, true);
+          switch(disaster.type){
+            case 'earthquake':
+              this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.selectedLayer!, disaster as Earthquake, null,true,false, true);
+              break;
+            case 'flood':
+              this.markerService.makeFloodMarkers(this.disastersMap!, this.selectedLayer!, disaster as Flood, null,true,false, true);
+              break;
+            case 'hurricane':
+              this.markerService.makeHurricaneMarkers(this.disastersMap!, this.selectedLayer!, disaster as Hurricane, null,true,false, true);
+              break;
+            case 'eruption':
+              this.markerService.makeEruptionMarkers(this.disastersMap!, this.selectedLayer!, disaster as Eruption, null,true,false, true);
+              break;
+          }
       }
     }
 
@@ -206,6 +219,10 @@ export class DisasterView {
       this.panel = '';
     }
 
+    closePanel(){
+      this.hidePanels();
+    }
+
     showAllAlertOnMap(){
       if(this.allVisible) {
         this.alerts.forEach(item => {
@@ -243,7 +260,6 @@ export class DisasterView {
     getEarthquakes(){
       this.loading = true;
       this.earthquakes$.subscribe((data: any) => {
-        console.log(data);
         if (!data) return;
         data?.earthquakes.forEach(item => {
           const eq = new Earthquake(item);
@@ -340,13 +356,13 @@ export class DisasterView {
       disastersPoint.forEach((item:Disaster) => {
         switch(item.type){
           case 'earthquake':
-            this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item as Earthquake, null,false,true);
+            this.markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item as Earthquake, null,true,true);
             break;
           case 'flood':
-            this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item as Flood, null,false,true);
+            this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item as Flood, null,true,true);
             break;
           case 'hurricane':
-            this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item as Hurricane, null,false,true);
+            this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item as Hurricane, null,true,true);
             break;
         }
       })
