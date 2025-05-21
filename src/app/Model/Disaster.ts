@@ -1,5 +1,6 @@
 import { Point } from "geojson";
 import { Source } from "./Source";
+import { DisasterFromAlertDto } from "../DTO/DisasterFromAlertDto";
 
 export interface IDisaster {
     id: number;
@@ -8,6 +9,12 @@ export interface IDisaster {
     point: Point;
     createdAt: Date;
     updatedAt: Date;
+    type: string;
+    iso: string;
+    country: string;
+    city: string;
+    cityDistance: number;
+    source: Source;
 }
 
 export class Disaster implements IDisaster {
@@ -20,16 +27,36 @@ export class Disaster implements IDisaster {
 
     source: Source;
 
+    iso: string;
+    country: string;
+    city: string;
+    cityDistance: number;
+
     type: string;
-    
-    copyInto(obj: IDisaster){
-        if(obj){
-            this.id = obj?.id;
-            this.premier_releve = obj?.premier_releve;
-            this.dernier_releve = obj?.dernier_releve;
-            this.point = obj?.point;
-            this.createdAt = obj?.createdAt;
-            this.updatedAt = obj?.updatedAt;
+    power: string;
+    frenchType: string;
+    pictureType: string;
+    title: string;
+
+    constructor(obj?: DisasterFromAlertDto) {
+        if(obj) {
+            Object.assign(this, obj);
+            this.source = new Source({
+                name: obj.sourceName,
+                address: obj.sourceAddress
+            });
         }
+    }
+
+    get distanceText(): string {
+        if(this.cityDistance < 1000){
+            return this.cityDistance.toFixed(1) + ' km';
+        } else {
+            return (this.cityDistance / 1000).toFixed(1) + ' km';
+        }
+    }
+
+    get countryPicture(): string {
+        return `https://flagcdn.com/${this.iso.toLowerCase()}.svg`;
     }
 }

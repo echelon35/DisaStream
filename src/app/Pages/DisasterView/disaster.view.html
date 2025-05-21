@@ -1,11 +1,11 @@
 <div class="z-map w-full h-dvh relative">
-    <div id="map-disaster" class="z-map w-full h-dvh">
+    <div id="map-disaster" class="z-map w-full h-[calc(100%-3.5rem)] top-[3.5rem]">
         <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
     </div>
     <!-- Menu -->
     <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-0 p-3 grid-cols-4 gap-4 w-full bg-blue-950 rounded-md flex items-center justify-between">
       <div class="flex items-center space-x-3">
-          <label 
+          <!-- <label 
           [class.ring]="this.panel === 'alea'"
           [class.ring-offset-1]="this.panel === 'alea'"
           aria-label="Alea" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
@@ -14,8 +14,8 @@
             <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
               <svg class="size-6 mx-auto my-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 4H3"/><path d="M18 8H6"/><path d="M19 12H9"/><path d="M16 16h-6"/><path d="M11 20H9"/></svg>              
             </span>
-          </label>
-          <label 
+          </label> -->
+          <!-- <label 
           [class.ring]="this.panel === 'filters'"
           [class.ring-offset-1]="this.panel === 'filters'"
           aria-label="Filters" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
@@ -24,7 +24,7 @@
             <span aria-hidden="true" class="size-8 rounded-full border border-black/10 bg-current stroke-white">
               <svg class="size-5 mx-auto my-1.5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="21" x2="14" y1="4" y2="4"/><line x1="10" x2="3" y1="4" y2="4"/><line x1="21" x2="12" y1="12" y2="12"/><line x1="8" x2="3" y1="12" y2="12"/><line x1="21" x2="16" y1="20" y2="20"/><line x1="12" x2="3" y1="20" y2="20"/><line x1="14" x2="14" y1="2" y2="6"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="16" x2="16" y1="18" y2="22"/></svg>
             </span>
-          </label>
+          </label> -->
           <label 
           [class.ring]="this.panel === 'area'"
           [class.ring-offset-1]="this.panel === 'area'"
@@ -132,7 +132,8 @@
       </div>
     </div>
 
-    <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/80 w-full lg:w-4/12 overflow-auto">
+    <!-- Alert panel -->
+    <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-auto">
       <fieldset>
         <legend class="sr-only">Alerts</legend>
         <p class="mt-2 mb-3 pl-2 text-gray-400 font-bold">Mes alertes</p>
@@ -140,7 +141,7 @@
           <div class="flex gap-3 px-3">
             <div class="flex h-6 shrink-0 items-center">
               <div class="group grid size-4 grid-cols-1">
-                <input [checked]="allVisible" id="allAreas" (click)="showAllAlertOnMap()" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                <input [checked]="allVisible" id="allAreas" (click)="showAllAlertOnMap()" aria-describedby="all-alerts" name="all" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
                 <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
                   <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -148,13 +149,13 @@
               </div>
             </div>
             <div class="text-sm/6">
-              <label for="allAreas" class="font-bold text-white cursor-pointer hover:text-blue-500">Toutes</label>
+              <label for="allAreas" class="font-bold text-white cursor-pointer hover:text-blue-500">Afficher toutes</label>
             </div>
           </div>
           <div *ngFor="let alert of alerts" class="flex gap-3 px-3 ml-3">
             <div class="flex h-6 shrink-0 items-center">
               <div class="group grid size-4 grid-cols-1">
-                <input [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                <input [disabled]="alert.alert.areas === null" [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
                 <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
                   <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                   <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -218,12 +219,18 @@
                   <g>
                   </g>
               </svg>
-              <label for="{{alert?.alert?.name}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <label (click)="this.selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <button (click)="this.selectAlert(alert?.alert)" class="ml-3 text-red-500" >
+                Détail
+              </button>
             </div>
           </div>
         </div>
       </fieldset>      
     </div>
+
+    <!-- Alert detail panel -->
+    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>

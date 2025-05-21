@@ -1,5 +1,6 @@
 import { Geometry } from "geojson";
 import { Disaster, IDisaster } from "./Disaster";
+import { DisasterFromAlertDto, DisasterFromAlertDtoHurricane } from "../DTO/DisasterFromAlertDto";
 
 export interface IHurricane extends IDisaster {
     surface: Geometry;
@@ -13,17 +14,19 @@ export class Hurricane extends Disaster {
     forecast: Geometry;
     path: Geometry;
     name: string;
+    frenchType = 'Cyclone';
+    pictureType = '/assets/images/markers/hurricane.svg';
+    type = 'hurricane';
 
-    constructor(){
-        super();
-        this.type = 'hurricane';
-    }
-
-    copyInto(obj: IHurricane){
-        super.copyInto(obj);
-        this.surface = obj.surface;
-        this.forecast = obj.forecast;
-        this.name = obj.name;
-        this.path = obj.path;
+    constructor(obj: DisasterFromAlertDtoHurricane) {
+        super(obj);
+        if(obj) {
+            this.surface = obj.surface;
+            this.forecast = obj.forecast;
+            this.name = obj.name;
+            this.path = obj.path;
+            this.title = 'Cyclone ' + this.name;
+            this.power = this.name;
+        }
     }
 }

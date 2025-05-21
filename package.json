@@ -37,6 +37,7 @@
     "apollo-angular": "^7.2.1",
     "chart.js": "^4.4.5",
     "graphql": "^16",
+    "jquery": "^3.7.1",
     "leaflet-draw": "^1.0.4",
     "leaflet-geosearch": "^4.0.0",
     "leaflet.markerclusterv2": "^2.0.1",

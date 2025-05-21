@@ -5,7 +5,12 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DisplaydatePipe implements PipeTransform {
 
-  transform(value: Date,isShort: boolean = false, prefix: boolean = false): unknown {
+  transform(value: Date | null | undefined,isShort: boolean = false, prefix: boolean = false): unknown {
+
+    if(value == null){
+        return '';
+    }
+
     var now = Date.now();
     var seconds = Math.floor((now - new Date(value).getTime()) / 1000);
     

@@ -1,5 +1,6 @@
 import { Geometry } from "geojson";
 import { Disaster, IDisaster } from "./Disaster";
+import { DisasterFromAlertDtoEruption } from "../DTO/DisasterFromAlertDto";
 
 export interface IEruption extends IDisaster {
     surface: Geometry;
@@ -8,13 +9,14 @@ export interface IEruption extends IDisaster {
 export class Eruption extends Disaster implements IEruption {
 
     surface: Geometry;
+    type = 'eruption';
+    frenchType = 'Eruption volcanique';
+    pictureType = '/assets/images/markers/eruption.svg';
     
-    constructor(){
-        super();
-        this.type = 'eruption';
-    }
-    
-    copyInto(obj: IEruption){
-        super.copyInto(obj)
+    constructor(obj: DisasterFromAlertDtoEruption){
+        super(obj);
+        if(obj){
+            this.surface = obj.surface;
+        }
     }
 }
