@@ -42,7 +42,7 @@ export class AuthenticationView {
       }
     })
 
-    this.seoService.generateTags("S'authentifier sur SatellEarth","Inscrivez-vous sur SatellEarth pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
+    this.seoService.generateTags("S'authentifier sur Disastream","Inscrivez-vous sur Disastream pour être notifiés des dernières catastrophes naturelles","https://disastream.s3.eu-west-3.amazonaws.com/background/avalanche.jpg");
 
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
