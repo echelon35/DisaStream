@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { FreeModeComponent } from 'src/app/Modals/FreeMode/FreeMode.modal';
 import { ProPacksComponent } from 'src/app/Modals/ProPacks/ProPacks.modal';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
+import { SeoService } from 'src/app/Services/Seo.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
@@ -131,8 +132,10 @@ export class LandingPageView {
     public router: Router, 
     private authenticationApi: AuthentificationApi, 
     private userApiService: UserApiService,
+    private seoService: SeoService,
     private store: Store,
     private toastrService: ToastrService){
+      this.seoService.generateTags('Présentation de DisaStream', 'Soyez informés au plus vite de catastrophes naturelles partout dans le monde avec Disastream.','')
     const token = this.route.snapshot.queryParamMap.get('access_token');
     const mail = this.route.snapshot.queryParamMap.get('mail');
     this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
