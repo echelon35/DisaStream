@@ -18,8 +18,9 @@ import { environment } from 'src/environments/environment';
 export class AuthenticationView {
 
   showLogin = true;
-  env = environment;
-  appName: string = this.env.settings.appName;
+  #env = environment;
+  appName: string = this.#env.settings.appName;
+  protected s3BasePath = this.#env.settings.s3_bucket;
   registerForm: FormGroup;
   errorMessage = '';
   picture: Picture;
@@ -42,7 +43,7 @@ export class AuthenticationView {
       }
     })
 
-    this.seoService.generateTags("S'authentifier sur Disastream","Inscrivez-vous sur Disastream pour être notifiés des dernières catastrophes naturelles","https://disastream.s3.eu-west-3.amazonaws.com/background/avalanche.jpg");
+    this.seoService.generateTags("S'authentifier sur Disastream","Inscrivez-vous sur Disastream pour être notifiés des dernières catastrophes naturelles",`${this.s3BasePath}/background/avalanche.jpg`);
 
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
