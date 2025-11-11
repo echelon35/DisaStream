@@ -6,6 +6,7 @@ export const environment = {
       backend: "http://localhost:4003",
       disasterapi: "http://localhost:4002",
       version: "1.0.0",
-      appName: "Disastream"
+      appName: "Disastream",
+      s3_bucket: "https://disastream-bucket.s3.fr-par.scw.cloud",
     }
   };

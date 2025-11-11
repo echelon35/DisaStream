@@ -9,6 +9,7 @@ import { SeoService } from 'src/app/Services/Seo.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   templateUrl: './LandingPage.view.html',
@@ -18,6 +19,9 @@ export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   isSidebarOpen = false;
   isAuthenticated$: Observable<boolean>;
+
+  #env = environment;
+  protected s3BasePath = this.#env.settings.s3_bucket;
 
   //Change detector to update component manually
   private cd = inject(ChangeDetectorRef)

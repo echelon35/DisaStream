@@ -6,6 +6,7 @@ export const environment = {
       backend: "https://api.disastream.com",
       disasterapi: "https://api.disastream.com/disasters",
       version: "1.0.0",
-      appName: "Disastream"
+      appName: "Disastream",
+      s3_bucket: "https://disastream-bucket.s3.fr-par.scw.cloud"
     }
   };

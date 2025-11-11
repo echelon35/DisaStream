@@ -33,8 +33,7 @@
       [class.opacity-100]="isSidebarOpen"
       [class.opacity-0]="!isSidebarOpen"
       [hidden]="!isSidebarOpen"
-      class="lg:hidden  transition-transform ease-in-out duration-300" role="dialog" aria-modal="true">
-        <!-- Background backdrop, show/hide based on slide-over state. -->
+      class="lg:hidden transition-transform ease-in-out duration-300" role="dialog" aria-modal="true">
         <div class="fixed inset-0 z-sidebar"></div>
         <div 
         [class.translate-x-0]="isSidebarOpen"
@@ -71,7 +70,7 @@
     <main>
       <!-- Hero section -->
       <div class="relative isolate overflow-hidden bg-blue-950 pb-16 pt-14 sm:pb-20">
-        <video class="absolute inset-0 -z-10 size-full object-cover opacity-30" autoplay muted loop id="myVideo" poster="https://disastream-bucket.s3.fr-par.scw.cloud/background/meta_bg.png">
+        <video class="absolute inset-0 -z-10 size-full object-cover opacity-30" autoplay muted loop id="myVideo" poster="{{s3BasePath}}/background/hurricane.jpg">
             <source src="/assets/videos/landing.mp4" type="video/mp4">
         </video>
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -88,10 +87,10 @@
   
           <!-- Logo cloud -->
           <div class="mx-auto grid max-w-lg grid-cols-4 items-center gap-x-8 gap-y-10 sm:max-w-xl sm:grid-cols-4 sm:gap-x-10 lg:mx-0 lg:max-w-none lg:grid-cols-4">
-            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://disastream.s3.eu-west-3.amazonaws.com/sources/gdacs+logo.png" alt="GDACS" width="158" height="48">
-            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://disastream.s3.eu-west-3.amazonaws.com/sources/nasa_logo.png" alt="NASA" width="158" height="48">
-            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="https://disastream.s3.eu-west-3.amazonaws.com/sources/USGS_logo.png" alt="USGS" width="158" height="48">
-            <img class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1" src="https://disastream.s3.eu-west-3.amazonaws.com/sources/noaa.png" alt="NOAA" width="158" height="48">
+            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="assets/images/sources/gdacs_logo.webp" alt="GDACS" width="158" height="48">
+            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="assets/images/sources/nasa.webp" alt="NASA" width="158" height="48">
+            <img class="col-span-2 max-h-12 w-full object-contain lg:col-span-1" src="assets/images/sources/usgs.webp" alt="USGS" width="158" height="48">
+            <img class="col-span-2 max-h-12 w-full object-contain sm:col-start-2 lg:col-span-1" src="assets/images/sources/noaa.webp" alt="NOAA" width="158" height="48">
           </div>
         </div>
         <div class="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]" aria-hidden="true">
