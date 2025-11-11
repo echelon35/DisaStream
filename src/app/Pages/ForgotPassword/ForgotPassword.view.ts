@@ -2,12 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   templateUrl: './ForgotPassword.view.html'
 })
 export class ForgotPasswordView implements OnInit {
 
+  #env = environment;
+  protected s3BasePath = this.#env.settings.s3_bucket;
   forgotForm: FormGroup;
   loading = false;
   submitted = false;

@@ -11,8 +11,9 @@ import { environment } from 'src/environments/environment';
 })
 export class ConfirmEmailView {
 
-  env = environment;
-  appName: string = this.env.settings.appName;
+  #env = environment;
+  protected appName: string = this.#env.settings.appName;
+  protected s3BasePath = this.#env.settings.s3_bucket;
   message = '';
   error = '';
   errorMessage = '';

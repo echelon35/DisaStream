@@ -16,6 +16,7 @@ import { PublicApiService } from "src/app/Services/PublicApi.service";
 import { GeographyApiService } from "src/app/Services/GeographyApi.service";
 import { ShapeService } from "src/app/Map/Services/shape.service";
 import { EndAlertComponent } from "src/app/Modals/EndAlert/EndAlert.modal";
+import { environment } from "src/environments/environment";
 
 class AleaVM {
   alea: Alea;
@@ -37,6 +38,8 @@ class AleaCategoryVM {
 })
 export class NewAlertView {
   
+    #env = environment;
+    protected s3BasePath = this.#env.settings.s3_bucket;
     private _formBuilder = inject(FormBuilder);
 
     public alert: Alert = new Alert();

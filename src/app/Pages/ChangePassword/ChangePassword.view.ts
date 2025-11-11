@@ -4,12 +4,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   templateUrl: './ChangePassword.view.html'
 })
 export class ChangePasswordView implements OnInit {
 
+  #env = environment;
+  protected s3BasePath = this.#env.settings.s3_bucket;
   passwordForm: FormGroup;
   loading = false;
   submitted = false;
