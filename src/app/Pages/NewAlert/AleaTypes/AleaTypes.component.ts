@@ -5,6 +5,7 @@ import { Alea } from "src/app/Model/Alea";
 import { Alert } from "src/app/Model/Alert";
 import { PublicApiService } from "src/app/Services/PublicApi.service";
 import { ToastrService } from "src/app/Shared/Services/toastr.service";
+import { environment } from "src/environments/environment";
 
 class AleaVM {
     alea: Alea;
@@ -27,6 +28,8 @@ class AleaCategoryVM {
 })
 export class AleaTypesComponent implements OnInit, OnDestroy {
 
+    #env = environment;
+    protected s3BasePath = this.#env.settings.s3_bucket;
     public categories: AleaCategoryVM[] = [];
     public selectedAleaTypes: Alea[] = [];
 
