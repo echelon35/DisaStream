@@ -6,6 +6,7 @@ import { ToastrService } from "src/app/Shared/Services/Toastr.service";
 @Component({
     selector: "app-delete-confirm",
     templateUrl: './DeleteConfirm.modal.html',
+    standalone: false
 })
 export class DeleteConfirmModal {
 

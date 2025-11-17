@@ -14,7 +14,8 @@ export class Step {
 @Component({
     selector: 'app-stepper',
     templateUrl: './Stepper.component.html',
-    styleUrls: ['./Stepper.component.css']
+    styleUrls: ['./Stepper.component.css'],
+    standalone: false
 })
 export class StepperComponent {
 

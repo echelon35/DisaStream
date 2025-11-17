@@ -7,7 +7,8 @@ import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
-  templateUrl: './ChangePassword.view.html'
+    templateUrl: './ChangePassword.view.html',
+    standalone: false
 })
 export class ChangePasswordView implements OnInit {
 

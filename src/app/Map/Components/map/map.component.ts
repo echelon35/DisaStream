@@ -10,8 +10,9 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import { Observable, Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: './map.component.html'
+    selector: 'app-map',
+    templateUrl: './map.component.html',
+    standalone: false
 })
 export class MapComponent implements OnInit,OnDestroy {
 

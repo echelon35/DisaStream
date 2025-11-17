@@ -9,7 +9,8 @@ import { debounceTime, fromEvent, map } from 'rxjs';
 @Component({
     selector: "app-search-place-modal",
     templateUrl: './SearchPlace.modal.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SearchPlace implements OnInit {
 

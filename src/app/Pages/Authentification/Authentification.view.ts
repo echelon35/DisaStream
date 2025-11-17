@@ -13,7 +13,8 @@ import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './Authentification.view.html'
+    templateUrl: './Authentification.view.html',
+    standalone: false
 })
 export class AuthenticationView {
 

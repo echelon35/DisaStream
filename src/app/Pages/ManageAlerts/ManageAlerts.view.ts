@@ -13,7 +13,8 @@ class AlertVm extends Alert {
 }
 
 @Component({
-  templateUrl: './ManageAlerts.view.html',
+    templateUrl: './ManageAlerts.view.html',
+    standalone: false
 })
 export class ManageAlertsView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';

@@ -7,6 +7,7 @@ import { ToastrService } from "src/app/Shared/Services/Toastr.service";
     selector: "app-end-alert-modal",
     templateUrl: './EndAlert.modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class EndAlertComponent {
 

@@ -6,7 +6,8 @@ import { ToastrContent, ToastrService, ToastrType } from "../../Services/Toastr.
     selector: 'app-toastr',
     templateUrl: './Toastr.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-  })
+    standalone: false
+})
 export class ToastrComponent implements OnInit {
 
     toastrs$: Observable<ToastrContent[] | null>;

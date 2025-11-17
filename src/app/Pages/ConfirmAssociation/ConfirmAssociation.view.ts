@@ -7,7 +7,8 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './ConfirmAssociation.view.html',
+    templateUrl: './ConfirmAssociation.view.html',
+    standalone: false
 })
 export class ConfirmAssociationView {
 

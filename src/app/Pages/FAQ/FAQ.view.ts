@@ -7,7 +7,7 @@ import { selectIsAuthenticated } from "src/app/Store/Selectors/user.selector";
 @Component({
     templateUrl: './FAQ.view.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-
+    standalone: false
 })
 export class FAQView {
   isSidebarOpen = false;

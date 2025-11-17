@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
     selector: "app-pro-pack-modal",
     templateUrl: './ProPacks.modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class ProPacksComponent {
 

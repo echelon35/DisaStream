@@ -4,9 +4,10 @@ import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.servic
 import { UserApiService } from 'src/app/Services/UserApiService';
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.css']
+    selector: 'app-user-profile',
+    templateUrl: './user-profile.component.html',
+    styleUrls: ['./user-profile.component.css'],
+    standalone: false
 })
 export class UserProfileComponent {
 

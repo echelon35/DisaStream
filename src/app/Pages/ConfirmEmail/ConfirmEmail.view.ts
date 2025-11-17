@@ -7,7 +7,8 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './ConfirmEmail.view.html'
+    templateUrl: './ConfirmEmail.view.html',
+    standalone: false
 })
 export class ConfirmEmailView {
 

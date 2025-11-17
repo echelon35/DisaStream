@@ -34,7 +34,8 @@ class AleaCategoryVM {
 
 @Component({
     templateUrl: './NewAlert.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class NewAlertView {
   

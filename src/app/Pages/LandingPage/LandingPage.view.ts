@@ -12,8 +12,9 @@ import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
-  templateUrl: './LandingPage.view.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    templateUrl: './LandingPage.view.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';

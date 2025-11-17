@@ -12,7 +12,8 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
 
 @Component({
-  templateUrl: './Login.view.html'
+    templateUrl: './Login.view.html',
+    standalone: false
 })
 export class LoginView {
 

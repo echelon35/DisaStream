@@ -34,7 +34,8 @@ class AlertVm {
 
 @Component({
     templateUrl: './disaster.view.html',
-  })
+    standalone: false
+})
 export class DisasterView {
 
     disastersMap?: L.Map;

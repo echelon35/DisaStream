@@ -8,8 +8,9 @@ import { User } from './Model/User';
 import { selectIsAuthenticated, selectUser } from './Store/Selectors/user.selector';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    standalone: false
 })
 export class App {
 

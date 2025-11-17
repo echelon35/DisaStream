@@ -5,7 +5,8 @@ import { DetailService } from "src/app/Services/DetailService";
 @Component({
     selector: "app-disaster-detail",
     templateUrl: './disaster-detail.component.html',
-    styleUrls: ['./disaster-detail.component.css']
+    styleUrls: ['./disaster-detail.component.css'],
+    standalone: false
 })
 export class DisasterDetailComponent {
     disaster$ = this.detailService.disasterDetail$;
