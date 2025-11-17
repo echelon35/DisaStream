@@ -3,25 +3,25 @@
 <div class="criterias-list" >
     <h2 class="w-600 margin-t10">Quels critères doivent vous alerter ?</h2>
     <div style="max-height:500px;" class="overflow-auto custom-scrollbar">
-        <div class="margin-t20 d-flex flex-wrap align-items-center" *ngFor="let alertCriteria of this.AlertCriteriaVMList; index as i">
+        <div class="margin-t20 d-flex flex-wrap align-items-center" *ngFor="let alertCriteria of AlertCriteriaVMList; index as i">
             <div (click)="removeCriteria(i)" class="margin-10 cursor-pointer">
                 <svg class="margin-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
             </div>
             <mat-form-field>
                 <mat-label>Type d'aléa</mat-label>
-                <mat-select (selectionChange)="feedCriteriaList(i)" [compareWith]="this.objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedAlea" name="alea">
+                <mat-select (selectionChange)="feedCriteriaList(i)" [compareWith]="objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedAlea" name="alea">
                     <mat-option *ngFor="let alea of aleaType" [value]="alea">{{alea.name | titlecase }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="margin-l20">
                 <mat-label>Critère</mat-label>
-                <mat-select [compareWith]="this.objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedCriteria" name="critere">
+                <mat-select [compareWith]="objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedCriteria" name="critere">
                     <mat-option *ngFor="let criteria of alertCriteria.criteriaList" [value]="criteria">{{criteria.label | titlecase }}</mat-option>
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="margin-l20">
                 <mat-label>Opération</mat-label>
-                <mat-select [compareWith]="this.operatorComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedOperator" name="operation">
+                <mat-select [compareWith]="operatorComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedOperator" name="operation">
                     <mat-option *ngFor="let operation of operations | keyvalue" [value]="operation.key">{{operation.value | titlecase }}</mat-option>
                 </mat-select>
             </mat-form-field>

@@ -6,8 +6,8 @@
     <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-0 p-3 grid-cols-4 gap-4 w-full bg-blue-950 rounded-md flex items-center justify-between">
       <div class="flex items-center space-x-3">
           <!-- <label 
-          [class.ring]="this.panel === 'alea'"
-          [class.ring-offset-1]="this.panel === 'alea'"
+          [class.ring]="panel === 'alea'"
+          [class.ring-offset-1]="panel === 'alea'"
           aria-label="Alea" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Alea" class="sr-only" (click)="selectPanel('alea')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Aléas</span>
@@ -16,8 +16,8 @@
             </span>
           </label> -->
           <!-- <label 
-          [class.ring]="this.panel === 'filters'"
-          [class.ring-offset-1]="this.panel === 'filters'"
+          [class.ring]="panel === 'filters'"
+          [class.ring-offset-1]="panel === 'filters'"
           aria-label="Filters" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Filters" class="sr-only" (click)="selectPanel('filters')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Filtres</span>
@@ -26,8 +26,8 @@
             </span>
           </label> -->
           <label 
-          [class.ring]="this.panel === 'area'"
-          [class.ring-offset-1]="this.panel === 'area'"
+          [class.ring]="panel === 'area'"
+          [class.ring-offset-1]="panel === 'area'"
           aria-label="Area" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Area" class="sr-only" (click)="selectPanel('area')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Zones</span>
@@ -42,11 +42,11 @@
     <!-- PANELS -->
 
     <!-- Alea panel selection-->
-    <div [class.hidden]="this.panel !== 'alea'" [class.block]="this.panel === 'alea'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 w-auto rounded-md flex flex-col">
+    <div [class.hidden]="panel !== 'alea'" [class.block]="panel === 'alea'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 w-auto rounded-md flex flex-col">
       <div class="flex flex-col items-center">
             <label 
-            [class.ring]="this.selectedAleaType === 'earthquake'"
-            [class.ring-offset-1]="this.selectedAleaType === 'earthquake'"
+            [class.ring]="selectedAleaType === 'earthquake'"
+            [class.ring-offset-1]="selectedAleaType === 'earthquake'"
             aria-label="Earthquake" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-green-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
                 <input type="radio" name="alea-choice" value="Earthquake" class="sr-only" (click)="selectAlea('earthquake')">
                 <span class="text-sm rounded-lg absolute opacity-0 md:group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
@@ -57,8 +57,8 @@
               </span>
             </label>
             <label aria-label="Hurricane" 
-            [class.ring]="this.selectedAleaType === 'hurricane'"
-            [class.ring-offset-1]="this.selectedAleaType === 'hurricane'"
+            [class.ring]="selectedAleaType === 'hurricane'"
+            [class.ring-offset-1]="selectedAleaType === 'hurricane'"
             class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-purple-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Hurricane" class="sr-only" (click)="selectAlea('hurricane')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
@@ -76,8 +76,8 @@
               </span>
             </label>
             <label aria-label="Flood" 
-            [class.ring]="this.selectedAleaType === 'flood'"
-            [class.ring-offset-1]="this.selectedAleaType === 'flood'"
+            [class.ring]="selectedAleaType === 'flood'"
+            [class.ring-offset-1]="selectedAleaType === 'flood'"
             class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-1 text-blue-700 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Flood" class="sr-only" (click)="selectAlea('flood')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
@@ -103,8 +103,8 @@
               </span>
             </label>
             <label 
-            [class.ring]="this.selectedAleaType === 'eruption'"
-            [class.ring-offset-1]="this.selectedAleaType === 'eruption'"
+            [class.ring]="selectedAleaType === 'eruption'"
+            [class.ring-offset-1]="selectedAleaType === 'eruption'"
             aria-label="Eruption" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
               <input type="radio" name="alea-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
@@ -133,7 +133,7 @@
     </div>
 
     <!-- Alert panel -->
-    <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-auto">
+    <div [class.hidden]="panel !== 'area'" [class.block]="panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-auto">
       <fieldset>
         <legend class="sr-only">Alerts</legend>
         <p class="mt-2 mb-3 pl-2 text-gray-400 font-bold">Mes alertes</p>
@@ -219,8 +219,8 @@
                   <g>
                   </g>
               </svg>
-              <label (click)="this.selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
-              <button (click)="this.selectAlert(alert?.alert)" class="ml-3 text-red-500" >
+              <label (click)="selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+              <button (click)="selectAlert(alert?.alert)" class="ml-3 text-red-500" >
                 Détail
               </button>
             </div>
@@ -230,13 +230,13 @@
     </div>
 
     <!-- Alert detail panel -->
-    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
+    <app-detail-alert #detailalert [class.hidden]="panel !== 'detail-alert'" [class.block]="panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>
 
     <!-- Loader -->
-    <div *ngIf="this.loading" class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
+    <div *ngIf="loading" class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
       <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>
     </div>
 </div>

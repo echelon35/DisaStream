@@ -1,4 +1,4 @@
-@if((isAuthenticated$ | async) && (this.route.url.startsWith('/dashboard') || this.route.url.startsWith('/profile'))){
+@if((isAuthenticated$ | async) && (route.url.startsWith('/dashboard') || route.url.startsWith('/profile'))){
     <div>
         <div class="relative z-sidebar lg:hidden" role="dialog" aria-modal="true">
           <div class="fixed inset-0 bg-gray-900/80 transition-opacity ease-linear duration-300"
