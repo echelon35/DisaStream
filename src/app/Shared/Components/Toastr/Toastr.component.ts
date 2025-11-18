@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Observable } from "rxjs";
 import { ToastrContent, ToastrService, ToastrType } from "../../Services/Toastr.service"
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: 'app-toastr',
     templateUrl: './Toastr.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class ToastrComponent implements OnInit {
 

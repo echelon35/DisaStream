@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { environment } from 'src/environments/environment';
 import { AuthentificationApi } from './Services/AuthentificationApi.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from './Model/User';
 import { selectIsAuthenticated, selectUser } from './Store/Selectors/user.selector';
+import { ToastrComponent } from './Shared/Components/Toastr/Toastr.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    standalone: false
+    standalone: true,
+    imports: [RouterOutlet, CommonModule, ToastrComponent]
 })
 export class App {
 

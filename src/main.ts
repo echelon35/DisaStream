@@ -1,12 +1,8 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-
-import { AppModule } from './app/app.module';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 import { environment } from './environments/environment';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { App } from './app/app.component';
 
-
-platformBrowserDynamic().bootstrapModule(AppModule)
-  .catch(err => console.error(err));
-
-  if(environment.production){
-    window.console.log = () => {};
-  }
+bootstrapApplication(App, {
+  providers: [provideCharts(withDefaultRegisterables())],
+}).catch((err) => console.error(err));
