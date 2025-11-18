@@ -12,7 +12,7 @@
     "strictPropertyInitialization": false,
     "noImplicitThis": false,
     "noImplicitAny": false,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "typeRoots": [
       "node_modules/@types"

@@ -13,9 +13,11 @@ export class HurricanesEffects {
     ofType(loadHurricanesGeography),
     mergeMap(() => 
         this.disasterApiService.searchHurricanes().pipe(
-            map((hurricanes) =>
-              HurricanesActions.loadHurricanesGeographySuccess({ hurricanes })
-            ),
+            map((hurricanes) => {
+              // ensure we always pass a definite Hurricane[] (filter out undefineds and default to [])
+              const safeHurricanes = Array.isArray(hurricanes) ? hurricanes.filter(h => h != null) as any[] : [];
+              return HurricanesActions.loadHurricanesGeographySuccess({ hurricanes: safeHurricanes as any });
+            }),
             catchError((error) =>
                 of(HurricanesActions.loadHurricanesGeographyFailure({ error }))
             )

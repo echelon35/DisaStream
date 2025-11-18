@@ -5,6 +5,7 @@ import { map, catchError, mergeMap } from 'rxjs/operators';
 import { DisasterApiService } from 'src/app/Services/DisasterApiService';
 import { loadEarthquakesGeography } from '../Actions/earthquakes.actions';
 import * as EarthquakeActions from '../Actions/earthquakes.actions';
+import { Earthquake } from 'src/app/Model/Earthquake';
 
 @Injectable()
 export class EarthquakesEffects {
@@ -14,7 +15,7 @@ export class EarthquakesEffects {
     mergeMap(() => 
         this.disasterApiService.searchEarthquakes().pipe(
             map((earthquakes) =>
-                EarthquakeActions.loadEarthquakesGeographySuccess({ earthquakes })
+                EarthquakeActions.loadEarthquakesGeographySuccess({ earthquakes: (earthquakes ?? []).filter((eq): eq is Earthquake => eq !== undefined) })
             ),
             catchError((error) =>
                 of(EarthquakeActions.loadEarthquakesGeographyFailure({ error }))

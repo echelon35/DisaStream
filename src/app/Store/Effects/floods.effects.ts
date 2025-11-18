@@ -14,7 +14,8 @@ export class FloodsEffects {
     mergeMap(() => 
         this.disasterApiService.searchFloods().pipe(
             map((floods) =>
-              FloodsActions.loadFloodsGeographySuccess({ floods })
+              // ensure we always pass a Flood[]: default to [] and remove any undefined entries
+              FloodsActions.loadFloodsGeographySuccess({ floods: ((floods ?? []) as unknown as any[]).filter(Boolean) as any[] })
             ),
             catchError((error) =>
                 of(FloodsActions.loadFloodsGeographyFailure({ error }))

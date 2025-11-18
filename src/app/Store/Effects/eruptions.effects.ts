@@ -5,6 +5,7 @@ import { map, catchError, mergeMap } from 'rxjs/operators';
 import { DisasterApiService } from 'src/app/Services/DisasterApiService';
 import * as EruptionsActions from '../Actions/eruptions.actions';
 import { loadEruptionsGeography } from '../Actions/eruptions.actions';
+import { Eruption } from 'src/app/Model/Eruption';
 
 @Injectable()
 export class EruptionsEffects {
@@ -14,7 +15,7 @@ export class EruptionsEffects {
     mergeMap(() => 
         this.disasterApiService.searchEruptions().pipe(
             map((eruptions) =>
-              EruptionsActions.loadEruptionsGeographySuccess({ eruptions })
+              EruptionsActions.loadEruptionsGeographySuccess({ eruptions: (eruptions ?? []) as Eruption[] })
             ),
             catchError((error) =>
                 of(EruptionsActions.loadEruptionsGeographyFailure({ error }))
