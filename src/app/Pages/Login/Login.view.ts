@@ -1,6 +1,6 @@
 
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -13,7 +13,8 @@ import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
 
 @Component({
     templateUrl: './Login.view.html',
-    standalone: false
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class LoginView {
 

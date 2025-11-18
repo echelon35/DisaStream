@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
@@ -7,7 +9,8 @@ import { UserApiService } from 'src/app/Services/UserApiService';
     selector: 'app-user-profile',
     templateUrl: './user-profile.component.html',
     styleUrls: ['./user-profile.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, ReactiveFormsModule, FormsModule]
 })
 export class UserProfileComponent {
 

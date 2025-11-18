@@ -12,7 +12,7 @@ import { Observable, Subscription } from 'rxjs';
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
-    standalone: false
+    standalone: true
 })
 export class MapComponent implements OnInit,OnDestroy {
 

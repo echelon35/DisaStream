@@ -11,6 +11,10 @@ import { Hurricane } from 'src/app/Model/Hurricane';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import $ from 'jquery';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PipeModule } from 'src/app/PipeModule/pipe.module';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 
 interface Filter {
   name: string;
@@ -21,7 +25,8 @@ interface Filter {
     selector: 'app-detail-alert',
     templateUrl: './DetailAlert.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule, PipeModule]
 })
 export class DetailAlertComponent {
 

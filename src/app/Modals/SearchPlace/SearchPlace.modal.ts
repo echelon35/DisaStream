@@ -5,12 +5,16 @@ import { environment } from 'src/environments/environment';
 import * as L from "leaflet";
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import { debounceTime, fromEvent, map } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 
 @Component({
     selector: "app-search-place-modal",
     templateUrl: './SearchPlace.modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule]
 })
 export class SearchPlace implements OnInit {
 

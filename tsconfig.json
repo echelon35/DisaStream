@@ -24,7 +24,10 @@
       "ES2022",
       "dom",
       "esnext.asynciterable"
-    ]
+    ],
+    "paths": {
+      "chart.js/dist/types/utils": ["node_modules/chart.js/dist/types/utils.d.ts"]
+    }
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

@@ -24,6 +24,10 @@ import * as FloodsActions from '../../Store/Actions/floods.actions';
 import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
 import { DetailAlertComponent } from "./DetailAlert/DetailAlert.component";
 import { Disaster } from "src/app/Model/Disaster";
+import { CommonModule } from "@angular/common";
+import { SearchPlace } from "src/app/Modals/SearchPlace/SearchPlace.modal";
+import { MapComponent } from "src/app/Map/Components/map/map.component";
+import { SharedModule } from "src/app/Shared/Shared.module";
 
 class AlertVm {
   alert: Alert;
@@ -34,7 +38,8 @@ class AlertVm {
 
 @Component({
     templateUrl: './disaster.view.html',
-    standalone: false
+    standalone: true,
+    imports: [CommonModule, SharedModule, DisasterDetailComponent, DetailAlertComponent, SearchPlace, MapComponent]
 })
 export class DisasterView {
 

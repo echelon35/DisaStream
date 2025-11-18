@@ -3,7 +3,7 @@ import { Component, Input } from "@angular/core";
 @Component({
     selector: 'app-spinner',
     templateUrl: './Spinner.component.html',
-    standalone: false
+    standalone: false,
 })
 export class SpinnerComponent {
     @Input() dark = true;

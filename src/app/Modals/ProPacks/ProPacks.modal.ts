@@ -1,16 +1,19 @@
 
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { finalize } from 'rxjs';
 import { PublicApiService } from 'src/app/Services/PublicApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
     selector: "app-pro-pack-modal",
     templateUrl: './ProPacks.modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [ReactiveFormsModule, SharedModule, CommonModule]
 })
 export class ProPacksComponent {
 

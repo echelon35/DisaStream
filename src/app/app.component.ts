@@ -6,14 +6,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { User } from './Model/User';
 import { selectIsAuthenticated, selectUser } from './Store/Selectors/user.selector';
-import { ToastrComponent } from './Shared/Components/Toastr/Toastr.component';
 import { CommonModule } from '@angular/common';
+import { SharedModule } from './Shared/Shared.module';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     standalone: true,
-    imports: [RouterOutlet, CommonModule, ToastrComponent]
+    imports: [RouterOutlet, CommonModule, SharedModule]
 })
 export class App {
 

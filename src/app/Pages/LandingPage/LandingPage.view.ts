@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,7 +15,8 @@ import { environment } from 'src/environments/environment.prod';
 @Component({
     templateUrl: './LandingPage.view.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [ProPacksComponent, FreeModeComponent, CommonModule]
 })
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';

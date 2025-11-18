@@ -18,32 +18,22 @@ import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
 import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
 
-const routes: Routes = [
+export const routes: Routes = [
   { path: '', component: LandingPageView },
-  { path: 'auth', component: AuthenticationView },
-  { path: 'login', component: LoginView },
-  { path: 'price', component: PricingView },
-  { path: 'faq', component: FAQView },
-  { path: 'forgot-password', component: ForgotPasswordView },
-  { path: 'change-password', component: ChangePasswordView },
-  { path: 'profile', component: UserProfileComponent },
-  { path: 'confirm-email', component: ConfirmEmailView },
-  { path: 'confirm-association', component: ConfirmAssociationView },
-  { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/alert/success', component: FinalScreenView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/map', component: DisasterView },
-  { path: '**', pathMatch: 'full', component: PageNotFoundView },
+  // { path: 'auth', component: AuthenticationView },
+  // { path: 'login', component: LoginView },
+  // { path: 'price', component: PricingView },
+  // { path: 'faq', component: FAQView },
+  // { path: 'forgot-password', component: ForgotPasswordView },
+  // { path: 'change-password', component: ChangePasswordView },
+  // { path: 'profile', component: UserProfileComponent },
+  // { path: 'confirm-email', component: ConfirmEmailView },
+  // { path: 'confirm-association', component: ConfirmAssociationView },
+  // { path: 'dashboard', component: DashboardView, canActivate: [IsUserSignedIn] },
+  // { path: 'dashboard/alert/success', component: FinalScreenView, canActivate: [IsUserSignedIn] },
+  // { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
+  // { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
+  // { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
+  // { path: 'dashboard/map', component: DisasterView },
+  // { path: '**', pathMatch: 'full', component: PageNotFoundView },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes, {    
-    scrollPositionRestoration: 'top',
-    anchorScrolling: 'enabled',
-    preloadingStrategy: PreloadAllModules
-  })],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }

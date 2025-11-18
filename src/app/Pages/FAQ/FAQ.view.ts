@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
@@ -7,7 +8,8 @@ import { selectIsAuthenticated } from "src/app/Store/Selectors/user.selector";
 @Component({
     templateUrl: './FAQ.view.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class FAQView {
   isSidebarOpen = false;

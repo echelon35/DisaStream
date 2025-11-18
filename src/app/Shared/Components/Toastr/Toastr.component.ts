@@ -7,8 +7,7 @@ import { CommonModule } from "@angular/common";
     selector: 'app-toastr',
     templateUrl: './Toastr.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule]
+    standalone: false,
 })
 export class ToastrComponent implements OnInit {
 

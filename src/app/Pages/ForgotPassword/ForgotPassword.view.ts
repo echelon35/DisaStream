@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
     templateUrl: './ForgotPassword.view.html',
-    standalone: false
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class ForgotPasswordView implements OnInit {
 

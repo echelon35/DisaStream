@@ -1,5 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
@@ -8,7 +9,8 @@ import { environment } from 'src/environments/environment.prod';
 
 @Component({
     templateUrl: './ChangePassword.view.html',
-    standalone: false
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, CommonModule]
 })
 export class ChangePasswordView implements OnInit {
 

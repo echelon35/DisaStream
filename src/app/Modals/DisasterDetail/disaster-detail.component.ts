@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import L from "leaflet";
 import { DetailService } from "src/app/Services/DetailService";
@@ -6,7 +7,8 @@ import { DetailService } from "src/app/Services/DetailService";
     selector: "app-disaster-detail",
     templateUrl: './disaster-detail.component.html',
     styleUrls: ['./disaster-detail.component.css'],
-    standalone: false
+    standalone: true,
+    imports: [CommonModule]
 })
 export class DisasterDetailComponent {
     disaster$ = this.detailService.disasterDetail$;

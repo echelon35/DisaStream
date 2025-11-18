@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, ViewChild, inject } from "@angular/core";
-import { FormBuilder, Validators } from "@angular/forms";
+import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
 import L from "leaflet";
@@ -17,6 +17,9 @@ import { GeographyApiService } from "src/app/Services/GeographyApi.service";
 import { ShapeService } from "src/app/Map/Services/shape.service";
 import { EndAlertComponent } from "src/app/Modals/EndAlert/EndAlert.modal";
 import { environment } from "src/environments/environment";
+import { CommonModule } from "@angular/common";
+import { SearchPlace } from "src/app/Modals/SearchPlace/SearchPlace.modal";
+import { MapComponent } from "src/app/Map/Components/map/map.component";
 
 class AleaVM {
   alea: Alea;
@@ -35,7 +38,8 @@ class AleaCategoryVM {
 @Component({
     templateUrl: './NewAlert.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: false
+    standalone: true,
+    imports: [AddMailAlert, EndAlertComponent, CommonModule, ReactiveFormsModule, SearchPlace, MapComponent],
 })
 export class NewAlertView {
   
