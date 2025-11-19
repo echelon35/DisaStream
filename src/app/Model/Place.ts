@@ -49,7 +49,7 @@ export class Place {
                 }
 
                 if(obj.raw.boundingbox){
-                    var boundingbox = obj.raw.boundingbox;
+                    const boundingbox = obj.raw.boundingbox;
                     this.boundingbox = L.latLngBounds(L.latLng(boundingbox[0],boundingbox[2]),L.latLng(boundingbox[1],boundingbox[3]));
                 }
             }

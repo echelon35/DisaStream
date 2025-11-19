@@ -5,17 +5,17 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DisplaydatePipe implements PipeTransform {
 
-  transform(value: Date | null | undefined,isShort: boolean = false, prefix: boolean = false): unknown {
+  transform(value: Date | null | undefined,isShort = false, prefix = false): unknown {
 
     if(value == null){
         return '';
     }
 
-    var now = Date.now();
-    var seconds = Math.floor((now - new Date(value).getTime()) / 1000);
+    const now = Date.now();
+    const seconds = Math.floor((now - new Date(value).getTime()) / 1000);
     
-    var interval = seconds / 31536000;
-    var textDate = (prefix) ? "il y a " : "";
+    let interval = seconds / 31536000;
+    const textDate = (prefix) ? "il y a " : "";
 
     if (interval > 1) {
         var textPeriod = (isShort) ? " a" : " an" + ((Math.floor(interval)) > 1 ? "s" : "");

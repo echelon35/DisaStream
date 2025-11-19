@@ -108,6 +108,20 @@
               </div>
             </div>
 
+            <!-- Alea-specific criteria -->
+            <div *ngIf="this.alert.aleas.length > 0" class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">Critères spécifiques</label>
+              </div>
+              <div class="sm:col-span-2">
+                <app-alea-criteria-input 
+                  [selectedAleas]="this.alert.aleas"
+                  [initialCriteria]="this.alert.criteria"
+                  (criteriaChange)="onCriteriaChange($event)">
+                </app-alea-criteria-input>
+              </div>
+            </div>
+
             <!-- Team members -->
             <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
               <div>

@@ -47,6 +47,7 @@ import { FloodsEffects } from './Store/Effects/floods.effects';
 import { hurricaneReducer } from './Store/Reducer/hurricanes.reducer';
 import { HurricanesEffects } from './Store/Effects/hurricanes.effects';
 import { DetailAlertComponent } from './Pages/DisasterView/DetailAlert/DetailAlert.component';
+import { AleaCriteriaInputComponent } from './Pages/NewAlert/AleaCriteriaInput/AleaCriteriaInput.component';
 
 export function localStorageSyncReducer(reducer: any): any {
     return localStorageSync({keys: ['user'], rehydrate: true })(reducer);
@@ -67,7 +68,8 @@ export function localStorageSyncReducer(reducer: any): any {
         FAQView,
         ConfirmAssociationView,
         ChangePasswordView,
-        DetailAlertComponent
+        DetailAlertComponent,
+        AleaCriteriaInputComponent
     ],
     bootstrap: [App], 
     imports: [BrowserModule,

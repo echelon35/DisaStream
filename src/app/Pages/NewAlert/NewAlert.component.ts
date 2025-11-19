@@ -17,6 +17,7 @@ import { GeographyApiService } from "src/app/Services/GeographyApi.service";
 import { ShapeService } from "src/app/Map/Services/shape.service";
 import { EndAlertComponent } from "src/app/Modals/EndAlert/EndAlert.modal";
 import { environment } from "src/environments/environment";
+import { AleaCriteriaType } from "src/app/Model/AleaCriteria";
 
 class AleaVM {
   alea: Alea;
@@ -311,6 +312,7 @@ export class NewAlertView {
               this.alert.aleas.push(aleaVM.alea);
           }
       }))
+      this.updateComponent();
     }
 
     /**
@@ -406,6 +408,13 @@ export class NewAlertView {
      */
     updateComponent(){
       this.cd.markForCheck();
+    }
+
+    /**
+     * Handle criteria changes from the criteria input component
+     */
+    onCriteriaChange(criteria: AleaCriteriaType[]) {
+      this.alert.criteria = criteria.length > 0 ? criteria : undefined;
     }
 
     createAlert(){
