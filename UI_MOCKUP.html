@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert Criteria Feature - UI Mockup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 p-8">
+    <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-6">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">Alert Creation - New Criteria Feature</h1>
+        
+        <!-- Alert Name Section -->
+        <div class="mb-6">
+            <label class="block text-sm font-medium text-gray-900 mb-2">Nom de l'alerte</label>
+            <input type="text" value="High Magnitude Earthquakes" 
+                   class="block w-full rounded-md border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm py-2 px-3 border">
+        </div>
+
+        <!-- Aleas Section -->
+        <div class="mb-6">
+            <h2 class="text-sm font-medium text-gray-900 mb-3">Aléas</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Selected Earthquake -->
+                <div class="flex rounded-md shadow-sm border-2 border-indigo-500">
+                    <div class="flex w-16 shrink-0 items-center justify-center rounded-l-md bg-indigo-600 text-white text-xs">
+                        🌍
+                    </div>
+                    <div class="flex flex-1 items-center justify-between truncate rounded-r-md bg-indigo-500 px-4 py-2">
+                        <p class="text-sm text-white font-medium">Séisme</p>
+                    </div>
+                </div>
+                
+                <!-- Unselected Flood -->
+                <div class="flex rounded-md shadow-sm border border-gray-200">
+                    <div class="flex w-16 shrink-0 items-center justify-center rounded-l-md bg-blue-600 text-white text-xs">
+                        💧
+                    </div>
+                    <div class="flex flex-1 items-center justify-between truncate rounded-r-md bg-white px-4 py-2">
+                        <p class="text-sm text-gray-500">Inondation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NEW: Criteria Section -->
+        <div class="mb-6 border-t pt-6">
+            <h2 class="text-sm font-medium text-gray-900 mb-2">Critères spécifiques</h2>
+            
+            <!-- Criteria Container -->
+            <div class="space-y-4">
+                <div>
+                    <h3 class="text-sm font-medium text-gray-900 mb-2">Critères d'alerte (optionnel)</h3>
+                    <p class="text-xs text-gray-500 mb-3">Définissez des critères spécifiques pour affiner vos alertes</p>
+                </div>
+
+                <!-- Earthquake Criteria -->
+                <div class="border border-gray-200 rounded-md p-4 bg-gray-50">
+                    <h4 class="text-sm font-medium text-gray-700 mb-3">Séisme</h4>
+                    
+                    <div class="space-y-3">
+                        <!-- Magnitude Filter -->
+                        <div class="flex items-center gap-2">
+                            <label class="text-sm text-gray-600 w-24">Magnitude</label>
+                            <select class="rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500 w-20 py-2 px-3 border">
+                                <option value="gt" selected>></option>
+                                <option value="gte">>=</option>
+                                <option value="lt"><</option>
+                                <option value="lte"><=</option>
+                            </select>
+                            <input type="number" 
+                                   value="5.0"
+                                   step="0.1" 
+                                   min="0" 
+                                   max="10"
+                                   placeholder="Ex: 5.0"
+                                   class="rounded-md border-gray-300 text-sm focus:ring-indigo-500 focus:border-indigo-500 w-28 py-2 px-3 border">
+                            <button type="button" class="text-gray-400 hover:text-gray-600">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info Box -->
+                <div class="bg-blue-50 border border-blue-200 rounded-md p-3">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm text-blue-700">
+                                <strong>Astuce:</strong> Cette alerte sera déclenchée uniquement pour les séismes avec une magnitude supérieure à 5.0 dans la zone sélectionnée.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Team Members Section -->
+        <div class="mb-6 border-t pt-6">
+            <h2 class="text-sm font-medium text-gray-900 mb-3">Membres à alerter</h2>
+            <div class="space-y-3">
+                <div class="flex items-center">
+                    <input type="checkbox" checked class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                    <label class="ml-3 text-sm text-gray-900">user@example.com</label>
+                    <svg class="ml-2 h-4 w-4 text-green-400" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex justify-end space-x-3 border-t pt-6">
+            <button type="button" class="rounded-md bg-white px-4 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                Annuler
+            </button>
+            <button type="button" class="inline-flex justify-center rounded-md bg-indigo-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">
+                Créer
+            </button>
+        </div>
+    </div>
+
+    <!-- Example JSON Output -->
+    <div class="max-w-4xl mx-auto mt-8 bg-gray-900 rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-bold text-white mb-4">JSON envoyé au backend</h2>
+        <pre class="text-green-400 text-sm overflow-x-auto"><code>{
+  "name": "High Magnitude Earthquakes",
+  "aleas": [
+    {
+      "id": 1,
+      "name": "seisme",
+      "label": "Séisme"
+    }
+  ],
+  "areas": { /* GeoJSON geometry */ },
+  "mailAlerts": [
+    {
+      "id": 1,
+      "mail": "user@example.com"
+    }
+  ],
+  "criteria": [
+    {
+      "type": "earthquake",
+      "magnitude": {
+        "operator": "gt",
+        "value": 5.0
+      }
+    }
+  ]
+}</code></pre>
+    </div>
+
+    <!-- Feature Highlights -->
+    <div class="max-w-4xl mx-auto mt-8 bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-lg font-bold text-gray-900 mb-4">Fonctionnalités principales</h2>
+        <ul class="space-y-2 text-sm text-gray-700">
+            <li class="flex items-start">
+                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span><strong>Critères dynamiques:</strong> Les champs de critères apparaissent automatiquement en fonction des aléas sélectionnés</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span><strong>Filtres optionnels:</strong> Les critères sont facultatifs - les alertes sans critères fonctionnent comme avant</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span><strong>Validation:</strong> Validation côté client pour garantir des valeurs numériques valides</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span><strong>Interface intuitive:</strong> Opérateurs de comparaison clairs (>, >=, <, <=)</span>
+            </li>
+            <li class="flex items-start">
+                <svg class="h-5 w-5 text-green-500 mr-2 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span><strong>Extensible:</strong> Architecture prête pour l'ajout de nouveaux types d'aléas et critères</span>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
