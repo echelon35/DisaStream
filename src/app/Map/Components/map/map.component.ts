@@ -1,6 +1,6 @@
 import { EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { SimpleChanges } from '@angular/core';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import * as L from 'leaflet';
 // import "leaflet.fullscreen/Control.Fullscreen";
 // import * as screenfull from 'screenfull';
@@ -13,7 +13,7 @@ import { Observable, Subscription } from 'rxjs';
   selector: 'app-map',
   templateUrl: './map.component.html'
 })
-export class MapComponent implements OnInit,OnDestroy {
+export class MapComponent implements OnInit,OnDestroy, OnChanges {
 
   @Input() mapId = 'map';
   @Input() displayFullscreen = true;
