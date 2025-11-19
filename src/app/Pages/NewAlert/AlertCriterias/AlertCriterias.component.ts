@@ -1,158 +1,204 @@
-import { Component } from "@angular/core";
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from "@angular/core";
 import { Alea } from "src/app/Model/Alea";
-import { AlertCriteria, Criteria, CriteriaType } from "src/app/Model/AlertCriteria";
+import { 
+    AleaCriteria, 
+    EarthquakeCriteria, 
+    EarthquakeCriteriaFilters,
+    NumericOperator, 
+    StringOperator,
+    NumericFilter,
+    StringFilter
+} from "src/app/Model/AlertCriteria";
 
+interface EarthquakeCriteriaVM {
+    magnitude?: {
+        operator: NumericOperator;
+        value: number | null;
+    };
+    nb_ressenti?: {
+        operator: NumericOperator;
+        value: number | null;
+    };
+    lien_source?: {
+        operator: StringOperator;
+        value: string;
+    };
+}
 
 @Component({
     selector: "app-alert-criterias",
-    templateUrl: './AlertCriterias.component.html',
-    styleUrls: ['./AlertCriterias.component.css'],
+    templateUrl: './AlertCriterias.Component.html',
+    styleUrls: ['./AlertCriterias.Component.css'],
 })
-export class AlertCriteriasComponent {
-    public aleaType: Alea[] = [];
-    public operations = CriteriaType;
+export class AlertCriteriasComponent implements OnChanges {
+    @Input() selectedAleas: Alea[] = [];
+    @Output() criteriasChange = new EventEmitter<AleaCriteria[]>();
+
+    // Earthquake (id=1) specific criteria
+    earthquakeCriteria: EarthquakeCriteriaVM = {};
     
-    public AlertCriteriaVMList: AlertCriteriaVM[] = [];
+    // Track if earthquake is selected
+    hasEarthquake = false;
 
-    //Mock an alert criteria edition
-    alertCriteriaFromDb: AlertCriteria[] = [
-        {
-            criteria: {
-                name: "intensite",
-                label: "Intensité",
-                alea: {
-                    name: "Séisme",
-                    label: "seisme",
-                    id: 1,
-                }
-            },
-            criteriaType: CriteriaType.EQUAL,
-            value: "5"
-        }
-    ]
-
-    //Mock aleas from db with criterias
-    aleasFromDb = [
-        {
-            name: "seisme",
-            disponible: true,
-            legend: "",
-            category: "tectonique"
-        },
-        {
-            name: "cyclone",
-            disponible: true,
-            legend: "",
-            category: "météo"
-        },
-        {
-            name: "inondation",
-            disponible: true,
-            legend: "",
-            category: "météo"
-        },
-        {
-            name: "eruption",
-            disponible: true,
-            legend: "",
-            category: "tectonique"
-        },
-        {
-            name: "Bolide",
-            disponible: true,
-            legend: "",
-            category: "spatial"
-        }
-    ]
-
-    //Mock criterias from db associated with alea selected
-    criteriasFromDb = [
-        {
-            alea: this.aleasFromDb[0],
-            name: "intensite",
-            label: "Intensité"
-        },
-        {
-            alea: this.aleasFromDb[0],
-            name: "magnitude",
-            label: "Magnitude"
-        },
-        {
-            alea: this.aleasFromDb[1],
-            name: "force",
-            label: "Force"
-        }
+    numericOperators = [
+        { value: 'gt' as NumericOperator, label: '>' },
+        { value: 'gte' as NumericOperator, label: '>=' },
+        { value: 'lt' as NumericOperator, label: '<' },
+        { value: 'lte' as NumericOperator, label: '<=' }
     ];
-    
-    constructor(){
-        this.AlertCriteriaVMList = this.alertCriteriaFromDb.map((item: AlertCriteria):AlertCriteriaVM => { return {
-            selectedAlea: item.criteria.alea,
-            selectedCriteria: item.criteria,
-            selectedOperator: item.criteriaType,
-            criteriaList: [],
-            typedValue: item.value
-        } });
-        this.feedAleaCriteriaList();
+
+    stringOperators = [
+        { value: 'eq' as StringOperator, label: 'Égal à' },
+        { value: 'contains' as StringOperator, label: 'Contient' }
+    ];
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['selectedAleas']) {
+            this.hasEarthquake = this.selectedAleas.some(alea => alea.id === 1);
+            if (!this.hasEarthquake) {
+                // Clear earthquake criteria if earthquake is deselected
+                this.earthquakeCriteria = {};
+            }
+            this.emitCriterias();
+        }
     }
 
     /**
-     * Get alea with criterias
+     * Enable/disable magnitude criteria
      */
-    feedAleaCriteriaList(): void{
-        // this.aleaType = this.aleasFromDb.filter( a => this.criteriasFromDb.some( b => a === b.alea ) );
+    toggleMagnitudeCriteria(enabled: boolean): void {
+        if (enabled) {
+            this.earthquakeCriteria.magnitude = {
+                operator: 'gt',
+                value: null
+            };
+        } else {
+            delete this.earthquakeCriteria.magnitude;
+        }
+        this.emitCriterias();
     }
 
     /**
-     * Get only the criterias associated with alea
+     * Enable/disable nb_ressenti criteria
      */
-    feedCriteriaList(index: number): void{
-        // this.AlertCriteriaVMList[index].criteriaList = this.criteriasFromDb.filter(item => item.alea == this.AlertCriteriaVMList[index].selectedAlea)
-    }
-
-    public objectComparisonFunction = function( option, value ) : boolean {
-        return option.name === value.name;
-    }
-
-    public operatorComparisonFunction = function( option, value ) : boolean {
-        return option.key === value.key;
+    toggleNbRessentiCriteria(enabled: boolean): void {
+        if (enabled) {
+            this.earthquakeCriteria.nb_ressenti = {
+                operator: 'gt',
+                value: null
+            };
+        } else {
+            delete this.earthquakeCriteria.nb_ressenti;
+        }
+        this.emitCriterias();
     }
 
     /**
-     * Add criteria on alert
+     * Enable/disable lien_source criteria
      */
-    public addCriteria(): void {
-        const newCriteria = new AlertCriteriaVM();
-        this.AlertCriteriaVMList.push(newCriteria);
+    toggleLienSourceCriteria(enabled: boolean): void {
+        if (enabled) {
+            this.earthquakeCriteria.lien_source = {
+                operator: 'eq',
+                value: ''
+            };
+        } else {
+            delete this.earthquakeCriteria.lien_source;
+        }
+        this.emitCriterias();
     }
 
     /**
-     * Remove criteria from the list
-     * @param index 
+     * Check if magnitude criteria is enabled
      */
-    public removeCriteria(index: number){
-        this.AlertCriteriaVMList.splice(index, 1);
+    isMagnitudeEnabled(): boolean {
+        return this.earthquakeCriteria.magnitude !== undefined;
     }
 
-}
-
-/**
- * A line of criteria
- */
-export class AlertCriteriaVM {
-    //Alea selected
-    selectedAlea?: Alea;
-    //Criteria selected
-    selectedCriteria?: Criteria;
-    //Criteria list
-    criteriaList: Criteria[] = [];
-    //Operator selected
-    selectedOperator?: CriteriaType;
-    //Value
-    typedValue = "";
-
-    constructor(){
-        this.selectedAlea = new Alea();
-        this.selectedCriteria = new Criteria();
+    /**
+     * Check if nb_ressenti criteria is enabled
+     */
+    isNbRessentiEnabled(): boolean {
+        return this.earthquakeCriteria.nb_ressenti !== undefined;
     }
 
+    /**
+     * Check if lien_source criteria is enabled
+     */
+    isLienSourceEnabled(): boolean {
+        return this.earthquakeCriteria.lien_source !== undefined;
+    }
+
+    /**
+     * Validate and emit criteria changes
+     */
+    emitCriterias(): void {
+        const criterias: AleaCriteria[] = [];
+
+        // Build earthquake criteria if earthquake is selected
+        if (this.hasEarthquake) {
+            const filters: EarthquakeCriteriaFilters = {};
+
+            // Add magnitude filter if configured
+            if (this.earthquakeCriteria.magnitude?.value !== null && 
+                this.earthquakeCriteria.magnitude?.value !== undefined) {
+                filters.magnitude = {
+                    op: this.earthquakeCriteria.magnitude.operator,
+                    value: this.earthquakeCriteria.magnitude.value
+                } as NumericFilter;
+            }
+
+            // Add nb_ressenti filter if configured
+            if (this.earthquakeCriteria.nb_ressenti?.value !== null && 
+                this.earthquakeCriteria.nb_ressenti?.value !== undefined) {
+                filters.nb_ressenti = {
+                    op: this.earthquakeCriteria.nb_ressenti.operator,
+                    value: Math.floor(this.earthquakeCriteria.nb_ressenti.value) // Ensure integer
+                } as NumericFilter;
+            }
+
+            // Add lien_source filter if configured
+            if (this.earthquakeCriteria.lien_source?.value && 
+                this.earthquakeCriteria.lien_source.value.trim() !== '') {
+                filters.lien_source = {
+                    op: this.earthquakeCriteria.lien_source.operator,
+                    value: this.earthquakeCriteria.lien_source.value.trim()
+                } as StringFilter;
+            }
+
+            // Only add earthquake criteria if at least one filter is set
+            if (Object.keys(filters).length > 0) {
+                criterias.push({
+                    type: 'earthquake',
+                    filters
+                } as EarthquakeCriteria);
+            }
+        }
+
+        this.criteriasChange.emit(criterias);
+    }
+
+    /**
+     * Validate magnitude value
+     */
+    validateMagnitude(): boolean {
+        const value = this.earthquakeCriteria.magnitude?.value;
+        return value !== null && value !== undefined && !isNaN(value) && isFinite(value) && value >= 0;
+    }
+
+    /**
+     * Validate nb_ressenti value
+     */
+    validateNbRessenti(): boolean {
+        const value = this.earthquakeCriteria.nb_ressenti?.value;
+        return value !== null && value !== undefined && !isNaN(value) && Number.isInteger(value) && value >= 0;
+    }
+
+    /**
+     * Validate lien_source value
+     */
+    validateLienSource(): boolean {
+        const value = this.earthquakeCriteria.lien_source?.value;
+        return value !== undefined && value !== null && value.trim().length > 0;
+    }
 }

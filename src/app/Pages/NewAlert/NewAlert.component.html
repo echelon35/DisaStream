@@ -108,6 +108,19 @@
               </div>
             </div>
 
+            <!-- Alert Criterias Section -->
+            <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+              <div>
+                <label class="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">Critères optionnels</label>
+              </div>
+              <div class="sm:col-span-2">
+                <app-alert-criterias 
+                  [selectedAleas]="this.alert.aleas" 
+                  (criteriasChange)="onCriteriasChange($event)">
+                </app-alert-criterias>
+              </div>
+            </div>
+
             <!-- Team members -->
             <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
               <div>

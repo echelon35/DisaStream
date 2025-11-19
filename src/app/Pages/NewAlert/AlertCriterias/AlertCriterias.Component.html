@@ -1,51 +1,98 @@
-<!-- eslint-disable @angular-eslint/template/interactive-supports-focus -->
-<!-- eslint-disable @angular-eslint/template/click-events-have-key-events -->
-<div class="criterias-list" >
-    <h2 class="w-600 margin-t10">Quels critères doivent vous alerter ?</h2>
-    <div style="max-height:500px;" class="overflow-auto custom-scrollbar">
-        <div class="margin-t20 d-flex flex-wrap align-items-center" *ngFor="let alertCriteria of this.AlertCriteriaVMList; index as i">
-            <div (click)="removeCriteria(i)" class="margin-10 cursor-pointer">
-                <svg class="margin-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-            </div>
-            <mat-form-field>
-                <mat-label>Type d'aléa</mat-label>
-                <mat-select (selectionChange)="feedCriteriaList(i)" [compareWith]="this.objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedAlea" name="alea">
-                    <mat-option *ngFor="let alea of aleaType" [value]="alea">{{alea.name | titlecase }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="margin-l20">
-                <mat-label>Critère</mat-label>
-                <mat-select [compareWith]="this.objectComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedCriteria" name="critere">
-                    <mat-option *ngFor="let criteria of alertCriteria.criteriaList" [value]="criteria">{{criteria.label | titlecase }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="margin-l20">
-                <mat-label>Opération</mat-label>
-                <mat-select [compareWith]="this.operatorComparisonFunction" matNativeControl [(ngModel)]="alertCriteria.selectedOperator" name="operation">
-                    <mat-option *ngFor="let operation of operations | keyvalue" [value]="operation.key">{{operation.value | titlecase }}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field class="margin-l20">
-                <mat-label>Valeur</mat-label>
-                <input matInput type="text" [(ngModel)]="alertCriteria.typedValue">
-                <button *ngIf="alertCriteria.typedValue !== ''" matSuffix mat-icon-button aria-label="Clear" (click)="alertCriteria.typedValue=''">
-                    <mat-icon>close</mat-icon>
-                </button>
-            </mat-form-field>
+<div *ngIf="hasEarthquake" class="criterias-container space-y-4">
+    <h3 class="text-sm font-medium text-gray-900">Critères pour les séismes</h3>
+    <p class="text-xs text-gray-500">Configurez des filtres optionnels pour être alerté uniquement quand certaines conditions sont remplies.</p>
+    
+    <!-- Magnitude Criteria -->
+    <div class="space-y-2">
+        <div class="flex items-center">
+            <input 
+                type="checkbox" 
+                id="enable-magnitude" 
+                [checked]="isMagnitudeEnabled()"
+                (change)="toggleMagnitudeCriteria($any($event.target).checked)"
+                class="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            <label for="enable-magnitude" class="ml-2 text-sm text-gray-700">
+                Magnitude (ex: magnitude > 5.0)
+            </label>
         </div>
-        <button (click)="addCriteria()" class="margin-t10 sm-btn btn-primary btn-icon">
-            <span class="margin-r10">Ajouter un critère</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
-        </button>
+        <div *ngIf="isMagnitudeEnabled()" class="ml-6 flex gap-2 items-center">
+            <select 
+                [(ngModel)]="earthquakeCriteria.magnitude!.operator"
+                (change)="emitCriterias()"
+                class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                <option *ngFor="let op of numericOperators" [value]="op.value">{{ op.label }}</option>
+            </select>
+            <input 
+                type="number" 
+                step="0.1"
+                min="0"
+                [(ngModel)]="earthquakeCriteria.magnitude!.value"
+                (input)="emitCriterias()"
+                placeholder="ex: 5.0"
+                class="block w-32 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+        </div>
+    </div>
+
+    <!-- Nb Ressenti Criteria -->
+    <div class="space-y-2">
+        <div class="flex items-center">
+            <input 
+                type="checkbox" 
+                id="enable-nb-ressenti" 
+                [checked]="isNbRessentiEnabled()"
+                (change)="toggleNbRessentiCriteria($any($event.target).checked)"
+                class="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            <label for="enable-nb-ressenti" class="ml-2 text-sm text-gray-700">
+                Nombre de ressentis (ex: nb_ressenti > 100)
+            </label>
+        </div>
+        <div *ngIf="isNbRessentiEnabled()" class="ml-6 flex gap-2 items-center">
+            <select 
+                [(ngModel)]="earthquakeCriteria.nb_ressenti!.operator"
+                (change)="emitCriterias()"
+                class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                <option *ngFor="let op of numericOperators" [value]="op.value">{{ op.label }}</option>
+            </select>
+            <input 
+                type="number" 
+                step="1"
+                min="0"
+                [(ngModel)]="earthquakeCriteria.nb_ressenti!.value"
+                (input)="emitCriterias()"
+                placeholder="ex: 100"
+                class="block w-32 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+        </div>
+    </div>
+
+    <!-- Lien Source Criteria -->
+    <div class="space-y-2">
+        <div class="flex items-center">
+            <input 
+                type="checkbox" 
+                id="enable-lien-source" 
+                [checked]="isLienSourceEnabled()"
+                (change)="toggleLienSourceCriteria($any($event.target).checked)"
+                class="size-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+            <label for="enable-lien-source" class="ml-2 text-sm text-gray-700">
+                Source (ex: lien_source contient "USGS")
+            </label>
+        </div>
+        <div *ngIf="isLienSourceEnabled()" class="ml-6 flex gap-2 items-center">
+            <select 
+                [(ngModel)]="earthquakeCriteria.lien_source!.operator"
+                (change)="emitCriterias()"
+                class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+                <option *ngFor="let op of stringOperators" [value]="op.value">{{ op.label }}</option>
+            </select>
+            <input 
+                type="text"
+                [(ngModel)]="earthquakeCriteria.lien_source!.value"
+                (input)="emitCriterias()"
+                placeholder="ex: USGS"
+                class="block flex-1 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+        </div>
     </div>
 </div>
-<div class="next-step dark-bg d-flex justify-content-around align-items-center">
-    <button class="btn-primary btn-icon sm-btn" matStepperPrevious>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-left"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="m12 8-4 4 4 4"/><path d="M16 12H8"/></svg>
-        <span class="margin-l10">Revenir aux types d'aléas</span>
-    </button>
-    <button matStepperNext class="btn-primary btn-icon sm-btn">
-        <span class="margin-r10">Enregistrer mes critères</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-arrow-right"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M8 12h8"/><path d="m12 16 4-4-4-4"/></svg>
-    </button>
+<div *ngIf="!hasEarthquake" class="text-sm text-gray-500">
+    Sélectionnez un type d'aléa pour configurer des critères spécifiques.
 </div>
