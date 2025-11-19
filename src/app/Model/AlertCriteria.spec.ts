@@ -2,7 +2,6 @@ import {
     NumericFilter,
     StringFilter,
     EarthquakeCriteria,
-    EarthquakeCriteriaFilters,
     isNumericOperator,
     isStringOperator,
     validateNumericFilter,
@@ -53,6 +52,7 @@ describe('AlertCriteria Models and Validation', () => {
         });
 
         it('should reject numeric filters with invalid operators', () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const invalidFilter = { op: 'invalid' as any, value: 5.0 };
             expect(validateNumericFilter(invalidFilter)).toBe(false);
         });
@@ -60,6 +60,7 @@ describe('AlertCriteria Models and Validation', () => {
         it('should reject numeric filters with invalid values', () => {
             const infinityFilter = { op: 'gt' as const, value: Infinity };
             const nanFilter = { op: 'gt' as const, value: NaN };
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const nonNumericFilter = { op: 'gt' as const, value: 'text' as any };
 
             expect(validateNumericFilter(infinityFilter)).toBe(false);
@@ -81,6 +82,7 @@ describe('AlertCriteria Models and Validation', () => {
         });
 
         it('should reject string filters with invalid operators', () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const invalidFilter = { op: 'invalid' as any, value: 'text' };
             expect(validateStringFilter(invalidFilter)).toBe(false);
         });
@@ -91,6 +93,7 @@ describe('AlertCriteria Models and Validation', () => {
         });
 
         it('should reject string filters with non-string values', () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const nonStringFilter = { op: 'eq' as const, value: 123 as any };
             expect(validateStringFilter(nonStringFilter)).toBe(false);
         });
@@ -140,6 +143,7 @@ describe('AlertCriteria Models and Validation', () => {
         });
 
         it('should reject earthquake criteria with wrong type', () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const criteria: any = {
                 type: 'flood',
                 filters: {
@@ -197,16 +201,13 @@ describe('AlertCriteria Models and Validation', () => {
             };
             expect(validateEarthquakeCriteria(criteria)).toBe(true);
 
-            // Magnitude values to test
-            const testCases = [
-                { magnitude: 4.9, shouldPass: false },
-                { magnitude: 5.0, shouldPass: false },
-                { magnitude: 5.1, shouldPass: true },
-                { magnitude: 6.5, shouldPass: true }
-            ];
-
             // Note: Actual event matching logic would be in backend
             // Here we just verify the criteria structure is valid
+            // Example test cases for backend:
+            // { magnitude: 4.9, shouldPass: false },
+            // { magnitude: 5.0, shouldPass: false },
+            // { magnitude: 5.1, shouldPass: true },
+            // { magnitude: 6.5, shouldPass: true }
         });
 
         it('should handle multiple operator types correctly', () => {
