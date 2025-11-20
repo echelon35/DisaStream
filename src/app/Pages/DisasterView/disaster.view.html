@@ -163,11 +163,22 @@
               </div>
             </div>
             <div class="flex items-center text-sm/6">
-              <svg *ngIf="alert?.alert?.areas == null" alt="Monde" title="Alerte mondiale" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-              <img *ngIf="alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId != null" class="w-5" src="https://flagcdn.com/{{alert?.country?.iso3166_2 | lowercase }}.svg" />
-              <svg *ngIf="alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId == null" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  alt="Zone" title="Zone ciblée"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-              <svg class="size-5 fill-white" *ngIf="alert?.alert?.areas != null && !alert?.alert?.isCountryShape" x="0px" y="0px" viewBox="0 0 512.145 512.145">
-                  <g>
+              @if(alert?.alert?.areas == null){
+                <!-- Aucune zone définie, alerte mondiale -->
+                <svg alt="Monde" title="Alerte mondiale" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+              }
+              @else if(alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId != null){
+                <!-- Alerte nationale => Affichage du drapeau du pays -->
+                <img class="w-5" src="https://flagcdn.com/{{alert?.country?.iso3166_2 | lowercase }}.svg" />
+              }
+              @else if(alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId == null){
+                <!-- Alerte nationale sans pays identifié => Affichage d'une icône de drapeau -->
+                <svg class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  alt="Zone" title="Zone ciblée"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+              }
+              @else if (alert?.alert?.areas != null && !alert?.alert?.isCountryShape) {
+                <!-- Zone custom -->
+                <svg class="size-5 fill-white" x="0px" y="0px" viewBox="0 0 512.145 512.145">
+                    <g>
                       <g>
                           <g>
                               <path d="M512.085,128.069c-0.133-35.346-28.894-63.892-64.24-63.759c-25.145,0.094-47.905,14.904-58.176,37.855l-54.64-9.136
@@ -219,6 +230,7 @@
                   <g>
                   </g>
               </svg>
+              }
               <label (click)="selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
               <button (click)="selectAlert(alert?.alert)" class="ml-3 text-red-500" >
                 Détail

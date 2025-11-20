@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, HostListener, ViewChild, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { FreeModeComponent } from 'src/app/Modals/FreeMode/FreeMode.modal';
 import { ProPacksComponent } from 'src/app/Modals/ProPacks/ProPacks.modal';
@@ -9,7 +8,7 @@ import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.servic
 import { SeoService } from 'src/app/Services/Seo.service';
 import { UserApiService } from 'src/app/Services/UserApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
-import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
+import { AuthStore } from 'src/app/Store/auth/auth.store';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
@@ -21,7 +20,6 @@ import { environment } from 'src/environments/environment.prod';
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
   isSidebarOpen = false;
-  isAuthenticated$: Observable<boolean>;
 
   #env = environment;
   protected s3BasePath = this.#env.settings.s3_bucket;
@@ -135,28 +133,29 @@ export class LandingPageView {
   @ViewChild("free") freeModal: FreeModeComponent;
   @ViewChild("pro") proPackModal: ProPacksComponent;
 
-  constructor(private route: ActivatedRoute,
-    public router: Router, 
-    private authenticationApi: AuthentificationApi, 
-    private userApiService: UserApiService,
-    private seoService: SeoService,
-    private store: Store,
-    private toastrService: ToastrService){
-      this.seoService.generateTags('Présentation de DisaStream', 'Soyez informés au plus vite de catastrophes naturelles partout dans le monde avec Disastream.','')
-    const token = this.route.snapshot.queryParamMap.get('access_token');
-    const mail = this.route.snapshot.queryParamMap.get('mail');
-    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+  #route = inject(ActivatedRoute);
+  #router = inject(Router);
+  #authenticationApi = inject(AuthentificationApi);
+  #userApiService = inject(UserApiService);
+  #seoService = inject(SeoService);
+  #toastrService = inject(ToastrService);
+  protected readonly authStore = inject(AuthStore);
+
+  constructor(){
+      this.#seoService.generateTags('Présentation de DisaStream', 'Soyez informés au plus vite de catastrophes naturelles partout dans le monde avec Disastream.','')
+    const token = this.#route.snapshot.queryParamMap.get('access_token');
+    const mail = this.#route.snapshot.queryParamMap.get('mail');
     if(token){
-      this.authenticationApi.saveToken(token);
-      this.userApiService.getSummaryInfos().subscribe((user) => {
-        this.authenticationApi.storeUser(user);
-        this.router.navigate(['/dashboard/alerts/manage']).then(() => {
+      this.#authenticationApi.saveToken(token);
+      this.#userApiService.getSummaryInfos().subscribe((user) => {
+        // this.authenticationApi.storeUser(user);
+        this.#router.navigate(['/dashboard']).then(() => {
           window.location.reload();
         });
       })
     }
     else if(mail){
-      this.toastrService.success(`Inscription réalisée avec succès.`,`Un mail de confirmation vient de vous être envoyé à <b>${mail}</b>.`);
+      this.#toastrService.success(`Inscription réalisée avec succès.`,`Un mail de confirmation vient de vous être envoyé à <b>${mail}</b>.`);
     }
   }
 

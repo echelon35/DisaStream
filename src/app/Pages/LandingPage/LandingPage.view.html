@@ -22,12 +22,16 @@
           <a href="#pricing" class="text-sm/6 font-semibold text-white">Tarifs</a>
           <a href="#faq" class="text-sm/6 font-semibold text-white">FAQ</a>
         </div>
-        <div *ngIf="(isAuthenticated$ | async)" class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/dashboard" class="text-sm/6 font-semibold text-white">Dashboard <span aria-hidden="true">&rarr;</span></a>
-        </div>
-        <div *ngIf="(isAuthenticated$ | async) === false" class="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="/login" class="text-sm/6 font-semibold text-white">Connexion <span aria-hidden="true">&rarr;</span></a>
-        </div>
+        @if(authStore.isAuthenticated()){
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="/dashboard" class="text-sm/6 font-semibold text-white">Dashboard <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        }
+        @else{
+          <div class="hidden lg:flex lg:flex-1 lg:justify-end">
+            <a href="/login" class="text-sm/6 font-semibold text-white">Connexion <span aria-hidden="true">&rarr;</span></a>
+          </div>
+        }
       </nav>
       <div 
       [class.opacity-100]="isSidebarOpen"

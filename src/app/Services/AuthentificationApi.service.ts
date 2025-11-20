@@ -8,7 +8,6 @@ import { User } from "../Model/User";
 import { TokenDto } from "../DTO/token.dto";
 import { ChangePasswordDto } from "../DTO/ChangePassword.dto";
 import { Store } from "@ngrx/store";
-import { loginUser, logoutUser } from "../Store/Actions/user.action";
 
 const env = environment;
 const API_URL = `${env.settings.backend}`;
@@ -21,7 +20,7 @@ export class AuthentificationApi {
     private httpOptions = {};
     public user: User;
 
-    constructor(private http: HttpClient, private store: Store){
+    constructor(private http: HttpClient){
         this.httpOptions = {
             headers: new HttpHeaders({ 
               'Content-Type': 'application/json', 
@@ -41,25 +40,10 @@ export class AuthentificationApi {
         window.localStorage.removeItem(TOKEN_KEY);
         window.localStorage.setItem(TOKEN_KEY, token);
     }
-
-    public storeUser(user: User): void {
-        this.store.dispatch(loginUser({ user }))
-    }
     
     public getToken(): string | null {
         const token = localStorage.getItem(TOKEN_KEY);
         return token;
-    }
-
-    public logOut() {
-        this.store.dispatch(logoutUser())
-        window.location.href = '/';
-    }
-
-    public logOutExpires() {
-        this.store.dispatch(logoutUser())
-        const error = 'Votre session a expiré, veuillez-vous reconnecter.';
-        window.location.href = `/login?error=${encodeURI(error)}`;
     }
 
     public login(userDto: UserLoginDto): Observable<TokenDto>{

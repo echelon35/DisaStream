@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { Observable } from "rxjs";
-import { selectIsAuthenticated } from "src/app/Store/Selectors/user.selector";
 
 @Component({
     templateUrl: './FAQ.view.html',
@@ -115,8 +114,7 @@ export class FAQView {
     },
   ];
 
-  constructor(public router: Router, private store: Store){
-    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+  constructor(public router: Router){
   }
 
   toggleFaq(index: number): void {

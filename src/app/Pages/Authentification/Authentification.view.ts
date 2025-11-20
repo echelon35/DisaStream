@@ -3,13 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/Model/User';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { SeoService } from 'src/app/Services/Seo.service';
 import { Picture, RandomPictureService } from 'src/app/Shared/Services/RandomPicture.service';
-import { selectIsAuthenticated } from 'src/app/Store/Selectors/user.selector';
+import { UserStore } from 'src/app/Store/user/user.store';
 import { StrongPasswordRegx } from 'src/app/Utils/Const/StrongPasswordRegex';
 import { environment } from 'src/environments/environment';
 
@@ -17,7 +15,7 @@ import { environment } from 'src/environments/environment';
     templateUrl: './Authentification.view.html',
     standalone: true,
     imports: [FormsModule, ReactiveFormsModule, CommonModule],
-    providers: [AuthentificationApi, Router, SeoService, RandomPictureService, Store, FormBuilder],
+    providers: [AuthentificationApi, Router, SeoService, RandomPictureService, FormBuilder, UserStore],
 })
 export class AuthenticationView {
 
@@ -28,26 +26,16 @@ export class AuthenticationView {
   registerForm: FormGroup;
   errorMessage = '';
   picture: Picture;
-  isAuthenticated$: Observable<boolean>;
 
   #authentificationApi = inject(AuthentificationApi);
   #route = inject(Router);
   #seoService = inject(SeoService);
   #randomPictureService = inject(RandomPictureService);
-  #store = inject(Store);
   #fb = inject(FormBuilder);
 
   constructor() { 
 
     this.picture = this.#randomPictureService.getPictureRandom();
-
-    //Redirect if already connected
-    this.isAuthenticated$ = this.#store.select(selectIsAuthenticated);
-    this.isAuthenticated$.subscribe((isAuth) => {
-      if(isAuth){
-        this.#route.navigateByUrl('/dashboard');
-      }
-    })
 
     this.#seoService.generateTags("S'authentifier sur Disastream","Inscrivez-vous sur Disastream pour être notifiés des dernières catastrophes naturelles",`${this.s3BasePath}/background/avalanche.jpg`);
     this.registerForm = this.#fb.group({
@@ -69,7 +57,6 @@ export class AuthenticationView {
 
   onSubmit(): void {
     if (this.registerForm.invalid) return;
-
     this.#authentificationApi.register(this.registerForm.value).subscribe({
       next: (user: User) => {
         // redirection ou message de succès
