@@ -32,7 +32,6 @@ export const AlertsStore = signalStore(
             alertApiService.getUserAlerts().pipe(
                 switchMap(alerts => {
                     const alertWithCountry = alerts.map(alert => {
-                        console.log("Processing alert : ", alert);
                         if(!alert.countryId){
                             return of({ alert, country: null });
                         }
@@ -49,6 +48,7 @@ export const AlertsStore = signalStore(
                         const alertVm = new AlertVm();
                         alertVm.alert = a.alert;
                         alertVm.country = a.country;
+                        alertVm.layer = markerService.makeAlertShapes(a.alert);
                         alertVm.visible = true;
                         return alertVm;
                     }));
@@ -57,7 +57,6 @@ export const AlertsStore = signalStore(
                         isLoading: false,
                         error: null,
                     });
-                    console.log("Alerts loaded in store : ", alertVms);
                 },
                 error: (error) => {
                     patchState(store, {
@@ -67,10 +66,5 @@ export const AlertsStore = signalStore(
                 },
             })
         }
-    })),
-    withHooks({
-        onInit: ({ loadAlerts, ...store }) => {
-             patchState(store, { isLoading: true });
-        }
-    })
+    }))
 );

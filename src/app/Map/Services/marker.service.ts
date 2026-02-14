@@ -274,9 +274,9 @@ export class MarkerService {
    * @param layer 
    * @param alert
    */
-  makeAlertShapes(map: L.Map, layer: L.LayerGroup, alert: Alert): L.LayerGroup | null {
+  makeAlertShapes(alert: Alert): L.LayerGroup | null {
 
-      if(alert != undefined && map != undefined && alert.areas != null){
+      if(alert != undefined && alert.areas != null){
 
         //Zone de l'alerte
         const areaSurface = L.geoJSON(alert.areas);
@@ -284,9 +284,7 @@ export class MarkerService {
           color: '#6a55af',
           weight: 2
         })
-        areaSurface.setZIndex(4)
-        areaSurface.addTo(layer);
-        layer.addTo(map);
+        areaSurface.setZIndex(4);
 
         return areaSurface;
         

@@ -1,27 +1,11 @@
-import { Component, inject, ViewChild } from "@angular/core";
-import { Store } from "@ngrx/store";
+import { Component, effect, inject, ViewChild } from "@angular/core";
 import L, { FeatureGroup } from "leaflet";
 import 'leaflet.markerclusterv2';
-import { Observable } from "rxjs";
 import { MarkerService } from "src/app/Map/Services/marker.service";
 import { DisasterDetailComponent } from "src/app/Modals/DisasterDetail/disaster-detail.component";
 import { Alert } from "src/app/Model/Alert";
 import { Country } from "src/app/Model/Country";
 import { Earthquake } from "src/app/Model/Earthquake";
-import { Eruption } from "src/app/Model/Eruption";
-import { Flood } from "src/app/Model/Flood";
-import { Hurricane } from "src/app/Model/Hurricane";
-import { AlertApiService } from "src/app/Services/AlertApiService";
-import { DisasterApiService } from "src/app/Services/DisasterApiService";
-import { GeographyApiService } from "src/app/Services/GeographyApi.service";
-import { selectEarthquakes } from "src/app/Store/Selectors/earthquakes.selector";
-import { selectEruptions } from "src/app/Store/Selectors/eruptions.selector";
-import { selectFloods } from "src/app/Store/Selectors/floods.selector";
-import { selectHurricanes } from "src/app/Store/Selectors/hurricanes.selector";
-import * as EarthquakeActions from '../../Store/Actions/earthquakes.actions';
-import * as EruptionActions from '../../Store/Actions/eruptions.actions';
-import * as FloodsActions from '../../Store/Actions/floods.actions';
-import * as HurricanesActions from '../../Store/Actions/hurricanes.actions';
 import { DetailAlertComponent } from "./DetailAlert/DetailAlert.component";
 import { Disaster } from "src/app/Model/Disaster";
 import { CommonModule } from "@angular/common";
@@ -29,11 +13,12 @@ import { SearchPlace } from "src/app/Modals/SearchPlace/SearchPlace.modal";
 import { MapComponent } from "src/app/Map/Components/map/map.component";
 import { SharedModule } from "src/app/Shared/Shared.module";
 import { EarthquakesStore } from "src/app/Store/earthquakes.store";
+import { AlertsStore } from "src/app/Store/alerts.store";
 
-class AlertVm {
+export class AlertVm {
   alert: Alert;
-  country?: Country;
-  layer: L.LayerGroup;
+  country?: Country | null;
+  layer: L.LayerGroup | null;
   visible: boolean;
 }
 
@@ -41,29 +26,19 @@ class AlertVm {
     templateUrl: './disaster.view.html',
     standalone: true,
     imports: [CommonModule, SharedModule, DisasterDetailComponent, DetailAlertComponent, SearchPlace, MapComponent],
-    providers: [DisasterApiService, AlertApiService, GeographyApiService, MarkerService, Store, EarthquakesStore],
+    providers: [MarkerService, EarthquakesStore, AlertsStore],
 })
 export class DisasterView {
 
     disastersMap?: L.Map;
-    disastersLayer?: L.LayerGroup;
+    disastersLayer?: L.LayerGroup = new L.LayerGroup();
     selectedLayer?: L.LayerGroup = new L.LayerGroup();
-    alertsLayer?: L.LayerGroup;
+    alertsLayer?: L.LayerGroup = new L.LayerGroup();
     alerts: AlertVm[];
-    selectedAleaType: string;
-    loading = false;
     panel = '';
     lastPanel = '';
-    layersDisplayed: L.LayerGroup[];
-    allLayers: L.LayerGroup[];
 
     earthquakes: Earthquake[];
-    // eruptions$: Observable<Eruption[]>;
-    // floods$: Observable<Flood[]>;
-    // hurricanes$: Observable<Hurricane[]>;
-    error$: Observable<any>;
-
-    selectedAlert: Alert | undefined;
 
     allVisible = true;
 
@@ -72,41 +47,35 @@ export class DisasterView {
     @ViewChild('detailalert') detailAlertPanel?: DetailAlertComponent;
 
     protected readonly earthquakeStore = inject(EarthquakesStore);
+    protected readonly alertsStore = inject(AlertsStore);
 
     #markerService = inject(MarkerService);
-    #alertApiService = inject(AlertApiService);
-    #geographyService = inject(GeographyApiService);
 
     constructor(){
       this.earthquakes = this.earthquakeStore.earthquakes();
-      // this.eruptions$ = this.store.select(selectEruptions);
-      // this.floods$ = this.store.select(selectFloods);
-      // this.hurricanes$ = this.store.select(selectHurricanes);
-      // this.store.dispatch();
-      // this.store.dispatch(EruptionActions.loadEruptionsGeography());
-      // this.store.dispatch(FloodsActions.loadFloodsGeography());
-      // this.store.dispatch(HurricanesActions.loadHurricanesGeography());
       this.selectPanel('area');
+
+      effect(() => {
+        this.displayAlertAreas();
+      });
     }
 
-    selectAlea(type: string){
-      this.selectedAleaType = type;
-      this.resetAleaLayer();
-      switch(type){
-        case 'earthquake':
-          this.getEarthquakes();
-          break;
-        // case 'flood':
-        //   this.getFloods();
-        //   break;
-        // case 'hurricane':
-        //   this.getHurricanes();
-        //   break;
-        // case 'eruption':
-        //   this.getEruptions();
-        //   break;
-      }
-      this.hidePanels()
+    displayAlertAreas(){
+        this.alerts = this.alertsStore.alerts();
+
+        if(!this.disastersMap || !this.alertsLayer) return;
+
+        this.alertsLayer.clearLayers();
+
+        this.alerts.forEach((alert: AlertVm) => {
+          if (!alert.layer) return;
+
+          this.alertsLayer!.addLayer(alert.layer);
+        })
+
+        if (!this.disastersMap.hasLayer(this.alertsLayer)) {
+          this.disastersMap.addLayer(this.alertsLayer);
+        }
     }
 
     selectAlert(alert: Alert | undefined){
@@ -196,32 +165,6 @@ export class DisasterView {
       }
     }
 
-    getAreas(){
-      this.alertsLayer?.clearLayers();
-      this.alerts = [];
-      this.#alertApiService.getUserAlerts().subscribe((alerts) => {
-
-        //La zone de l'alerte ne doit s'afficher que si :
-        //- L'utilisateur a souhaité l'afficher via la case à cocher
-        //- L'alerte concerne le type d'aléa affiché
-        alerts.forEach(item => {
-          const alertVm = new AlertVm();
-          alertVm.alert = item;
-          if(item.countryId){
-            this.#geographyService.getCountryById(item.countryId!).subscribe(country => {
-              alertVm.country = country;
-            })
-          }
-          const layer = this.#markerService.makeAlertShapes(this.disastersMap!, this.alertsLayer!, item);
-          if(layer != null){
-            alertVm.layer = layer;
-          }
-          alertVm.visible = true;
-          this.alerts.push(alertVm);
-        })
-      })
-    }
-
     hidePanels(){
       this.lastPanel = this.panel;
       this.panel = '';
@@ -235,8 +178,8 @@ export class DisasterView {
       if(this.allVisible) {
         this.alerts.forEach(item => {
           if(item.alert.areas != null){
-            if(this.alertsLayer!.hasLayer(item.layer)) {
-              this.alertsLayer!.removeLayer(item.layer);
+            if(this.alertsLayer!.hasLayer(item.layer!)) {
+              this.alertsLayer!.removeLayer(item.layer!);
             }
             item.visible = false;
           }
@@ -245,8 +188,8 @@ export class DisasterView {
       } else {
         this.alerts.forEach(item => {
           if(item.alert.areas != null){
-            if(!this.alertsLayer!.hasLayer(item.layer)) {
-              this.alertsLayer!.addLayer(item.layer);
+            if(!this.alertsLayer!.hasLayer(item.layer!)) {
+              this.alertsLayer!.addLayer(item.layer!);
             }
             item.visible = true;
           }
@@ -256,67 +199,16 @@ export class DisasterView {
     }
 
     showAlertOnMap(alertVm: AlertVm){
-      if(this.alertsLayer!.hasLayer(alertVm?.layer)) {
-          this.alertsLayer!.removeLayer(alertVm?.layer);
-          alertVm.visible = false;
-      } else {
-        this.alertsLayer!.addLayer(alertVm?.layer);
-        alertVm.visible = true;
+      if(alertVm.layer != null){
+        if(this.alertsLayer!.hasLayer(alertVm?.layer!)) {
+            this.alertsLayer!.removeLayer(alertVm?.layer!);
+            alertVm.visible = false;
+        } else {
+            this.alertsLayer!.addLayer(alertVm.layer);
+            alertVm.visible = true;
+        }
       }
     }
-
-    getEarthquakes(){
-      this.earthquakeStore.loadEarthquakes();
-      // this.loading = true;
-      // this.earthquakes$.subscribe((data: any) => {
-      //   if (!data) return;
-      //   data?.earthquakes.forEach(item => {
-      //     const eq = new Earthquake(item);
-      //     this.#markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, eq, this.cluster,true,true);
-      //   });
-      //   this.loading = false;
-      // })
-    }
-
-    // getEruptions(){
-    //   this.loading = true;
-    //   this.eruptions$.subscribe((data: any) => {
-    //     console.log(data);
-    //     if (!data) return;
-    //     data?.eruptions?.forEach(item => {
-    //       const er = new Eruption(item);
-    //       this.#markerService.makeEruptionMarkers(this.disastersMap!, this.disastersLayer!, er, this.cluster,true,true);
-    //     });
-    //     this.loading = false;
-    //   })
-
-    // }
-
-    // getFloods(){
-    //   this.loading = true;
-    //   this.floods$.subscribe((data: any) => {
-    //     console.log(data);
-    //     if (!data) return;
-    //     data?.floods?.forEach(item => {
-    //       const fl = new Flood(item);
-    //       this.#markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, fl, this.cluster,true,true);
-    //     });
-    //     this.loading = false;
-    //   })
-    // }
-
-    // getHurricanes(){
-    //   this.loading = true;
-    //   this.hurricanes$.subscribe((data: any) => {
-    //     console.log(data);
-    //     if (!data) return;
-    //     data?.hurricanes?.forEach(item => {
-    //       const hu = new Hurricane(item);
-    //       this.#markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, hu, this.cluster,true,true);
-    //     });
-    //     this.loading = false;
-    //   })
-    // }
 
     /**
      * Reset la couche des aléas sur la carte
@@ -337,19 +229,11 @@ export class DisasterView {
       }
     }
 
-    /**
-     * Receive layer from the map component
-     * @param layer 
-     */
-    receiveLayer(layer: L.LayerGroup) {
-      this.disastersLayer = new L.LayerGroup();
-    }
-
     receiveMap(map: L.Map) {
       this.disastersMap = map;
-      this.disastersMap?.setView([0,0], 2);
-      this.alertsLayer = new L.LayerGroup();
-      this.getAreas();
+
+      //Now we can load the alerts to display the areas on the map and add click event on the map to hide/show panels
+      this.alertsStore.loadAlerts();
       this.disastersMap.on('click', (e) => {
         if(this.panel !== ''){
           this.hidePanels();
