@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
     templateUrl: './FinalScreen.component.html',
+    standalone: false
 })
 export class FinalScreenView {
     public alertName = '';

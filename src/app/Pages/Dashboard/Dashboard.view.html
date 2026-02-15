@@ -12,8 +12,8 @@
                 <!-- <p class="mt-2 max-w-lg text-sm/6 text-gray-400"></p> -->
             </div>
             <div class="graph px-6 py-6 d-flex flex-column align-items-center">
-                <canvas *ngIf="!this.loading" id="myGraph" class="margin-t40" baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
-                <div *ngIf="this.loading" class="text-center">
+                <canvas *ngIf="!loading" id="myGraph" class="margin-t40" baseChart [data]="lineChartData" [options]="lineChartOptions" [type]="'line'" [legend]="false"> </canvas>
+                <div *ngIf="loading" class="text-center">
                     <app-spinner [width]="'w-24'"></app-spinner>
                 </div>
             </div>

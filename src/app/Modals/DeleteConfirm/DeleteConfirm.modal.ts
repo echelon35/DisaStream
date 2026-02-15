@@ -1,3 +1,4 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Output } from "@angular/core";
 import { Alert } from "src/app/Model/Alert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
@@ -6,6 +7,8 @@ import { ToastrService } from "src/app/Shared/Services/Toastr.service";
 @Component({
     selector: "app-delete-confirm",
     templateUrl: './DeleteConfirm.modal.html',
+    standalone: true,
+    imports: [CommonModule]
 })
 export class DeleteConfirmModal {
 

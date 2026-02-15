@@ -6,9 +6,9 @@ import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { SharedModule } from 'src/app/Shared/Shared.module';
 
 @Component({
-  templateUrl: './Dashboard.view.html',
-  standalone: true,
-  imports: [BaseChartDirective, SharedModule, CommonModule],
+    templateUrl: './Dashboard.view.html',
+    imports: [BaseChartDirective, CommonModule, SharedModule],
+    standalone: true
 })
 export class DashboardView implements OnInit {
   title = 'Connectez-vous aux forces de la nature avec Disastream';

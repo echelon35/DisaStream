@@ -1,11 +1,15 @@
+import { CommonModule } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DeleteConfirmModal } from 'src/app/Modals/DeleteConfirm/DeleteConfirm.modal';
 import { Alert } from 'src/app/Model/Alert';
 import { Country } from 'src/app/Model/Country';
+import { PipeModule } from 'src/app/PipeModule/pipe.module';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 
 
 class AlertVm extends Alert {
@@ -13,7 +17,9 @@ class AlertVm extends Alert {
 }
 
 @Component({
-  templateUrl: './ManageAlerts.view.html',
+    templateUrl: './ManageAlerts.view.html',
+    standalone: true,
+    imports: [DeleteConfirmModal, SharedModule, PipeModule, CommonModule, FormsModule, ReactiveFormsModule]
 })
 export class ManageAlertsView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';

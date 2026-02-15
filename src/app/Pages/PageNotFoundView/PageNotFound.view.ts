@@ -4,7 +4,8 @@ import { SeoService } from 'src/app/Services/Seo.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './PageNotFound.view.html',
+    templateUrl: './PageNotFound.view.html',
+    standalone: false
 })
 export class PageNotFoundView {
 

@@ -1,12 +1,16 @@
+import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input } from "@angular/core";
 import { Alert } from "src/app/Model/Alert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
 import { ToastrService } from "src/app/Shared/Services/Toastr.service";
+import { SharedModule } from "src/app/Shared/Shared.module";
 
 @Component({
     selector: "app-end-alert-modal",
     templateUrl: './EndAlert.modal.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [SharedModule, CommonModule]
 })
 export class EndAlertComponent {
 

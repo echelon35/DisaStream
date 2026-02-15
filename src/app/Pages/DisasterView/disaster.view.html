@@ -1,13 +1,13 @@
 <div class="z-map w-full h-dvh relative">
     <div id="map-disaster" class="z-map w-full h-[calc(100%-3.5rem)] top-[3.5rem]">
-        <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
+        <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-disaster'" (map$)="receiveMap($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"></app-map>
     </div>
     <!-- Menu -->
     <div class="z-on-map-1 absolute left-1/2 transform -translate-x-1/2 top-0 p-3 grid-cols-4 gap-4 w-full bg-blue-950 rounded-md flex items-center justify-between">
       <div class="flex items-center space-x-3">
           <!-- <label 
-          [class.ring]="this.panel === 'alea'"
-          [class.ring-offset-1]="this.panel === 'alea'"
+          [class.ring]="panel === 'alea'"
+          [class.ring-offset-1]="panel === 'alea'"
           aria-label="Alea" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Alea" class="sr-only" (click)="selectPanel('alea')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Aléas</span>
@@ -16,8 +16,8 @@
             </span>
           </label> -->
           <!-- <label 
-          [class.ring]="this.panel === 'filters'"
-          [class.ring-offset-1]="this.panel === 'filters'"
+          [class.ring]="panel === 'filters'"
+          [class.ring-offset-1]="panel === 'filters'"
           aria-label="Filters" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Filters" class="sr-only" (click)="selectPanel('filters')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Filtres</span>
@@ -26,8 +26,8 @@
             </span>
           </label> -->
           <label 
-          [class.ring]="this.panel === 'area'"
-          [class.ring-offset-1]="this.panel === 'area'"
+          [class.ring]="panel === 'area'"
+          [class.ring-offset-1]="panel === 'area'"
           aria-label="Area" class="group relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-blue-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
             <input type="radio" name="panel-choice" value="Area" class="sr-only" (click)="selectPanel('area')">
             <span class="z-on-map-2 text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 -bottom-7 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Zones</span>
@@ -42,11 +42,11 @@
     <!-- PANELS -->
 
     <!-- Alea panel selection-->
-    <div [class.hidden]="this.panel !== 'alea'" [class.block]="this.panel === 'alea'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 w-auto rounded-md flex flex-col">
+    <!-- <div [class.hidden]="panel !== 'alea'" [class.block]="panel === 'alea'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 w-auto rounded-md flex flex-col">
       <div class="flex flex-col items-center">
             <label 
-            [class.ring]="this.selectedAleaType === 'earthquake'"
-            [class.ring-offset-1]="this.selectedAleaType === 'earthquake'"
+            [class.ring]="selectedAleaType === 'earthquake'"
+            [class.ring-offset-1]="selectedAleaType === 'earthquake'"
             aria-label="Earthquake" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-green-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
                 <input type="radio" name="alea-choice" value="Earthquake" class="sr-only" (click)="selectAlea('earthquake')">
                 <span class="text-sm rounded-lg absolute opacity-0 md:group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Séismes</span>
@@ -57,8 +57,8 @@
               </span>
             </label>
             <label aria-label="Hurricane" 
-            [class.ring]="this.selectedAleaType === 'hurricane'"
-            [class.ring-offset-1]="this.selectedAleaType === 'hurricane'"
+            [class.ring]="selectedAleaType === 'hurricane'"
+            [class.ring-offset-1]="selectedAleaType === 'hurricane'"
             class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-purple-500 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Hurricane" class="sr-only" (click)="selectAlea('hurricane')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Cyclones</span>
@@ -76,8 +76,8 @@
               </span>
             </label>
             <label aria-label="Flood" 
-            [class.ring]="this.selectedAleaType === 'flood'"
-            [class.ring-offset-1]="this.selectedAleaType === 'flood'"
+            [class.ring]="selectedAleaType === 'flood'"
+            [class.ring-offset-1]="selectedAleaType === 'flood'"
             class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-1 text-blue-700 ring-current focus:outline-none hover:ring hover:ring-offset-1 ">
               <input type="radio" name="alea-choice" value="Flood" class="sr-only" (click)="selectAlea('flood')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Inondations</span>
@@ -103,8 +103,8 @@
               </span>
             </label>
             <label 
-            [class.ring]="this.selectedAleaType === 'eruption'"
-            [class.ring-offset-1]="this.selectedAleaType === 'eruption'"
+            [class.ring]="selectedAleaType === 'eruption'"
+            [class.ring-offset-1]="selectedAleaType === 'eruption'"
             aria-label="Eruption" class="group relative my-1 flex cursor-pointer items-center justify-center rounded-full p-0.5 text-yellow-500 ring-current focus:outline-none hover:ring hover:ring-offset-1">
               <input type="radio" name="alea-choice" value="Yellow" class="sr-only" (click)="selectAlea('eruption')">
               <span class="text-sm rounded-lg absolute opacity-0 group-hover:opacity-100 left-12 bg-white text-black px-2 transition-opacity ease-in-out duration-500">Eruptions</span>
@@ -130,10 +130,10 @@
               </span>
             </label>
       </div>
-    </div>
+    </div> -->
 
     <!-- Alert panel -->
-    <div [class.hidden]="this.panel !== 'area'" [class.block]="this.panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-auto">
+    <div [class.hidden]="panel !== 'area'" [class.block]="panel === 'area'" class="z-on-map-1 absolute top-14 h-[calc(100%-3.5rem)] p-2 grid-cols-4 gap-4 rounded-md bg-blue-950/90 w-full lg:w-4/12 overflow-auto">
       <fieldset>
         <legend class="sr-only">Alerts</legend>
         <p class="mt-2 mb-3 pl-2 text-gray-400 font-bold">Mes alertes</p>
@@ -152,91 +152,55 @@
               <label for="allAreas" class="font-bold text-white cursor-pointer hover:text-blue-500">Afficher toutes</label>
             </div>
           </div>
-          <div *ngFor="let alert of alerts" class="flex gap-3 px-3 ml-3">
-            <div class="flex h-6 shrink-0 items-center">
-              <div class="group grid size-4 grid-cols-1">
-                <input [disabled]="alert.alert.areas === null" [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
-                <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
-                  <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                  <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                </svg>
+          @for(alert of alerts;track alert.alert.id){
+            <div class="flex gap-3 px-3 ml-3">
+              <div class="flex h-6 shrink-0 items-center">
+                <div class="group grid size-4 grid-cols-1">
+                  <input [disabled]="alert.alert.areas === null" [checked]="alert.visible" id="{{alert?.alert?.name}}" (click)="showAlertOnMap(alert)" aria-describedby="comments-description" name="comments" type="checkbox" checked class="col-start-1 row-start-1 appearance-none rounded border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto">
+                  <svg class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-[:disabled]:stroke-gray-950/25" viewBox="0 0 14 14" fill="none">
+                    <path class="opacity-0 group-has-[:checked]:opacity-100" d="M3 8L6 11L11 3.5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path class="opacity-0 group-has-[:indeterminate]:opacity-100" d="M3 7H11" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </div>
+              </div>
+              <div class="flex items-center text-sm/6">
+                @if(alert?.alert?.areas == null){
+                  <!-- Aucune zone définie, alerte mondiale -->
+                  <svg alt="Monde" title="Alerte mondiale" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                }
+                @else if(alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId != null){
+                  <!-- Alerte nationale => Affichage du drapeau du pays -->
+                  <img title="{{alert?.country?.namefr}}" class="w-5" src="https://flagcdn.com/{{alert?.country?.iso3166_2 | lowercase }}.svg" />
+                }
+                @else if(alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId == null){
+                  <!-- Alerte nationale sans pays identifié => Affichage d'une icône de drapeau -->
+                  <svg class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  alt="Zone" title="Zone ciblée"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                }
+                @else if (alert?.alert?.areas != null && !alert?.alert?.isCountryShape) {
+                  <!-- Zone custom -->
+                  <img src="assets/images/svg/custom_zone.svg" class="size-5" alt="Zone" title="Zone personnalisée" />
+                }
+                <label (click)="selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
+                <button (click)="selectAlert(alert?.alert)" class="ml-3 text-red-500" >
+                  Détail
+                </button>
               </div>
             </div>
-            <div class="flex items-center text-sm/6">
-              <svg *ngIf="alert?.alert?.areas == null" alt="Monde" title="Alerte mondiale" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-              <img *ngIf="alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId != null" class="w-5" src="https://flagcdn.com/{{alert?.country?.iso3166_2 | lowercase }}.svg" />
-              <svg *ngIf="alert?.alert?.areas != null && alert?.alert?.isCountryShape && alert?.alert?.countryId == null" class="size-5 text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  alt="Zone" title="Zone ciblée"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-              <svg class="size-5 fill-white" *ngIf="alert?.alert?.areas != null && !alert?.alert?.isCountryShape" x="0px" y="0px" viewBox="0 0 512.145 512.145">
-                  <g>
-                      <g>
-                          <g>
-                              <path d="M512.085,128.069c-0.133-35.346-28.894-63.892-64.24-63.759c-25.145,0.094-47.905,14.904-58.176,37.855l-54.64-9.136
-                                  l-5.344,31.568l54.912,9.168c2.137,23.81,17.366,44.444,39.488,53.504l-15.584,117.552
-                                  c-32.099,3.773-56.321,30.928-56.416,63.248v0.24l-184.464,48.64c-9.839-17.54-27.385-29.403-47.328-32L87.621,123.461
-                                  c15.543-6.19,28.053-18.207,34.864-33.488l49.456,8.256l5.264-31.552l-49.696-8.304C124.488,23.245,93.561-2.783,58.433,0.239
-                                  C23.305,3.26-2.723,34.186,0.299,69.314c2.577,29.962,25.715,54.062,55.546,57.859l32.704,261.44
-                                  c-32.869,12.999-48.978,50.182-35.979,83.051c12.999,32.869,50.182,48.978,83.051,35.979
-                                  c24.441-9.666,40.488-33.291,40.464-59.574v-0.24l184.464-48.64c17.182,30.788,56.069,41.818,86.857,24.637
-                                  c30.788-17.182,41.818-56.069,24.637-86.857c-7.105-12.732-18.355-22.648-31.878-28.1l15.584-117.552
-                                  C487.816,187.507,511.995,160.362,512.085,128.069z M64.085,96.069c-17.673,0-32-14.327-32-32s14.327-32,32-32s32,14.327,32,32
-                                  S81.758,96.069,64.085,96.069z M112.085,480.069c-17.673,0-32-14.327-32-32c0-17.673,14.327-32,32-32s32,14.327,32,32
-                                  C144.085,465.742,129.758,480.069,112.085,480.069z M448.085,368.069c0,17.673-14.327,32-32,32c-17.673,0-32-14.327-32-32
-                                  c0-17.673,14.327-32,32-32C433.758,336.069,448.085,350.396,448.085,368.069z M416.085,128.069c0-17.673,14.327-32,32-32
-                                  c17.673,0,32,14.327,32,32s-14.327,32-32,32C430.412,160.069,416.085,145.742,416.085,128.069z"></path>
-                              <rect x="269.047" y="84.899" transform="matrix(0.9864 0.1646 -0.1646 0.9864 20.4913 -45.5342)" width="32" height="32"></rect>
-                              <rect x="205.844" y="74.36" transform="matrix(0.9863 0.1648 -0.1648 0.9863 17.9183 -35.3141)" width="32" height="32"></rect>
-                          </g>
-                      </g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-                  <g>
-                  </g>
-              </svg>
-              <label (click)="this.selectAlert(alert?.alert)" for="{{alert?.alert}}" class="font-medium text-white cursor-pointer hover:text-blue-500 ml-2">{{alert?.alert?.name}}</label>
-              <button (click)="this.selectAlert(alert?.alert)" class="ml-3 text-red-500" >
-                Détail
-              </button>
-            </div>
-          </div>
+          }
         </div>
       </fieldset>      
     </div>
 
     <!-- Alert detail panel -->
-    <app-detail-alert #detailalert [class.hidden]="this.panel !== 'detail-alert'" [class.block]="this.panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (disastersToDisplay$)="displayDisasters($event)" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
+    <app-detail-alert #detailalert [class.hidden]="panel !== 'detail-alert'" [class.block]="panel === 'detail-alert'" (close$)="closeAlert()" (closePanel$)="closePanel()" (zoomAlert$)="zoomOnAlert($event)" (zoomDisaster$)="zoomOnDisaster($event)" (hoverDisaster$)="hoverOnDisaster($event)"></app-detail-alert>
 
     <!-- Disaster detail panel -->
     <app-disaster-detail #detail></app-disaster-detail>
 
     <!-- Loader -->
-    <div *ngIf="this.loading" class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
-      <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>
-    </div>
+    @if(this.alertsStore.isLoading()){
+      <div class="absolute top-0 left-0 w-full h-full z-modal-bg bg-white opacity-80">
+        <app-spinner [width]="'w-24'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-on-map-1"></app-spinner>
+      </div>
+    }
 </div>

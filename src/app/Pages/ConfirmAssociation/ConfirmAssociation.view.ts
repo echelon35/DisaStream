@@ -4,10 +4,13 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthentificationApi } from 'src/app/Services/AuthentificationApi.service';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
+import { SharedModule } from 'src/app/Shared/Shared.module';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  templateUrl: './ConfirmAssociation.view.html',
+    templateUrl: './ConfirmAssociation.view.html',
+    standalone: true,
+    imports: [SharedModule]
 })
 export class ConfirmAssociationView {
 
