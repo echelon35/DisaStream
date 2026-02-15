@@ -1,4 +1,4 @@
-import { Component, effect, inject, ViewChild } from "@angular/core";
+import { Component, effect, inject, OnInit, ViewChild } from "@angular/core";
 import L, { FeatureGroup } from "leaflet";
 import 'leaflet.markerclusterv2';
 import { MarkerService } from "src/app/Map/Services/marker.service";
@@ -30,7 +30,7 @@ export class AlertVm {
     imports: [CommonModule, SharedModule, DisasterDetailComponent, DetailAlertComponent, SearchPlace, MapComponent],
     providers: [MarkerService, AlertsStore],
 })
-export class DisasterView {
+export class DisasterView implements OnInit {
 
     disastersMap?: L.Map;
     disastersLayer?: L.LayerGroup = new L.LayerGroup();
@@ -65,6 +65,10 @@ export class DisasterView {
       });
     }
 
+    ngOnInit(): void {
+      this.disastersFromAlertStore.reset();
+    }
+
     displayAlertAreas(){
 
         if(!this.disastersMap || !this.alertsLayer) return;
@@ -97,11 +101,6 @@ export class DisasterView {
               this.showAlertOnMap(a);
             }
         }
-        else{
-          if(a.visible){
-            this.showAlertOnMap(a);
-          }
-        }
       })
     }
 
@@ -109,7 +108,7 @@ export class DisasterView {
       this.selectPanel('area');
       this.resetAleaLayer();
       this.resetSelectedAleaLayer();
-      this.disastersMap?.setView([0,0], 2);
+      // this.disastersMap?.setView([0,0], 2);
       this.alerts.forEach(a => {
         if(!a.visible){
           this.showAlertOnMap(a);
