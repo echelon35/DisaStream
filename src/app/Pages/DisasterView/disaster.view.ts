@@ -12,8 +12,10 @@ import { CommonModule } from "@angular/common";
 import { SearchPlace } from "src/app/Modals/SearchPlace/SearchPlace.modal";
 import { MapComponent } from "src/app/Map/Components/map/map.component";
 import { SharedModule } from "src/app/Shared/Shared.module";
-import { EarthquakesStore } from "src/app/Store/earthquakes.store";
-import { AlertsStore } from "src/app/Store/alerts.store";
+import { AlertsStore } from "src/app/Store/alerts/alerts.store";
+import { Flood } from "src/app/Model/Flood";
+import { Hurricane } from "src/app/Model/Hurricane";
+import { DisastersFromAlertsStore } from "src/app/Store/disastersFromAlert/disastersFromAlert.store";
 
 export class AlertVm {
   alert: Alert;
@@ -26,7 +28,7 @@ export class AlertVm {
     templateUrl: './disaster.view.html',
     standalone: true,
     imports: [CommonModule, SharedModule, DisasterDetailComponent, DetailAlertComponent, SearchPlace, MapComponent],
-    providers: [MarkerService, EarthquakesStore, AlertsStore],
+    providers: [MarkerService, AlertsStore],
 })
 export class DisasterView {
 
@@ -46,22 +48,24 @@ export class DisasterView {
     @ViewChild('detail') modalDetail?: DisasterDetailComponent;
     @ViewChild('detailalert') detailAlertPanel?: DetailAlertComponent;
 
-    protected readonly earthquakeStore = inject(EarthquakesStore);
     protected readonly alertsStore = inject(AlertsStore);
+    protected readonly disastersFromAlertStore = inject(DisastersFromAlertsStore);
 
     #markerService = inject(MarkerService);
 
     constructor(){
-      this.earthquakes = this.earthquakeStore.earthquakes();
       this.selectPanel('area');
 
       effect(() => {
+        this.alerts = this.alertsStore.alerts();
         this.displayAlertAreas();
+
+        const disasters = this.disastersFromAlertStore.disasters();
+        this.displayDisasters(disasters);
       });
     }
 
     displayAlertAreas(){
-        this.alerts = this.alertsStore.alerts();
 
         if(!this.disastersMap || !this.alertsLayer) return;
 
@@ -79,7 +83,7 @@ export class DisasterView {
     }
 
     selectAlert(alert: Alert | undefined){
-      this.detailAlertPanel?.open(alert);
+      this.detailAlertPanel?.open(alert!);
       this.selectPanel("detail-alert");
       this.zoomOnAlert(alert!);
     }
@@ -122,12 +126,12 @@ export class DisasterView {
             case 'earthquake':
               this.#markerService.makeEarthquakeMarkers(this.disastersMap!, this.selectedLayer!, disaster as Earthquake, null,true,false, true);
               break;
-            // case 'flood':
-            //   this.markerService.makeFloodMarkers(this.disastersMap!, this.selectedLayer!, disaster as Flood, null,true,false, true);
-            //   break;
-            // case 'hurricane':
-            //   this.markerService.makeHurricaneMarkers(this.disastersMap!, this.selectedLayer!, disaster as Hurricane, null,true,false, true);
-            //   break;
+            case 'flood':
+              this.#markerService.makeFloodMarkers(this.disastersMap!, this.selectedLayer!, disaster as Flood, null,true,false, true);
+              break;
+            case 'hurricane':
+              this.#markerService.makeHurricaneMarkers(this.disastersMap!, this.selectedLayer!, disaster as Hurricane, null, true, false, true);
+              break;
             // case 'eruption':
             //   this.markerService.makeEruptionMarkers(this.disastersMap!, this.selectedLayer!, disaster as Eruption, null,true,false, true);
             //   break;
@@ -141,14 +145,14 @@ export class DisasterView {
           this.selectedLayer?.clearLayers();
           switch(disaster.type){
             case 'earthquake':
-              this.#markerService.makeEarthquakeMarkers(this.disastersMap!, this.selectedLayer!, disaster as Earthquake, null,true,false, true);
+              this.#markerService.makeEarthquakeMarkers(this.disastersMap!, this.selectedLayer!, disaster as Earthquake, null, true, false, true);
               break;
-            // case 'flood':
-            //   this.markerService.makeFloodMarkers(this.disastersMap!, this.selectedLayer!, disaster as Flood, null,true,false, true);
-            //   break;
-            // case 'hurricane':
-            //   this.markerService.makeHurricaneMarkers(this.disastersMap!, this.selectedLayer!, disaster as Hurricane, null,true,false, true);
-            //   break;
+            case 'flood':
+              this.#markerService.makeFloodMarkers(this.disastersMap!, this.selectedLayer!, disaster as Flood, null, true, false, true);
+              break;
+            case 'hurricane':
+              this.#markerService.makeHurricaneMarkers(this.disastersMap!, this.selectedLayer!, disaster as Hurricane, null, true, false, true);
+              break;
             // case 'eruption':
             //   this.markerService.makeEruptionMarkers(this.disastersMap!, this.selectedLayer!, disaster as Eruption, null,true,false, true);
             //   break;
@@ -251,12 +255,12 @@ export class DisasterView {
           case 'earthquake':
             this.#markerService.makeEarthquakeMarkers(this.disastersMap!, this.disastersLayer!, item as Earthquake, null,true,true);
             break;
-          // case 'flood':
-          //   this.markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item as Flood, null,true,true);
-          //   break;
-          // case 'hurricane':
-          //   this.markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item as Hurricane, null,true,true);
-          //   break;
+          case 'flood':
+            this.#markerService.makeFloodMarkers(this.disastersMap!, this.disastersLayer!, item as Flood, null, true, true);
+            break;
+          case 'hurricane':
+            this.#markerService.makeHurricaneMarkers(this.disastersMap!, this.disastersLayer!, item as Hurricane, null, true, true);
+            break;
         }
       })
     }

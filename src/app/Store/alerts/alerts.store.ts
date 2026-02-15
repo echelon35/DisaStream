@@ -1,22 +1,11 @@
-import { patchState, signalStore, withHooks, withMethods, withProps, withState } from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withProps, withState } from '@ngrx/signals';
 import { inject } from '@angular/core';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { AlertVm } from 'src/app/Pages/DisasterView/disaster.view';
 import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
 import { MarkerService } from 'src/app/Map/Services/marker.service';
 import { catchError, forkJoin, map, of, switchMap } from 'rxjs';
-
-type LoadAlertsState = {
-  alerts: AlertVm[];
-  isLoading: boolean;
-  error: string | null;
-};
-
-const initialState: LoadAlertsState = {
-  alerts: [],
-  isLoading: false,
-  error: null,
-};
+import { initialState } from './alerts.state';
 
 export const AlertsStore = signalStore(
     {providedIn: 'root'},

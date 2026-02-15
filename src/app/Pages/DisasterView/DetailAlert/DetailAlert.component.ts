@@ -1,20 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, output } from '@angular/core';
-import { Router } from '@angular/router';
-import { DisasterAlertDto } from 'src/app/DTO/DisasterAlertDto';
-import { DisasterFromAlertDtoEarthquake, DisasterFromAlertDtoEruption, DisasterFromAlertDtoFlood, DisasterFromAlertDtoHurricane } from 'src/app/DTO/DisasterFromAlertDto';
+import { Component, effect, inject, output } from '@angular/core';
 import { Alert } from 'src/app/Model/Alert';
 import { Disaster } from 'src/app/Model/Disaster';
-import { Earthquake } from 'src/app/Model/Earthquake';
-import { Eruption } from 'src/app/Model/Eruption';
-import { Flood } from 'src/app/Model/Flood';
-import { Hurricane } from 'src/app/Model/Hurricane';
 import { AlertApiService } from 'src/app/Services/AlertApiService';
 import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
-import $ from 'jquery';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipeModule } from 'src/app/PipeModule/pipe.module';
 import { SharedModule } from 'src/app/Shared/Shared.module';
+import { DisastersFromAlertsStore } from 'src/app/Store/disastersFromAlert/disastersFromAlert.store';
 
 interface Filter {
   name: string;
@@ -24,11 +17,12 @@ interface Filter {
 @Component({
     selector: 'app-detail-alert',
     templateUrl: './DetailAlert.component.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
     imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule, PipeModule]
 })
 export class DetailAlertComponent {
+
+  private readonly DisastersFromAlertStore = inject(DisastersFromAlertsStore);
 
   alert?: Alert;
   close$ = output<boolean>();
@@ -65,13 +59,32 @@ export class DetailAlertComponent {
   nbPage = 0;
   limit = 20;
 
-  //Change detector to update component manually
-  private cd = inject(ChangeDetectorRef)
-
   constructor(private alertApiService: AlertApiService, 
-    private router: Router,
     private toastrService: ToastrService){
-      this.load = true;
+
+      effect(() => {
+        this.historyDisasters = this.DisastersFromAlertStore.disasters();
+        this.currentFilter = this.DisastersFromAlertStore.filter();
+        this.count = this.DisastersFromAlertStore.disasterCount();
+        this.load = this.DisastersFromAlertStore.isLoading();
+        this.currentPage = this.DisastersFromAlertStore.currentPage();
+        this.nbPage = Math.ceil(this.DisastersFromAlertStore.disasterCount() / this.DisastersFromAlertStore.limit());
+
+        if(!this.counted && this.count > 0){
+          this.allCount = this.count;
+          this.counted = true;
+        }
+      });
+  }
+
+  razFilters(){
+    this.filterCity = '';
+    this.filterCountry = '';
+    this.filterFrom = new Date('2000-01-01').toISOString().split('T').shift();
+    this.filterTo = new Date().toISOString().split('T').shift();
+    this.currentFilter = 'premier_releve';
+    this.currentOrder = 'ASC';
+    this.filters.forEach(f => f.order = 'ASC');
   }
 
   back(){
@@ -88,7 +101,6 @@ export class DetailAlertComponent {
     this.alertApiService.activateAlert(id,false).subscribe(() => {
       this.toastrService.info('Alerte désactivée');
       this.alert!.isActivate = false;
-      this.updateComponent();
     });
   }
 
@@ -97,47 +109,55 @@ export class DetailAlertComponent {
     this.alertApiService.activateAlert(id,true).subscribe(() => {
       this.toastrService.info('Alerte activée');
       this.alert!.isActivate = true;
-      this.updateComponent();
     });
   }
 
   searchCity(){
-    this.changePage(1);
+    this.DisastersFromAlertStore.changeCity(this.filterCity);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   clearCity(){
+    this.DisastersFromAlertStore.changeCity('');
     this.filterCity = '';
-    this.changePage(1);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   searchCountry(){
-    this.changePage(1);
+    this.DisastersFromAlertStore.changeCountry(this.filterCountry);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   clearCountry(){
+    this.DisastersFromAlertStore.changeCountry('');
     this.filterCountry = '';
-    this.changePage(1);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   searchFrom(event: any){
     if(event.target.value.length > 0){
       this.filterFrom = event.target.value;
-      this.changePage(1);
+      this.DisastersFromAlertStore.changePremierReleve(this.filterFrom!);
+      this.DisastersFromAlertStore.loadDisasterFromAlerts();
     }
   }
 
   searchTo(event: any){
     if(event.target.value.length > 0){
       this.filterTo = event.target.value;
-      this.changePage(1);
+      this.DisastersFromAlertStore.changeDernierReleve(this.filterTo!);
+      this.DisastersFromAlertStore.loadDisasterFromAlerts();
     }
   }
 
   open(alert: Alert | undefined){
+    this.alert = undefined;
     if(alert != null){
       this.alert = alert;
-      this.updateComponent()
-      this.changePage(1);
+      this.razFilters();
+      this.DisastersFromAlertStore.reset();
+      this.DisastersFromAlertStore.setAlert(alert!.id);
+      this.DisastersFromAlertStore.loadDisasterFromAlerts();
     }
   }
 
@@ -167,8 +187,10 @@ export class DetailAlertComponent {
   }
 
   orderBy(filter: string){
-    this.currentFilter = filter;
+    this.DisastersFromAlertStore.changeFilter(filter);
+
     this.currentOrder = (this.filters.find(f => f.name == filter)?.order === 'ASC') ? 'DESC' : 'ASC';
+    this.DisastersFromAlertStore.changeOrder(this.currentOrder);
     this.filters.forEach(f => {
       if(f.name == filter){
         f.order = this.currentOrder;
@@ -176,51 +198,13 @@ export class DetailAlertComponent {
         f.order = 'ASC';
       }
     });
-    this.changePage(this.currentPage);
+    this.DisastersFromAlertStore.changePage(1);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   changePage(page: number){
-      this.load = true;
-      this.historyDisasters = [];
-      this.alertApiService.getDisastersAlerts(this.alert!.id, page, this.currentFilter, this.currentOrder, this.filterCountry, this.filterCity, this.filterFrom, this.filterTo).subscribe((dAlertDto:DisasterAlertDto) => {
-        dAlertDto.disasters.forEach(d => {
-          switch (d.type) {
-            case 'earthquake':
-              this.historyDisasters.push(new Earthquake(d as DisasterFromAlertDtoEarthquake));
-              break;
-            case 'flood':
-              this.historyDisasters.push(new Flood(d as DisasterFromAlertDtoFlood));
-              break;
-            case 'hurricane':
-              this.historyDisasters.push(new Hurricane(d as DisasterFromAlertDtoHurricane));
-              break;
-            case 'eruption':
-              this.historyDisasters.push(new Eruption(d as DisasterFromAlertDtoEruption));
-              break;
-          }
-        });
-        this.disastersToDisplay$.emit(this.historyDisasters)
-        this.count = dAlertDto.count;
-
-        this.load = false;
-        this.currentPage = page;
-        this.nbPage = Math.ceil(this.count / this.limit);
-
-        this.updateComponent()
-        $("#filterCountry").trigger("focus");
-
-        if(!this.counted){
-          this.allCount = this.count;
-          this.counted = true;
-        }
-      });
-  }
-
-  /**
-   * Update view
-   */
-  updateComponent(){
-      this.cd.markForCheck();
+    this.DisastersFromAlertStore.changePage(page);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
 }
