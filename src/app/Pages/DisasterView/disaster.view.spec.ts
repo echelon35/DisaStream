@@ -226,4 +226,17 @@ describe('DisasterView', () => {
         expect(mockMap.setView).toHaveBeenCalledWith([0, 0], 2);
     });
 
+    it('should remove markers from map after changing alert', () => {
+        // Reset spies to ensure clean state
+        (mockMarkerClusterGroup.clearLayers as jasmine.Spy).calls.reset();
+        (mockLayerGroup.clearLayers as jasmine.Spy).calls.reset();
+
+        // Simulate changing alert which triggers displayDisasters
+        component.displayDisasters([]);
+
+        // Verify layers are cleared
+        expect((component as any).cluster.clearLayers).toHaveBeenCalled();
+        expect(component.disastersLayer?.clearLayers).toHaveBeenCalled();
+    });
+
 });
