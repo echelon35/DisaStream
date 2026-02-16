@@ -72,11 +72,7 @@ export class NewAlertView {
   selectedMailIds: number[] = [];
 
   // Criteria Configuration
-  readonly CRITERIA_CONFIG: Record<string, string[]> = {
-    'earthquake': ['Magnitude'],
-    'hurricane': ['Catégorie'],
-    // Add other mappings as needed
-  };
+  CRITERIA_CONFIG: Record<string, string[]> = {};
 
   readonly OPERATORS = ['>', '<', '=', '>=', '<='];
 
@@ -99,6 +95,7 @@ export class NewAlertView {
 
     this.getAleas();
     this.getTeamMembersMail();
+    this.getCriterias();
 
     //Edit alert
     if (this.route.snapshot.queryParamMap.get('id') != null) {
@@ -335,9 +332,9 @@ export class NewAlertView {
     }))
   }
 
-  getAvailableCriteria(aleaName: string): string[] {
-    console.log('Getting criteria for alea:', aleaName);
-    return this.CRITERIA_CONFIG[aleaName] || [];
+  getAvailableCriteria(aleaId: number): string[] {
+    console.log('Getting criteria for alea:', aleaId);
+    return this.CRITERIA_CONFIG[aleaId] || [];
   }
 
   addCriterion(alea: Alea, field: string, operator: string, value: number) {
@@ -400,6 +397,27 @@ export class NewAlertView {
       this.categories = aleasByCategory;
       this.updateComponent();
     })
+  }
+
+  getCriterias() {
+    this.publicApiService.getCriterias().subscribe((criterias) => {
+      const config: Record<string, string[]> = {};
+
+      criterias.forEach(c => {
+        const aleaId = c.alea?.id;
+        if (aleaId) {
+          if (!config[aleaId]) {
+            config[aleaId] = [];
+          }
+          if (!config[aleaId].includes(c.name)) {
+            config[aleaId].push(c.name);
+          }
+        }
+      });
+
+      this.CRITERIA_CONFIG = config;
+      this.updateComponent();
+    });
   }
 
   /*********************TEAM MEMBERS*************************/
