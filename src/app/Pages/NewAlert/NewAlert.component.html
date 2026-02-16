@@ -50,26 +50,34 @@
                 Zone (monde par défaut)
               </label>
               <div class="sm:col-span-2">
-                <button *ngIf="alert.areas == null" (click)="drawPolygon()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                  Tracer une zone à surveiller
-                </button>
-                <button *ngIf="alert.areas == null" (click)="showCountries()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-2 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
-                  <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-                  Choisir un pays à surveiller
-                </button>
-                <button *ngIf="alert.areas != null && !alert.isCountryShape" (click)="editArea()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
-                  Editer la zone
-                </button>
-                <button *ngIf="alert.areas != null && alert.isCountryShape" (click)="showCountries()" type="button" class="mx-1 inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
-                  Envie de sélectionner un autre pays ?
-                </button>
-                <button *ngIf="alert.areas != null" (click)="deleteArea()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
-                  Supprimer la zone
-                </button>
+                @if(alert.areas == null){
+                  <button (click)="drawPolygon()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                    Tracer une zone à surveiller
+                  </button>
+                  <button (click)="showCountries()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-2 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
+                    <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                    Choisir un pays à surveiller
+                  </button>
+                }
+                @if(alert.areas != null && !alert.isCountryShape){
+                  <button (click)="editArea()" type="button" class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.54 15H17a2 2 0 0 0-2 2v4.54"/><path d="M7 3.34V5a3 3 0 0 0 3 3a2 2 0 0 1 2 2c0 1.1.9 2 2 2a2 2 0 0 0 2-2c0-1.1.9-2 2-2h3.17"/><path d="M11 21.95V18a2 2 0 0 0-2-2a2 2 0 0 1-2-2v-1a2 2 0 0 0-2-2H2.05"/><circle cx="12" cy="12" r="10"/></svg>
+                    Editer la zone
+                  </button>
+                }
+                @if(alert.areas != null && alert.isCountryShape){
+                  <button (click)="showCountries()" type="button" class="mx-1 inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    <svg class="size-4"  width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg>
+                    Envie de sélectionner un autre pays ?
+                  </button>
+                }
+                @if(alert.areas != null){
+                  <button (click)="deleteArea()" type="button" class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                    <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>
+                    Supprimer la zone
+                  </button>
+                }
                 <div class="mt-4">
                   <app-search-place-modal [areaMap]="areaMap"></app-search-place-modal>
                 </div>
@@ -83,30 +91,96 @@
               </div>
               <div class="sm:col-span-2">
                 <!-- <app-alea-types id="alea-step" [loadingAlert]="loadedAlert.asObservable()" (aleaChange)="selectAleas($event)" ></app-alea-types> -->
-                <div *ngFor="let category of categories; index as i" [class.mt-2]="i > 0">
-                  <h2 class="text-sm font-medium text-gray-500">{{category.category}}</h2>
-                  <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
-                    <li (click)="selectAlea(aleaCategory)" *ngFor="let aleaCategory of category?.aleas" class="col-span-1 flex rounded-md shadow-sm">
-                      <div class="flex w-16 shrink-0 items-center justify-center rounded-l-md bg-pink-600 text-sm font-medium text-white"
-                      style="background-size: cover; background-image: url('{{s3BasePath}}/background/{{aleaCategory.alea.name | lowercase}}.jpg');">
-                      </div>
-                      <div 
-                      [class.bg-indigo-500]="aleaCategory.selected"
-                      [class.bg-white]="!aleaCategory.selected"
-                      [class.border-gray-500]="aleaCategory.selected"
-                      class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-300 cursor-pointer">
-                        <div class="flex-1 truncate px-4 py-2 text-sm">
-                          <p 
-                          [class.text-white]="aleaCategory.selected"
-                          [class.text-gray-500]="!aleaCategory.selected"
-                          >{{aleaCategory.alea.label | titlecase}}</p>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
+                @for(category of categories; track $index){
+                  <div [class.mt-2]="$index > 0">
+                    <h2 class="text-sm font-medium text-gray-500">{{category.category}}</h2>
+                    <ul role="list" class="mt-3 grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6">
+                      @for(aleaCategory of category?.aleas; track $index){
+                        <li (click)="selectAlea(aleaCategory)" class="col-span-1 flex rounded-md shadow-sm">
+                          <div class="flex w-16 shrink-0 items-center justify-center rounded-l-md bg-pink-600 text-sm font-medium text-white"
+                          style="background-size: cover; background-image: url('{{s3BasePath}}/background/{{aleaCategory.alea.name | lowercase}}.jpg');">
+                          </div>
+                          <div 
+                          [class.bg-indigo-500]="aleaCategory.selected"
+                          [class.bg-white]="!aleaCategory.selected"
+                          [class.border-gray-500]="aleaCategory.selected"
+                          class="flex flex-1 items-center justify-between truncate rounded-r-md border-b border-r border-t border-gray-200 bg-white hover:bg-gray-300 cursor-pointer">
+                            <div class="flex-1 truncate px-4 py-2 text-sm">
+                              <p 
+                              [class.text-white]="aleaCategory.selected"
+                              [class.text-gray-500]="!aleaCategory.selected"
+                              >{{aleaCategory.alea.label | titlecase}}</p>
+                            </div>
+                          </div>
+                        </li>
+                      }
+                    </ul>
+                  </div>
+                }
               </div>
             </div>
+
+            <!-- Specific Criteria -->
+            @if(alert.aleas.length > 0){
+              <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">
+                <div>
+                  <label class="block text-sm/6 font-medium text-gray-900 sm:mt-1.5">Critères spécifiques</label>
+                  <p class="text-xs text-gray-500">Ajoutez des conditions pour affiner vos alertes (ex: Magnitude > 5).</p>
+                </div>
+                <div class="sm:col-span-2">
+                  @for(alea of alert.aleas; track $index){
+                      @if(getAvailableCriteria(alea.name).length > 0){
+                        <div class="mb-4">
+                          <h3 class="text-sm font-medium text-gray-700 mb-2">{{alea.label}}</h3>
+                          
+                          <!-- Existing Criteria List for this Alea -->
+                          <ul class="mb-2 space-y-2">
+                            @for(criterion of getCriteriaForAlea(alea.id); track $index){
+                              <li class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md text-sm">
+                                <span>{{criterion.field}} {{criterion.operator}} {{criterion.value}}</span>
+                                <button type="button" (click)="removeCriterion(alert.criteria.indexOf(criterion))" class="text-red-600 hover:text-red-800">
+                                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                  </svg>
+                                </button>
+                              </li>
+                            }
+                          </ul>
+
+                          <!-- Add New Criterion Form -->
+                          <div class="flex flex-col sm:flex-row gap-2 items-end">
+                            <div class="w-full sm:w-1/3">
+                                <label class="block text-xs font-medium text-gray-500">Critère</label>
+                                <select #fieldInput class="mt-1 block w-full rounded-md border-gray-300 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                  @for(field of getAvailableCriteria(alea.name);track $index){
+                                    <option [value]="field">{{field}}</option>
+                                  }
+                                </select>
+                            </div>
+                            <div class="w-full sm:w-1/4">
+                                <label class="block text-xs font-medium text-gray-500">Opérateur</label>
+                                <select #operatorInput class="mt-1 block w-full rounded-md border-gray-300 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                                  @for(op of OPERATORS;track $index){
+                                    <option [value]="op">{{op}}</option>
+                                  }
+                                </select>
+                            </div>
+                            <div class="w-full sm:w-1/4">
+                                <label class="block text-xs font-medium text-gray-500">Valeur</label>
+                                <input #valueInput type="number" class="mt-1 block w-full rounded-md border-gray-300 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                            </div>
+                            <button type="button" (click)="addCriterion(alea, fieldInput.value, operatorInput.value, +valueInput.value); valueInput.value = ''" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      }
+                  }
+                </div>
+              </div>
+            }
 
             <!-- Team members -->
             <div class="space-y-2 px-4 sm:grid sm:grid-cols-3 sm:items-start sm:gap-4 sm:space-y-0 sm:px-6 sm:py-5">

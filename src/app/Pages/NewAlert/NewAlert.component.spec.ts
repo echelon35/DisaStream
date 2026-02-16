@@ -171,4 +171,31 @@ describe('NewAlertView', () => {
         expect(component['areaMap']).toBe(mockMap as any);
     });
 
+    it('should add a criterion', () => {
+        const alea = { id: 1, name: 'Séisme', label: 'Séisme' };
+        component.addCriterion(alea as any, 'Magnitude', '>', 5);
+        expect(component.alert.criteria.length).toBe(1);
+        expect(component.alert.criteria[0]).toEqual(jasmine.objectContaining({
+            aleaId: 1,
+            field: 'Magnitude',
+            operator: '>',
+            value: 5
+        }));
+    });
+
+    it('should remove a criterion', () => {
+        const alea = { id: 1, name: 'Séisme', label: 'Séisme' };
+        component.addCriterion(alea as any, 'Magnitude', '>', 5);
+        expect(component.alert.criteria.length).toBe(1);
+
+        component.removeCriterion(0);
+        expect(component.alert.criteria.length).toBe(0);
+    });
+
+    it('should return available criteria for an alea', () => {
+        expect(component.getAvailableCriteria('Séisme')).toEqual(['Magnitude']);
+        expect(component.getAvailableCriteria('Cyclone')).toEqual(['Catégorie']);
+        expect(component.getAvailableCriteria('Unknown')).toEqual([]);
+    });
+
 });

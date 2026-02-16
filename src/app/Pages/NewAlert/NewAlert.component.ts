@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, ViewChild, inject } from "@angular/core";
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
 import L from "leaflet";
 import "@geoman-io/leaflet-geoman-free";
 import { Subject } from "rxjs";
 import { Alea } from "src/app/Model/Alea";
+import { AlertCriterion } from "src/app/Model/AlertCriterion";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
@@ -39,7 +40,7 @@ export class AleaCategoryVM {
   templateUrl: './NewAlert.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [AddMailAlert, EndAlertComponent, CommonModule, ReactiveFormsModule, SearchPlace, MapComponent],
+  imports: [AddMailAlert, EndAlertComponent, CommonModule, ReactiveFormsModule, FormsModule, SearchPlace, MapComponent],
 })
 export class NewAlertView {
 
@@ -69,6 +70,17 @@ export class NewAlertView {
   //team
   public mailAlerts: MailAlert[] = [];
   selectedMailIds: number[] = [];
+
+  // Criteria Configuration
+  readonly CRITERIA_CONFIG: Record<string, string[]> = {
+    'earthquake': ['Magnitude'],
+    'hurricane': ['Catégorie'],
+    // Add other mappings as needed
+  };
+
+  readonly OPERATORS = ['>', '<', '=', '>=', '<='];
+
+  newCriterion: Partial<AlertCriterion> = {};
 
   @ViewChild('mailAlertModal') mailAlertModal?: AddMailAlert;
   @ViewChild('endAlertModal') endAlertModal?: EndAlertComponent;
@@ -316,8 +328,41 @@ export class NewAlertView {
     this.categories.forEach(item => item.aleas.forEach(aleaVM => {
       if (aleaVM.selected) {
         this.alert.aleas.push(aleaVM.alea);
+      } else {
+        // Remove criteria associated with deselected alea
+        this.alert.criteria = this.alert.criteria.filter(c => c.aleaId !== aleaVM.alea.id);
       }
     }))
+  }
+
+  getAvailableCriteria(aleaName: string): string[] {
+    console.log('Getting criteria for alea:', aleaName);
+    return this.CRITERIA_CONFIG[aleaName] || [];
+  }
+
+  addCriterion(alea: Alea, field: string, operator: string, value: number) {
+    if (!field || !operator || value === undefined || value === null) return;
+
+    const criterion = new AlertCriterion();
+    criterion.aleaId = alea.id;
+    criterion.aleaName = alea.name;
+    criterion.field = field;
+    criterion.operator = operator;
+    criterion.value = value;
+
+    this.alert.criteria.push(criterion);
+
+    // Reset new criterion input if needed, or handle via dedicated form control
+    this.newCriterion = {};
+  }
+
+  removeCriterion(index: number) {
+    this.alert.criteria.splice(index, 1);
+  }
+
+  getCriteriaForAlea(aleaId: number): AlertCriterion[] {
+    if (!this.alert.criteria) return [];
+    return this.alert.criteria.filter(c => c.aleaId === aleaId);
   }
 
   /**
