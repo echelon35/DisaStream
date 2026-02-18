@@ -1,7 +1,7 @@
 <div id="map-new-area" class="z-map w-full h-dvh">
   <app-map [displayLayers]="false" [displayZoom]="false" [mapId]="'map-new-area'" (map$)="receiveMap($event)" (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true" [locationBox]="locationBox"></app-map>
 </div>
-<button [class.opacity-0]="panelVisible" [class.opacity-100]="!panelVisible" (click)="showPanel()" class="z-on-map-1 absolute top-20 right-0 inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-on-map-1 transform transition ease-in-out duration-500 hover:bg-indigo-300">
+<button [class.opacity-0]="panelVisible" [class.opacity-100]="!panelVisible" (click)="showPanel()" class="z-on-map-1 absolute top-20 right-0 inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-on-map-1 transform transition ease-in-out duration-500 hover:bg-indigo-300">
   <span class="text-md mr-2">Détail de l'alerte</span>
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left-to-line"><path d="M3 19V5"/><path d="m13 6-6 6 6 6"/><path d="M7 12h14"/></svg>
 </button>
@@ -142,7 +142,7 @@
                             @for(criterion of getCriteriaForAlea(alea.id); track $index){
                               <li class="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md text-sm">
                                 <span>{{criterion.field}} {{criterion.operator}} {{criterion.value}}</span>
-                                <button type="button" (click)="removeCriterion(alert.criteria.indexOf(criterion))" class="text-red-600 hover:text-red-800">
+                                <button type="button" (click)="removeCriterion(alert.criterias.indexOf(criterion))" class="text-red-600 hover:text-red-800">
                                   <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                                   </svg>

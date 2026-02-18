@@ -15,11 +15,13 @@ export type LoadDisastersFromAlertsState = {
     disasterCount: number;
     limit: number;
     nbPages: number;
+    withCriterias: boolean;
 };
 
 export const initialState: LoadDisastersFromAlertsState = {
     alertId: -1,
     disasters: [],
+    withCriterias: true,
     isLoading: false,
     error: null,
     currentPage: 1,

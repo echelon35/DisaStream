@@ -107,9 +107,11 @@ export class NewAlertView {
           this.alert = alert;
 
           //feed area
-          const geo = new L.GeoJSON(alert.areas);
-          this.actualLayer?.addLayer(geo);
-          this.addShapeToMap();
+          if(this.actualLayer != null && alert.areas != null) {
+            const geo = new L.GeoJSON(alert.areas);
+            this.actualLayer.addLayer(geo);
+            this.addShapeToMap();
+          }
 
           //feed alea selected
           this.categories.forEach(item => item.aleas.forEach(aleaVM => {
@@ -124,7 +126,7 @@ export class NewAlertView {
         },
         error: (error) => {
           if (error.status == 403) {
-            this.router.navigateByUrl('dashboard/alerts/manage').then(() => {
+            this.router.navigateByUrl('dashboard').then(() => {
               this.toastrService.error('Vous n\'êtes pas autorisé à accéder à cette alerte');
             })
           }
@@ -236,7 +238,7 @@ export class NewAlertView {
   /**
    * Quit edit mode with esc key
    */
-  @HostListener('keydown.esc', ['$event'])
+  @HostListener('keydown.esc')
   onEsc() {
     if (this.areaMap != null) {
       this.areaMap.pm.disableDraw();
@@ -290,19 +292,8 @@ export class NewAlertView {
    * @param e 
    */
   addShapeToMap() {
-
-    if (this.areaMap != null) {
-
-      this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
-      this.actualLayer?.addTo(this.areaMap!);
-
-      // this.areaMap!.pm.disableDraw();
-      // this.areaMap!.pm.enableGlobalEditMode({
-      //     snappable: true,
-      //     snapDistance: 50
-      // });
-
       if (this.actualLayer != null) {
+        this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
         const collection = this.actualLayer?.toGeoJSON() as FeatureCollection;
         this.alert.areas = collection?.features[0]?.geometry;
       }
@@ -310,7 +301,6 @@ export class NewAlertView {
       if (!this.panelVisible) {
         this.showPanel();
       }
-    }
   }
 
   /*********************ALEAS*************************/
@@ -326,8 +316,8 @@ export class NewAlertView {
       if (aleaVM.selected) {
         this.alert.aleas.push(aleaVM.alea);
       } else {
-        // Remove criteria associated with deselected alea
-        this.alert.criteria = this.alert.criteria.filter(c => c.aleaId !== aleaVM.alea.id);
+        // Remove criterias associated with deselected alea
+        this.alert.criterias = this.alert.criterias.filter(c => c.aleaId !== aleaVM.alea.id);
       }
     }))
   }
@@ -347,19 +337,19 @@ export class NewAlertView {
     criterion.operator = operator;
     criterion.value = value;
 
-    this.alert.criteria.push(criterion);
+    this.alert.criterias.push(criterion);
 
     // Reset new criterion input if needed, or handle via dedicated form control
     this.newCriterion = {};
   }
 
   removeCriterion(index: number) {
-    this.alert.criteria.splice(index, 1);
+    this.alert.criterias.splice(index, 1);
   }
 
   getCriteriaForAlea(aleaId: number): AlertCriterion[] {
-    if (!this.alert.criteria) return [];
-    return this.alert.criteria.filter(c => c.aleaId === aleaId);
+    if (!this.alert.criterias) return [];
+    return this.alert.criterias.filter(c => c.aleaId === aleaId);
   }
 
   /**

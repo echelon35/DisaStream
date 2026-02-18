@@ -13,6 +13,6 @@ export class Alert {
     createdAt: Date;
     updatedAt: Date;
     countryId: number | null;
-    criteria: AlertCriterion[] = [];
+    criterias: AlertCriterion[] = [];
     isActivate: boolean;
 }

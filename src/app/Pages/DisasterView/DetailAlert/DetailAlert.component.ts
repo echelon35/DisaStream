@@ -58,6 +58,7 @@ export class DetailAlertComponent {
   currentPage = 1;
   nbPage = 0;
   limit = 20;
+  strictMode = true;
 
   constructor(private alertApiService: AlertApiService, 
     private toastrService: ToastrService){
@@ -69,6 +70,7 @@ export class DetailAlertComponent {
         this.load = this.DisastersFromAlertStore.isLoading();
         this.currentPage = this.DisastersFromAlertStore.currentPage();
         this.nbPage = Math.ceil(this.DisastersFromAlertStore.disasterCount() / this.DisastersFromAlertStore.limit());
+        this.strictMode = this.DisastersFromAlertStore.withCriterias();
 
         if(!this.counted && this.count > 0){
           this.allCount = this.count;
@@ -94,6 +96,11 @@ export class DetailAlertComponent {
 
   expand(expand: boolean){
     this.expandPanel = expand;
+  }
+
+  changeStrict(){
+    this.DisastersFromAlertStore.changeStrictMode(this.strictMode);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   disableAlert(){

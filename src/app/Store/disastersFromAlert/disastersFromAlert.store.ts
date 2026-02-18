@@ -21,7 +21,7 @@ export const DisastersFromAlertsStore = signalStore(
     withMethods(({ alertApiService, markerService, ...store }) => {
         const loadDisasterFromAlerts = () => {
             patchState(store, { isLoading: true });
-            alertApiService.getDisastersAlerts(store.alertId(), store.currentPage(), store.filter(), store.order(), store.country(), store.city(), store.premier_releve(), store.dernier_releve()).subscribe({
+            alertApiService.getDisastersAlerts(store.alertId(), store.currentPage(), store.filter(), store.order(), store.country(), store.city(), store.premier_releve(), store.dernier_releve(), store.withCriterias()).subscribe({
                 next: (disasterAlerts: DisasterAlertDto) => {
                     const disastersFound: Disaster[] = [];
                     disasterAlerts.disasters.forEach(d => {
@@ -66,6 +66,10 @@ export const DisastersFromAlertsStore = signalStore(
 
         const changeFilter = (filter: string) => {
             patchState(store, { filter });
+        };
+
+        const changeStrictMode = (strictMode: boolean) => {
+            patchState(store, { withCriterias: strictMode });
         };
 
         const changeOrder = (order: string) => {
@@ -113,6 +117,7 @@ export const DisastersFromAlertsStore = signalStore(
             changePremierReleve,
             changeDernierReleve,
             setAlert,
+            changeStrictMode,
             reset
         };
     })
