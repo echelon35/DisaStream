@@ -6,6 +6,7 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { of } from 'rxjs';
 import { Alert } from 'src/app/Model/Alert';
 import { signal } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
 
 describe('DetailAlertComponent', () => {
   let component: DetailAlertComponent;
@@ -13,6 +14,7 @@ describe('DetailAlertComponent', () => {
   let mockDisastersFromAlertsStore: any;
   let mockAlertApiService: any;
   let mockToastrService: any;
+  let mockHttpService: any;
 
   beforeEach(async () => {
     mockDisastersFromAlertsStore = {
@@ -32,6 +34,7 @@ describe('DetailAlertComponent', () => {
       changeFilter: jasmine.createSpy('changeFilter'),
       changeOrder: jasmine.createSpy('changeOrder'),
       changePage: jasmine.createSpy('changePage'),
+      withCriterias: jasmine.createSpy('withCriterias'),
     };
 
     mockAlertApiService = {
@@ -42,12 +45,17 @@ describe('DetailAlertComponent', () => {
       info: jasmine.createSpy('info'),
     };
 
+    mockHttpService = {
+      get: jasmine.createSpy('get').and.returnValue(of({})),
+    };
+
     await TestBed.configureTestingModule({
       imports: [DetailAlertComponent],
       providers: [
         { provide: DisastersFromAlertsStore, useValue: mockDisastersFromAlertsStore },
         { provide: AlertApiService, useValue: mockAlertApiService },
         { provide: ToastrService, useValue: mockToastrService },
+        { provide: HttpClient, useValue: mockHttpService },
       ],
     }).compileComponents();
 
@@ -70,7 +78,7 @@ describe('DetailAlertComponent', () => {
   });
 
   it('should call activateAlert service', () => {
-    const alertMock: Alert = { id: 1, isActivate: false } as unknown as Alert;
+    const alertMock: Alert = { id: 1, isActivate: false } as Alert;
     component.alert = alertMock;
     component.activateAlert();
     expect(mockAlertApiService.activateAlert).toHaveBeenCalledWith(1, true);
