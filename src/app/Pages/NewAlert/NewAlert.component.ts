@@ -337,6 +337,9 @@ export class NewAlertView {
     criterion.operator = operator;
     criterion.value = value;
 
+    if(this.alert.criterias == null) {
+      this.alert.criterias = [];
+    }
     this.alert.criterias.push(criterion);
 
     // Reset new criterion input if needed, or handle via dedicated form control
