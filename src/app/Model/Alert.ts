@@ -1,6 +1,7 @@
 import { Geometry } from "geojson";
 import { Alea } from "./Alea";
 import { MailAlert } from "./MailAlert";
+import { AlertCriterion } from "./AlertCriterion";
 
 export class Alert {
     id: number;
@@ -12,5 +13,6 @@ export class Alert {
     createdAt: Date;
     updatedAt: Date;
     countryId: number | null;
+    criterias: AlertCriterion[] = [];
     isActivate: boolean;
 }

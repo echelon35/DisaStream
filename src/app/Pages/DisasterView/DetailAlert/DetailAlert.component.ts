@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PipeModule } from 'src/app/PipeModule/pipe.module';
 import { SharedModule } from 'src/app/Shared/Shared.module';
 import { DisastersFromAlertsStore } from 'src/app/Store/disastersFromAlert/disastersFromAlert.store';
+import { Alea } from 'src/app/Model/Alea';
+import { AleasStore } from 'src/app/Store/alea/alea.store';
 
 interface Filter {
   name: string;
@@ -23,6 +25,7 @@ interface Filter {
 export class DetailAlertComponent {
 
   private readonly DisastersFromAlertStore = inject(DisastersFromAlertsStore);
+  private readonly AleaStore = inject(AleasStore);
 
   alert?: Alert;
   close$ = output<boolean>();
@@ -58,17 +61,21 @@ export class DetailAlertComponent {
   currentPage = 1;
   nbPage = 0;
   limit = 20;
+  strictMode = true;
+  aleas: Alea[] = [];
 
   constructor(private alertApiService: AlertApiService, 
     private toastrService: ToastrService){
 
       effect(() => {
+        this.aleas = this.AleaStore.aleas();
         this.historyDisasters = this.DisastersFromAlertStore.disasters();
         this.currentFilter = this.DisastersFromAlertStore.filter();
         this.count = this.DisastersFromAlertStore.disasterCount();
         this.load = this.DisastersFromAlertStore.isLoading();
         this.currentPage = this.DisastersFromAlertStore.currentPage();
         this.nbPage = Math.ceil(this.DisastersFromAlertStore.disasterCount() / this.DisastersFromAlertStore.limit());
+        this.strictMode = this.DisastersFromAlertStore.withCriterias();
 
         if(!this.counted && this.count > 0){
           this.allCount = this.count;
@@ -94,6 +101,11 @@ export class DetailAlertComponent {
 
   expand(expand: boolean){
     this.expandPanel = expand;
+  }
+
+  changeStrict(){
+    this.DisastersFromAlertStore.changeStrictMode(this.strictMode);
+    this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
   disableAlert(){
@@ -205,6 +217,11 @@ export class DetailAlertComponent {
   changePage(page: number){
     this.DisastersFromAlertStore.changePage(page);
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
+  }
+
+  getAleaLabel(aleaId: number): string {
+    const alea = this.aleas.find(a => a.id === aleaId);
+    return alea ? alea.label : 'Alea inconnu';
   }
 
 }

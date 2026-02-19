@@ -38,8 +38,8 @@ export class AlertApiService {
       return this.http.get<Alert[]>(API_URL + '/alert', this.httpOptions)
     }
 
-    getDisastersAlerts(id: number, page = 1, filter = 'premier_releve', order = 'ASC', country = '', city = '', premier_releve = '', dernier_releve = ''): Observable<DisasterAlertDto> {
-      return this.http.get<DisasterAlertDto>(API_URL + `/alert/disasters/${id}?page=${page}&order=${order}&filter=${filter}&city=${city}&country=${country}&premier_releve=${premier_releve}&dernier_releve=${dernier_releve}`, this.httpOptions)
+    getDisastersAlerts(id: number, page = 1, filter = 'premier_releve', order = 'ASC', country = '', city = '', premier_releve = '', dernier_releve = '', strict = false): Observable<DisasterAlertDto> {
+      return this.http.get<DisasterAlertDto>(API_URL + `/alert/disasters/${id}?page=${page}&order=${order}&filter=${filter}&city=${city}&country=${country}&premier_releve=${premier_releve}&dernier_releve=${dernier_releve}&strict=${strict}`, this.httpOptions)
     }
 
     getAlertById(id: number): Observable<Alert> {

@@ -16,21 +16,25 @@ class InterestedUserDto {
   providedIn: 'root'
 })
 export class PublicApiService {
-    private httpOptions = {};
+  private httpOptions = {};
 
-    constructor(private http: HttpClient){
-        this.httpOptions = {
-            headers: new HttpHeaders({ 
-              'Content-Type': 'application/json', 
-            })
-          };
-    }
+  constructor(private http: HttpClient) {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      })
+    };
+  }
 
-    getAleasByCategory(): Observable<AleaCategoryDto[]>{
-      return this.http.get<AleaCategoryDto[]>(API_URL + '/aleas', { responseType: 'json' });
-    }
+  getAleasByCategory(): Observable<AleaCategoryDto[]> {
+    return this.http.get<AleaCategoryDto[]>(API_URL + '/aleas', { responseType: 'json' });
+  }
 
-    interestedPro(interestedUserDto: InterestedUserDto){
-      return this.http.post(API_URL + '/user/pro/interested', interestedUserDto, { responseType: 'json' })
-    }
+  getCriterias(): Observable<any[]> {
+    return this.http.get<any[]>(API_URL + '/aleas/criterias', { responseType: 'json' });
+  }
+
+  interestedPro(interestedUserDto: InterestedUserDto) {
+    return this.http.post(API_URL + '/user/pro/interested', interestedUserDto, { responseType: 'json' })
+  }
 }

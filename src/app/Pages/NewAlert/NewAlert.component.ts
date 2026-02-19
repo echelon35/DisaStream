@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostListener, ViewChild, inject } from "@angular/core";
-import { FormBuilder, ReactiveFormsModule, Validators } from "@angular/forms";
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { FeatureCollection } from "geojson";
 import L from "leaflet";
 import "@geoman-io/leaflet-geoman-free";
 import { Subject } from "rxjs";
 import { Alea } from "src/app/Model/Alea";
+import { AlertCriterion } from "src/app/Model/AlertCriterion";
 import { Alert } from "src/app/Model/Alert";
 import { MailAlert } from "src/app/Model/MailAlert";
 import { AlertApiService } from "src/app/Services/AlertApiService";
@@ -39,7 +40,7 @@ export class AleaCategoryVM {
   templateUrl: './NewAlert.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [AddMailAlert, EndAlertComponent, CommonModule, ReactiveFormsModule, SearchPlace, MapComponent],
+  imports: [AddMailAlert, EndAlertComponent, CommonModule, ReactiveFormsModule, FormsModule, SearchPlace, MapComponent],
 })
 export class NewAlertView {
 
@@ -70,6 +71,13 @@ export class NewAlertView {
   public mailAlerts: MailAlert[] = [];
   selectedMailIds: number[] = [];
 
+  // Criteria Configuration
+  CRITERIA_CONFIG: Record<string, string[]> = {};
+
+  readonly OPERATORS = ['>', '<', '=', '>=', '<='];
+
+  newCriterion: Partial<AlertCriterion> = {};
+
   @ViewChild('mailAlertModal') mailAlertModal?: AddMailAlert;
   @ViewChild('endAlertModal') endAlertModal?: EndAlertComponent;
 
@@ -87,6 +95,7 @@ export class NewAlertView {
 
     this.getAleas();
     this.getTeamMembersMail();
+    this.getCriterias();
 
     //Edit alert
     if (this.route.snapshot.queryParamMap.get('id') != null) {
@@ -98,9 +107,11 @@ export class NewAlertView {
           this.alert = alert;
 
           //feed area
-          const geo = new L.GeoJSON(alert.areas);
-          this.actualLayer?.addLayer(geo);
-          this.addShapeToMap();
+          if(this.actualLayer != null && alert.areas != null) {
+            const geo = new L.GeoJSON(alert.areas);
+            this.actualLayer.addLayer(geo);
+            this.addShapeToMap();
+          }
 
           //feed alea selected
           this.categories.forEach(item => item.aleas.forEach(aleaVM => {
@@ -115,7 +126,7 @@ export class NewAlertView {
         },
         error: (error) => {
           if (error.status == 403) {
-            this.router.navigateByUrl('dashboard/alerts/manage').then(() => {
+            this.router.navigateByUrl('dashboard').then(() => {
               this.toastrService.error('Vous n\'êtes pas autorisé à accéder à cette alerte');
             })
           }
@@ -227,7 +238,7 @@ export class NewAlertView {
   /**
    * Quit edit mode with esc key
    */
-  @HostListener('keydown.esc', ['$event'])
+  @HostListener('keydown.esc')
   onEsc() {
     if (this.areaMap != null) {
       this.areaMap.pm.disableDraw();
@@ -281,19 +292,8 @@ export class NewAlertView {
    * @param e 
    */
   addShapeToMap() {
-
-    if (this.areaMap != null) {
-
-      this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
-      this.actualLayer?.addTo(this.areaMap!);
-
-      // this.areaMap!.pm.disableDraw();
-      // this.areaMap!.pm.enableGlobalEditMode({
-      //     snappable: true,
-      //     snapDistance: 50
-      // });
-
       if (this.actualLayer != null) {
+        this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
         const collection = this.actualLayer?.toGeoJSON() as FeatureCollection;
         this.alert.areas = collection?.features[0]?.geometry;
       }
@@ -301,7 +301,6 @@ export class NewAlertView {
       if (!this.panelVisible) {
         this.showPanel();
       }
-    }
   }
 
   /*********************ALEAS*************************/
@@ -316,8 +315,41 @@ export class NewAlertView {
     this.categories.forEach(item => item.aleas.forEach(aleaVM => {
       if (aleaVM.selected) {
         this.alert.aleas.push(aleaVM.alea);
+      } else {
+        // Remove criterias associated with deselected alea
+        this.alert.criterias = this.alert.criterias.filter(c => c.aleaId !== aleaVM.alea.id);
       }
     }))
+  }
+
+  getAvailableCriteria(aleaId: number): string[] {
+    console.log('Getting criteria for alea:', aleaId);
+    return this.CRITERIA_CONFIG[aleaId] || [];
+  }
+
+  addCriterion(alea: Alea, field: string, operator: string, value: number) {
+    if (!field || !operator || value === undefined || value === null) return;
+
+    const criterion = new AlertCriterion();
+    criterion.aleaId = alea.id;
+    criterion.aleaName = alea.name;
+    criterion.field = field;
+    criterion.operator = operator;
+    criterion.value = value;
+
+    this.alert.criterias.push(criterion);
+
+    // Reset new criterion input if needed, or handle via dedicated form control
+    this.newCriterion = {};
+  }
+
+  removeCriterion(index: number) {
+    this.alert.criterias.splice(index, 1);
+  }
+
+  getCriteriaForAlea(aleaId: number): AlertCriterion[] {
+    if (!this.alert.criterias) return [];
+    return this.alert.criterias.filter(c => c.aleaId === aleaId);
   }
 
   /**
@@ -355,6 +387,27 @@ export class NewAlertView {
       this.categories = aleasByCategory;
       this.updateComponent();
     })
+  }
+
+  getCriterias() {
+    this.publicApiService.getCriterias().subscribe((criterias) => {
+      const config: Record<string, string[]> = {};
+
+      criterias.forEach(c => {
+        const aleaId = c.alea?.id;
+        if (aleaId) {
+          if (!config[aleaId]) {
+            config[aleaId] = [];
+          }
+          if (!config[aleaId].includes(c.name)) {
+            config[aleaId].push(c.name);
+          }
+        }
+      });
+
+      this.CRITERIA_CONFIG = config;
+      this.updateComponent();
+    });
   }
 
   /*********************TEAM MEMBERS*************************/
