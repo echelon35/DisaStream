@@ -133,14 +133,14 @@
         <!-- <p id="comments-description" class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p> -->
       </div>
     </div>
-    <div class="mb-4 bg-gray-900/50 p-3 rounded-md border border-gray-700">
+    <div [ngClass]="{'bg-gray-900/50': strictMode, 'bg-gray-500': !strictMode}" class="mb-4 p-3 rounded-md border border-gray-700">
       <h4 class="text-sm font-medium text-white mb-2">Critères de l'alerte</h4>
       @if(alert?.criterias && alert!.criterias.length > 0) {
       <ul class="space-y-1">
         @for(criteria of alert?.criterias; track $index) {
         <li class="text-sm text-gray-300 flex items-center">
           <span class="w-2 h-2 rounded-full bg-indigo-500 mr-2"></span>
-          <span class="font-semibold mr-1">{{criteria.aleaName | titlecase}} :</span>
+          <span class="font-semibold mr-1">{{getAleaLabel(criteria.aleaId) | titlecase}} :</span>
           {{criteria.field}} <span class="mx-1 text-indigo-300 font-bold">{{criteria.operator}}</span>
           {{criteria.value}}
         </li>
