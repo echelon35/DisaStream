@@ -17,10 +17,10 @@ interface Filter {
 }
 
 @Component({
-    selector: 'app-detail-alert',
-    templateUrl: './DetailAlert.component.html',
-    standalone: true,
-    imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule, PipeModule]
+  selector: 'app-detail-alert',
+  templateUrl: './DetailAlert.component.html',
+  standalone: true,
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, FormsModule, PipeModule]
 })
 export class DetailAlertComponent {
 
@@ -64,27 +64,27 @@ export class DetailAlertComponent {
   strictMode = true;
   aleas: Alea[] = [];
 
-  constructor(private alertApiService: AlertApiService, 
-    private toastrService: ToastrService){
+  constructor(private alertApiService: AlertApiService,
+    private toastrService: ToastrService) {
 
-      effect(() => {
-        this.aleas = this.AleaStore.aleas();
-        this.historyDisasters = this.DisastersFromAlertStore.disasters();
-        this.currentFilter = this.DisastersFromAlertStore.filter();
-        this.count = this.DisastersFromAlertStore.disasterCount();
-        this.load = this.DisastersFromAlertStore.isLoading();
-        this.currentPage = this.DisastersFromAlertStore.currentPage();
-        this.nbPage = Math.ceil(this.DisastersFromAlertStore.disasterCount() / this.DisastersFromAlertStore.limit());
-        this.strictMode = this.DisastersFromAlertStore.withCriterias();
+    effect(() => {
+      this.aleas = this.AleaStore.aleas();
+      this.historyDisasters = this.DisastersFromAlertStore.disasters();
+      this.currentFilter = this.DisastersFromAlertStore.filter();
+      this.count = this.DisastersFromAlertStore.disasterCount();
+      this.load = this.DisastersFromAlertStore.isLoading();
+      this.currentPage = this.DisastersFromAlertStore.currentPage();
+      this.nbPage = Math.ceil(this.DisastersFromAlertStore.disasterCount() / this.DisastersFromAlertStore.limit());
+      this.strictMode = this.DisastersFromAlertStore.withCriterias();
 
-        if(!this.counted && this.count > 0){
-          this.allCount = this.count;
-          this.counted = true;
-        }
-      });
+      if (!this.counted && this.count > 0) {
+        this.allCount = this.count;
+        this.counted = true;
+      }
+    });
   }
 
-  razFilters(){
+  razFilters() {
     this.filterCity = '';
     this.filterCountry = '';
     this.filterFrom = new Date('2000-01-01').toISOString().split('T').shift();
@@ -94,77 +94,77 @@ export class DetailAlertComponent {
     this.filters.forEach(f => f.order = 'ASC');
   }
 
-  back(){
+  back() {
     this.alert = undefined;
     this.close$.emit(true);
   }
 
-  expand(expand: boolean){
+  expand(expand: boolean) {
     this.expandPanel = expand;
   }
 
-  changeStrict(){
+  changeStrict() {
     this.DisastersFromAlertStore.changeStrictMode(this.strictMode);
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  disableAlert(){
+  disableAlert() {
     const id = this.alert!.id;
-    this.alertApiService.activateAlert(id,false).subscribe(() => {
+    this.alertApiService.activateAlert(id, false).subscribe(() => {
       this.toastrService.info('Alerte désactivée');
       this.alert!.isActivate = false;
     });
   }
 
-  activateAlert(){
+  activateAlert() {
     const id = this.alert!.id;
-    this.alertApiService.activateAlert(id,true).subscribe(() => {
+    this.alertApiService.activateAlert(id, true).subscribe(() => {
       this.toastrService.info('Alerte activée');
       this.alert!.isActivate = true;
     });
   }
 
-  searchCity(){
+  searchCity() {
     this.DisastersFromAlertStore.changeCity(this.filterCity);
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  clearCity(){
+  clearCity() {
     this.DisastersFromAlertStore.changeCity('');
     this.filterCity = '';
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  searchCountry(){
+  searchCountry() {
     this.DisastersFromAlertStore.changeCountry(this.filterCountry);
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  clearCountry(){
+  clearCountry() {
     this.DisastersFromAlertStore.changeCountry('');
     this.filterCountry = '';
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  searchFrom(event: any){
-    if(event.target.value.length > 0){
+  searchFrom(event: any) {
+    if (event.target.value.length > 0) {
       this.filterFrom = event.target.value;
       this.DisastersFromAlertStore.changePremierReleve(this.filterFrom!);
       this.DisastersFromAlertStore.loadDisasterFromAlerts();
     }
   }
 
-  searchTo(event: any){
-    if(event.target.value.length > 0){
+  searchTo(event: any) {
+    if (event.target.value.length > 0) {
       this.filterTo = event.target.value;
       this.DisastersFromAlertStore.changeDernierReleve(this.filterTo!);
       this.DisastersFromAlertStore.loadDisasterFromAlerts();
     }
   }
 
-  open(alert: Alert | undefined){
+  open(alert: Alert | undefined) {
     this.alert = undefined;
-    if(alert != null){
+    if (alert != null) {
       this.alert = alert;
       this.razFilters();
       this.DisastersFromAlertStore.reset();
@@ -173,40 +173,40 @@ export class DetailAlertComponent {
     }
   }
 
-  zoomOnAlert(){
+  zoomOnAlert() {
     this.zoomAlert$.emit(this.alert!);
   }
 
-  zoomOnDisaster(disaster: Disaster){
+  zoomOnDisaster(disaster: Disaster) {
     this.zoomDisaster$.emit(disaster);
     this.closePanel();
   }
 
-  closePanel(){
+  closePanel() {
     this.closePanel$.emit();
   }
 
-  hoverOnDisaster(disaster: Disaster){
+  hoverOnDisaster(disaster: Disaster) {
     this.hoverDisaster$.emit(disaster);
   }
 
   senseOfOrder(filter: string): string {
     const f = this.filters.find(f => f.name == filter);
-    if(f != null){
+    if (f != null) {
       return f.order;
     }
     return 'ASC';
   }
 
-  orderBy(filter: string){
+  orderBy(filter: string) {
     this.DisastersFromAlertStore.changeFilter(filter);
 
     this.currentOrder = (this.filters.find(f => f.name == filter)?.order === 'ASC') ? 'DESC' : 'ASC';
     this.DisastersFromAlertStore.changeOrder(this.currentOrder);
     this.filters.forEach(f => {
-      if(f.name == filter){
+      if (f.name == filter) {
         f.order = this.currentOrder;
-      }else{
+      } else {
         f.order = 'ASC';
       }
     });
@@ -214,7 +214,7 @@ export class DetailAlertComponent {
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
 
-  changePage(page: number){
+  changePage(page: number) {
     this.DisastersFromAlertStore.changePage(page);
     this.DisastersFromAlertStore.loadDisasterFromAlerts();
   }
@@ -222,6 +222,11 @@ export class DetailAlertComponent {
   getAleaLabel(aleaId: number): string {
     const alea = this.aleas.find(a => a.id === aleaId);
     return alea ? alea.label : 'Alea inconnu';
+  }
+
+  isExpired(): boolean {
+    if (!this.alert?.expirationDate) return false;
+    return new Date(this.alert.expirationDate) < new Date();
   }
 
 }

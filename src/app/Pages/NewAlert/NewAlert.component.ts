@@ -60,6 +60,7 @@ export class NewAlertView {
   private cd = inject(ChangeDetectorRef)
 
   editMode = false;
+  minimalDate = new Date().toISOString().split('T')[0];
 
   //Area
   areaMap?: L.Map;
@@ -107,7 +108,7 @@ export class NewAlertView {
           this.alert = alert;
 
           //feed area
-          if(this.actualLayer != null && alert.areas != null) {
+          if (this.actualLayer != null && alert.areas != null) {
             const geo = new L.GeoJSON(alert.areas);
             this.actualLayer.addLayer(geo);
             this.addShapeToMap();
@@ -292,15 +293,15 @@ export class NewAlertView {
    * @param e 
    */
   addShapeToMap() {
-      if (this.actualLayer != null) {
-        this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
-        const collection = this.actualLayer?.toGeoJSON() as FeatureCollection;
-        this.alert.areas = collection?.features[0]?.geometry;
-      }
+    if (this.actualLayer != null) {
+      this.actualLayer?.setStyle({ weight: 3, fillColor: '#ffffff', color: 'white' });
+      const collection = this.actualLayer?.toGeoJSON() as FeatureCollection;
+      this.alert.areas = collection?.features[0]?.geometry;
+    }
 
-      if (!this.panelVisible) {
-        this.showPanel();
-      }
+    if (!this.panelVisible) {
+      this.showPanel();
+    }
   }
 
   /*********************ALEAS*************************/
@@ -337,7 +338,7 @@ export class NewAlertView {
     criterion.operator = operator;
     criterion.value = value;
 
-    if(this.alert.criterias == null) {
+    if (this.alert.criterias == null) {
       this.alert.criterias = [];
     }
     this.alert.criterias.push(criterion);
@@ -487,6 +488,15 @@ export class NewAlertView {
     else if (this.alert.mailAlerts.length === 0) {
       this.toastrService.error('Alerte incomplète', 'Vous devez selectionner au moins une personne à qui envoyer l\'adresse');
       return;
+    }
+    else if (this.alert.expirationDate) {
+      const expDate = new Date(this.alert.expirationDate);
+      const minDate = new Date();
+      minDate.setDate(minDate.getDate() + 2);
+      if (expDate < minDate) {
+        this.toastrService.error('Date invalide', 'La date d\'expiration doit être au moins à J+2');
+        return;
+      }
     }
 
     this.endAlertModal?.open();
