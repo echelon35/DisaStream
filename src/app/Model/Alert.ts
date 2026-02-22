@@ -12,6 +12,7 @@ export class Alert {
     isCountryShape = false;
     createdAt: Date;
     updatedAt: Date;
+    expirationDate?: Date;
     countryId: number | null;
     criterias: AlertCriterion[] = [];
     isActivate: boolean;

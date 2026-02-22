@@ -53,11 +53,31 @@
           </svg>
         </button>
         <a href="/dashboard/alert/edit?id={{alert?.id}}"
-          class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Editer</a>
+          class="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+          @if(isExpired()){
+          <span>Réactiver</span>
+          }
+          @else {
+          <span>Editer</span>
+          }
+        </a>
       </div>
     </div>
     <div>
       <div class="py-2 mt-2">
+        @if(isExpired()){
+        <!-- SVG placeholder for expired alert -->
+        <div class="flex items-center space-x-2 mb-2">
+          <svg class="size-4 text-orange-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <line x1="12" x2="12" y1="8" y2="12" />
+            <line x1="12" x2="12.01" y1="16" y2="16" />
+          </svg>
+          <p class="text-orange-400 font-semibold">Cette alerte a expiré</p>
+        </div>
+        }
         @if(!alert?.isActivate){
         <div class="flex items-center space-x-2">
           <svg class="size-4 text-red-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
@@ -133,7 +153,8 @@
         <!-- <p id="comments-description" class="text-gray-500 dark:text-gray-400">Get notified when someones posts a comment on a posting.</p> -->
       </div>
     </div>
-    <div [ngClass]="{'bg-gray-900/50': strictMode, 'bg-gray-500': !strictMode}" class="mb-4 p-3 rounded-md border border-gray-700">
+    <div [ngClass]="{'bg-gray-900/50': strictMode, 'bg-gray-500': !strictMode}"
+      class="mb-4 p-3 rounded-md border border-gray-700">
       <h4 class="text-sm font-medium text-white mb-2">Critères de l'alerte</h4>
       @if(alert?.criterias && alert!.criterias.length > 0) {
       <ul class="space-y-1">

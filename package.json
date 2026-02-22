@@ -8,6 +8,7 @@
     "build:prod": "ng build --configuration \"production\"",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "e2e": "npx cypress open",
     "lint": "ng lint --fix"
   },
   "private": true,
@@ -58,6 +59,7 @@
     "@types/jquery": "^3.5.30",
     "angular-eslint": "18.4.0",
     "autoprefixer": "^10.4.20",
+    "cypress": "^15.10.0",
     "eslint": "^9.9.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",

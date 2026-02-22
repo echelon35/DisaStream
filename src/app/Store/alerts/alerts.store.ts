@@ -52,8 +52,10 @@ export const AlertsStore = signalStore(
                         isLoading: false,
                         error: error.message || 'Unknown error',
                     });
-                },
-            })
+                }
+            }).add(() => {
+                patchState(store, { isLoading: false });
+            });
         }
     }))
 );
