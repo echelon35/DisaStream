@@ -3,7 +3,7 @@
     (layer$)="receiveLayer($event)" [layerPrincipal]="'Disaster'" [scrollZoom]="true"
     [locationBox]="locationBox"></app-map>
 </div>
-<button [class.opacity-0]="panelVisible" [class.opacity-100]="!panelVisible" (click)="showPanel()"
+<button data-cy="alert-detail" [class.opacity-0]="panelVisible" [class.opacity-100]="!panelVisible" (click)="showPanel()"
   class="z-on-map-1 absolute top-20 right-0 inline-flex items-center rounded-l-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-inset ring-gray-300 focus:z-on-map-1 transform transition ease-in-out duration-500 hover:bg-indigo-300">
   <span class="text-md mr-2">Détail de l'alerte</span>
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -35,7 +35,7 @@
                 }
               </div>
               <div class="flex h-7 items-center">
-                <button (click)="showPanel()" type="button"
+                <button data-cy="full-map" (click)="showPanel()" type="button"
                   class="relative text-gray-400 hover:text-gray-500 inline-flex items-center">
                   <span class="mr-2">Carte entière</span>
                   <span class="absolute -inset-2.5"></span>
@@ -86,7 +86,7 @@
               </label>
               <div class="sm:col-span-2">
                 @if(alert.areas == null){
-                <button (click)="drawPolygon()" type="button"
+                <button (click)="drawPolygon()" type="button" data-cy="draw-shape"
                   class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -97,7 +97,7 @@
                   </svg>
                   Tracer une zone à surveiller
                 </button>
-                <button (click)="showCountries()" type="button"
+                <button (click)="showCountries()" type="button" data-cy="select-country"
                   class="mx-1 mt-2 inline-flex items-center gap-x-2 rounded-md bg-green-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600">
                   <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -108,7 +108,7 @@
                 </button>
                 }
                 @if(alert.areas != null && !alert.isCountryShape){
-                <button (click)="editArea()" type="button"
+                <button (click)="editArea()" type="button" data-cy="edit-shape"
                   class="mx-1 inline-flex items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -121,7 +121,7 @@
                 </button>
                 }
                 @if(alert.areas != null && alert.isCountryShape){
-                <button (click)="showCountries()" type="button"
+                <button (click)="showCountries()" type="button" data-cy="other-country"
                   class="mx-1 inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                   <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -132,7 +132,7 @@
                 </button>
                 }
                 @if(alert.areas != null){
-                <button (click)="deleteArea()" type="button"
+                <button (click)="deleteArea()" type="button" data-cy="delete-shape"
                   class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
                   <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -289,7 +289,7 @@
                   </div>
                   }
                   <!-- </div> -->
-                  <button (click)="addTeamMember()" type="button"
+                  <button data-cy="add-mail" (click)="addTeamMember()" type="button"
                     class="float-end mt-1 px-2 py-1 relative inline-flex shrink-0 items-center rounded-full border-2 bg-white text-gray-400 hover:border-gray-300 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                     <span class="absolute -inset-2"></span>
                     <span class="sr-only">Inviter un nouveau membre</span>
@@ -312,7 +312,7 @@
           <div class="flex justify-end space-x-3">
             <button type="button"
               class="rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Annuler</button>
-            <button type="button" (click)="createAlert()"
+            <button data-cy="create-alert" type="button" (click)="createAlert()"
               class="inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               @if(editMode){
               <span>Editer</span>
