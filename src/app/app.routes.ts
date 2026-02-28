@@ -18,6 +18,7 @@ import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
 import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
 import { AdminView } from './Pages/Admin/Admin.view';
+import { AdminCitiesView } from './Pages/Admin/admin-cities/admin-cities.component';
 import { IsAdminGuard } from './Helpers/admin.guard';
 
 export const routes: Routes = [
@@ -38,5 +39,6 @@ export const routes: Routes = [
   // { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/map', component: DisasterView },
   { path: 'admin', component: AdminView, canActivate: [IsUserSignedIn, IsAdminGuard] },
+  { path: 'admin/cities', component: AdminCitiesView, canActivate: [IsUserSignedIn, IsAdminGuard] },
   { path: '**', pathMatch: 'full', component: PageNotFoundView },
 ];

@@ -1,0 +1,42 @@
+import { Injectable, inject } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { AuthentificationApi } from '../AuthentificationApi.service';
+
+export interface CityAdmin {
+  id: number;
+  namefr: string;
+  population: number;
+  altitude: number;
+  timezone: string;
+  paysId: number;
+  geom: string; // ST_AsGeoJSON
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class CityAdminService {
+  private http = inject(HttpClient);
+  private apiUrl = environment.settings.backend + '/admin/cities';
+  private httpOptions = {};
+  #authService = inject(AuthentificationApi);
+
+  constructor() {
+    this.httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.#authService.getToken()}`
+      })
+    };
+  }
+
+  getCitiesByCountry(countryId: number, outOfGeometry: boolean, page: number = 1, limit: number = 50): Observable<{ data: CityAdmin[], total: number }> {
+    return this.http.get<{ data: CityAdmin[], total: number }>(`${this.apiUrl}/${countryId}?outOfGeometry=${outOfGeometry}&page=${page}&limit=${limit}`, this.httpOptions);
+  }
+
+  updateCity(id: number, data: Partial<CityAdmin>): Observable<CityAdmin> {
+    return this.http.put<CityAdmin>(`${this.apiUrl}/${id}`, data, this.httpOptions);
+  }
+}
