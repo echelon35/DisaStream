@@ -120,6 +120,12 @@
                   Editer la zone
                 </button>
                 }
+                @if(selectedCountry != null){
+                  <div class="flex items-center mb-2">
+                    <img title="{{selectedCountry.namefr}}" class="w-5 mr-2" src="https://flagcdn.com/{{selectedCountry.iso3166_2 | lowercase }}.svg" />
+                    <span class="text-gray-700">{{selectedCountry.namefr}} sélectionné</span>
+                  </div>
+                }
                 @if(alert.areas != null && alert.isCountryShape){
                 <button (click)="showCountries()" type="button" data-cy="other-country"
                   class="mx-1 inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
@@ -132,18 +138,18 @@
                 </button>
                 }
                 @if(alert.areas != null){
-                <button (click)="deleteArea()" type="button" data-cy="delete-shape"
-                  class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-                  <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M3 6h18" />
-                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
-                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
-                    <line x1="10" x2="10" y1="11" y2="17" />
-                    <line x1="14" x2="14" y1="11" y2="17" />
-                  </svg>
-                  Supprimer la zone
-                </button>
+                  <button (click)="deleteArea()" type="button" data-cy="delete-shape"
+                    class="mx-1 mt-2 inline-flex items-center gap-x-1.5 rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                    <svg class="size-4" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 6h18" />
+                      <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                      <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                      <line x1="10" x2="10" y1="11" y2="17" />
+                      <line x1="14" x2="14" y1="11" y2="17" />
+                    </svg>
+                    Supprimer la zone
+                  </button>
                 }
                 <div class="mt-4">
                   <app-search-place-modal [areaMap]="areaMap"></app-search-place-modal>

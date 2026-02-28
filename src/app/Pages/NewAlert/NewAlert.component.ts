@@ -21,6 +21,7 @@ import { environment } from "src/environments/environment";
 import { CommonModule } from "@angular/common";
 import { SearchPlace } from "src/app/Modals/SearchPlace/SearchPlace.modal";
 import { MapComponent } from "src/app/Map/Components/map/map.component";
+import { Country } from "src/app/Model/Country";
 
 export class AleaVM {
   alea: Alea;
@@ -52,6 +53,8 @@ export class NewAlertView {
   public loadedAlert: Subject<Alert> = new Subject<Alert>();
   panelVisible = true;
   editShape = false;
+
+  protected selectedCountry: Country | null = null;
 
   public categories: AleaCategoryVM[] = [];
   public selectedAleaTypes: Alea[] = [];
@@ -232,6 +235,7 @@ export class NewAlertView {
       this.alert.areas = collection?.features[0]?.geometry;
       this.alert.countryId = idCountry;
       this.alert.isCountryShape = true;
+      this.selectedCountry = e.sourceTarget?.feature?.properties;
     }
     this.hideCountries();
   }
@@ -274,6 +278,7 @@ export class NewAlertView {
     this.alert.isCountryShape = false;
     this.alert.areas = null;
     this.alert.countryId = null;
+    this.selectedCountry = null;
   }
 
   /**
