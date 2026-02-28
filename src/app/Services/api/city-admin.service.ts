@@ -39,4 +39,8 @@ export class CityAdminService {
   updateCity(id: number, data: Partial<CityAdmin>): Observable<CityAdmin> {
     return this.http.put<CityAdmin>(`${this.apiUrl}/${id}`, data, this.httpOptions);
   }
+
+  updateMultipleCities(cityIds: number[], data: Partial<CityAdmin>): Observable<{ affected: number }> {
+    return this.http.patch<{ affected: number }>(this.apiUrl, { cityIds, ...data }, this.httpOptions);
+  }
 }

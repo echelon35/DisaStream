@@ -22,7 +22,8 @@ export class AdminCitiesView implements OnInit {
   isLoading: boolean = false;
 
   cities: CityAdmin[] = [];
-  selectedCity: CityAdmin | null = null;
+  selectedCities: CityAdmin[] = [];
+  isMultiSelectMode: boolean = false;
 
   currentPage: number = 1;
   pageSize: number = 50;
@@ -68,7 +69,7 @@ export class AdminCitiesView implements OnInit {
     }
 
     this.isLoading = true;
-    this.selectedCity = null;
+    this.selectedCities = [];
 
     this.cityAdminService.getCitiesByCountry(this.selectedCountryId, this.outOfGeometry, this.currentPage, this.pageSize)
       .subscribe({
@@ -127,7 +128,7 @@ export class AdminCitiesView implements OnInit {
             })
           })
             .bindTooltip(city.namefr)
-            .on('click', () => this.selectCity(city));
+            .on('click', (e: L.LeafletMouseEvent) => this.selectCity(city, e));
 
           this.markersLayer.addLayer(marker);
           bounds.extend([lat, lng]);
@@ -142,36 +143,104 @@ export class AdminCitiesView implements OnInit {
     }
   }
 
-  selectCity(city: CityAdmin): void {
-    this.selectedCity = city;
-    this.editModel = {
-      paysId: city.paysId,
-      population: city.population || 0,
-      altitude: city.altitude || 0,
-      timezone: city.timezone || ''
-    };
+  selectCity(city: CityAdmin, event?: L.LeafletMouseEvent): void {
+    const isMultiSelectAction = this.isMultiSelectMode || (event && (event.originalEvent.shiftKey || event.originalEvent.ctrlKey));
+
+    if (isMultiSelectAction) {
+      const idx = this.selectedCities.findIndex(c => c.id === city.id);
+      if (idx > -1) {
+        // Deselect if already selected
+        this.selectedCities.splice(idx, 1);
+      } else {
+        // Add to selection
+        this.selectedCities.push(city);
+      }
+    } else {
+      // Single select mode
+      this.selectedCities = [city];
+    }
+
+    this.updateEditModel();
+  }
+
+  deselectAll(): void {
+    this.selectedCities = [];
+    this.updateEditModel();
+  }
+
+  private updateEditModel(): void {
+    if (this.selectedCities.length === 0) {
+      this.editModel = { paysId: null, population: 0, altitude: 0, timezone: '' };
+      return;
+    }
+
+    if (this.selectedCities.length === 1) {
+      const city = this.selectedCities[0];
+      this.editModel = {
+        paysId: city.paysId,
+        population: city.population || 0,
+        altitude: city.altitude || 0,
+        timezone: city.timezone || ''
+      };
+    } else {
+      // Multiple selected: initialize with empty values unless they share the same value
+      const firstCity = this.selectedCities[0];
+      const allSamePaysId = this.selectedCities.every(c => c.paysId === firstCity.paysId);
+      const allSameTz = this.selectedCities.every(c => c.timezone === firstCity.timezone);
+
+      this.editModel = {
+        paysId: allSamePaysId ? firstCity.paysId : null,
+        population: 0,
+        altitude: 0,
+        timezone: allSameTz ? (firstCity.timezone || '') : ''
+      };
+    }
   }
 
   saveCity(): void {
-    if (!this.selectedCity || !this.editModel.paysId) return;
+    if (this.selectedCities.length === 0 || !this.editModel.paysId) return;
 
-    const updateData = {
-      paysId: +this.editModel.paysId,
-      population: this.editModel.population,
-      altitude: this.editModel.altitude,
-      timezone: this.editModel.timezone
-    };
+    if (this.selectedCities.length === 1) {
+      // Single update
+      const updateData = {
+        paysId: +this.editModel.paysId,
+        population: this.editModel.population,
+        altitude: this.editModel.altitude,
+        timezone: this.editModel.timezone
+      };
 
-    this.cityAdminService.updateCity(this.selectedCity.id, updateData).subscribe({
-      next: () => {
-        alert('Ville mise à jour avec succès');
-        // Refresh the list
-        this.onFilterChange();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Erreur lors de la mise à jour de la ville');
+      this.cityAdminService.updateCity(this.selectedCities[0].id, updateData).subscribe({
+        next: () => {
+          alert('Ville mise à jour avec succès');
+          this.onFilterChange(false);
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Erreur lors de la mise à jour de la ville');
+        }
+      });
+    } else {
+      // Bulk update
+      const updateData: Partial<CityAdmin> = {
+        paysId: +this.editModel.paysId
+      };
+
+      if (this.editModel.timezone) {
+        updateData.timezone = this.editModel.timezone;
       }
-    });
+
+      const cityIds = this.selectedCities.map(c => c.id);
+
+      this.cityAdminService.updateMultipleCities(cityIds, updateData).subscribe({
+        next: (res) => {
+          alert(`Mise à jour groupée de ${res.affected} villes avec succès`);
+          this.onFilterChange(false);
+        },
+        error: (err) => {
+          console.error(err);
+          alert('Erreur lors de la mise à jour groupée');
+        }
+      });
+    }
   }
 }
