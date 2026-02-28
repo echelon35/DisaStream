@@ -74,6 +74,7 @@ export class DisasterView implements OnInit {
         if(!this.disastersMap || !this.alertsLayer) return;
 
         this.alertsLayer.clearLayers();
+        this.selectedLayer?.clearLayers();
 
         this.alerts.forEach((alert: AlertVm) => {
           if (!alert.layer) return;
