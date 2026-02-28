@@ -17,6 +17,8 @@ import { DisasterView } from './Pages/DisasterView/disaster.view';
 import { PricingView } from './Pages/Pricing/Pricing.view';
 import { FAQView } from './Pages/FAQ/FAQ.view';
 import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
+import { AdminView } from './Pages/Admin/Admin.view';
+import { IsAdminGuard } from './Helpers/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -35,5 +37,6 @@ export const routes: Routes = [
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   // { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/map', component: DisasterView },
-  // { path: '**', pathMatch: 'full', component: PageNotFoundView },
+  { path: 'admin', component: AdminView, canActivate: [IsUserSignedIn, IsAdminGuard] },
+  { path: '**', pathMatch: 'full', component: PageNotFoundView },
 ];
