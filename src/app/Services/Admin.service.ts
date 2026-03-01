@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthentificationApi } from '../AuthentificationApi.service';
-import { Country } from '../../Model/Country';
+import { AuthentificationApi } from './AuthentificationApi.service';
+import { Country } from '../Model/Country';
 
 export interface CityAdmin {
   id: number;
@@ -18,7 +18,7 @@ export interface CityAdmin {
 @Injectable({
   providedIn: 'root',
 })
-export class CityAdminService {
+export class AdminService {
   private http = inject(HttpClient);
   private apiUrl = environment.settings.backend + '/admin/cities';
   private httpOptions = {};

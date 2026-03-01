@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
-import { CityAdmin, CityAdminService } from 'src/app/Services/api/city-admin.service';
+import { AdminService, CityAdmin } from 'src/app/Services/Admin.service';
 import { Country } from 'src/app/Model/Country';
 import * as L from 'leaflet';
 import '@geoman-io/leaflet-geoman-free';
@@ -17,7 +17,7 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 })
 export class AdminCitiesView implements OnInit {
   private geoService = inject(GeographyApiService);
-  private cityAdminService = inject(CityAdminService);
+  private adminService = inject(AdminService);
   private markerService = inject(MarkerService);
   #toastrService = inject(ToastrService);
 
@@ -91,7 +91,7 @@ export class AdminCitiesView implements OnInit {
     this.isEditingCountry = false;
 
     // Load Country Shape
-    this.cityAdminService.getCountry(this.selectedCountryId).subscribe({
+    this.adminService.getCountry(this.selectedCountryId).subscribe({
       next: (country) => {
         this.selectedCountry = country;
         this.renderCountryShape(country);
@@ -99,7 +99,7 @@ export class AdminCitiesView implements OnInit {
       error: (e) => console.error('Failed to load country', e)
     });
 
-    this.cityAdminService.getCitiesByCountry(this.selectedCountryId, this.outOfGeometry, this.currentPage, this.pageSize)
+    this.adminService.getCitiesByCountry(this.selectedCountryId, this.outOfGeometry, this.currentPage, this.pageSize)
       .subscribe({
         next: (response) => {
           this.cities = response.data;
@@ -113,7 +113,7 @@ export class AdminCitiesView implements OnInit {
         }
       });
 
-    this.cityAdminService.getCitiesCount(this.selectedCountryId).subscribe({
+    this.adminService.getCitiesCount(this.selectedCountryId).subscribe({
       next: (res) => {
         this.totalCitiesNumber = res.total;
       },
@@ -255,7 +255,7 @@ export class AdminCitiesView implements OnInit {
       geom: JSON.stringify(geometry)
     };
 
-    this.cityAdminService.updateCountry(this.selectedCountry.id, updateData).subscribe({
+    this.adminService.updateCountry(this.selectedCountry.id, updateData).subscribe({
       next: (res) => {
         this.#toastrService.success('Pays mis à jour avec succès');
         this.selectedCountry = res;
@@ -334,7 +334,7 @@ export class AdminCitiesView implements OnInit {
         timezone: this.editModel.timezone
       };
 
-      this.cityAdminService.updateCity(this.selectedCities[0].id, updateData).subscribe({
+      this.adminService.updateCity(this.selectedCities[0].id, updateData).subscribe({
         next: () => {
           this.#toastrService.success('Ville mise à jour avec succès');
           this.onFilterChange(false);
@@ -356,7 +356,7 @@ export class AdminCitiesView implements OnInit {
 
       const cityIds = this.selectedCities.map(c => c.id);
 
-      this.cityAdminService.updateMultipleCities(cityIds, updateData).subscribe({
+      this.adminService.updateMultipleCities(cityIds, updateData).subscribe({
         next: (res) => {
           this.#toastrService.success(`Mise à jour groupée de ${res.affected} villes avec succès`);
           this.onFilterChange(false);

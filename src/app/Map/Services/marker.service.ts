@@ -9,7 +9,7 @@ import { Alert } from "src/app/Model/Alert";
 import { Eruption } from "src/app/Model/Eruption";
 import { Hurricane } from "src/app/Model/Hurricane";
 import { City } from "src/app/Model/City";
-import { CityAdmin } from "src/app/Services/api/city-admin.service";
+import { CityAdmin } from "src/app/Services/Admin.service";
 
 @Injectable({
   providedIn: 'root'
