@@ -5,6 +5,7 @@ import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
 import { CityAdmin, CityAdminService } from 'src/app/Services/api/city-admin.service';
 import { Country } from 'src/app/Model/Country';
 import * as L from 'leaflet';
+import { MarkerService } from 'src/app/Map/Services/marker.service';
 
 @Component({
   selector: 'app-admin-cities',
@@ -15,6 +16,7 @@ import * as L from 'leaflet';
 export class AdminCitiesView implements OnInit {
   private geoService = inject(GeographyApiService);
   private cityAdminService = inject(CityAdminService);
+  private markerService = inject(MarkerService);
 
   countries: Country[] = [];
   selectedCountryId: number | null = null;
@@ -28,6 +30,9 @@ export class AdminCitiesView implements OnInit {
   currentPage: number = 1;
   pageSize: number = 50;
   totalItems: number = 0;
+
+  cityInErrors: CityAdmin[] = [];
+  totalCitiesNumber = 0;
 
   private map: L.Map | undefined;
   private markersLayer = new L.LayerGroup();
@@ -84,6 +89,15 @@ export class AdminCitiesView implements OnInit {
           this.isLoading = false;
         }
       });
+
+    this.cityAdminService.getCitiesCount(this.selectedCountryId).subscribe({
+      next: (res) => {
+        this.totalCitiesNumber = res.total;
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération du nombre total de villes', err);
+      }
+    });
   }
 
   get totalPages(): number {
@@ -112,29 +126,21 @@ export class AdminCitiesView implements OnInit {
 
     const bounds = L.latLngBounds([]);
 
-    this.cities.forEach(city => {
+    this.cities.forEach((city: CityAdmin) => {
       try {
-        const geom = typeof city.geom === 'string' ? JSON.parse(city.geom) : city.geom;
-        if (geom && geom.coordinates) {
-          const [lng, lat] = geom.coordinates;
+        
 
-          const marker = L.marker([lat, lng], {
-            icon: L.icon({
-              iconUrl: 'assets/images/svg/urbain.svg',
-              iconSize: [25, 41],
-              iconAnchor: [12, 41],
-              popupAnchor: [1, -34],
-              shadowSize: [41, 41]
-            })
-          })
+          const marker = this.markerService.makeCityAdminMarkers(city)!
             .bindTooltip(city.namefr)
             .on('click', (e: L.LeafletMouseEvent) => this.selectCity(city, e));
 
           this.markersLayer.addLayer(marker);
+          const lat = marker.getLatLng().lat;
+          const lng = marker.getLatLng().lng;
           bounds.extend([lat, lng]);
-        }
       } catch (e) {
-        console.error('Error parsing geom for city', city.namefr, e);
+        console.error('Erreur de chargement de la ville', city.namefr, e);
+        this.cityInErrors.push(city);
       }
     });
 

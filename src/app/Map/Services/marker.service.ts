@@ -8,6 +8,8 @@ import { DetailService } from "src/app/Services/DetailService";
 import { Alert } from "src/app/Model/Alert";
 import { Eruption } from "src/app/Model/Eruption";
 import { Hurricane } from "src/app/Model/Hurricane";
+import { City } from "src/app/Model/City";
+import { CityAdmin } from "src/app/Services/api/city-admin.service";
 
 @Injectable({
   providedIn: 'root'
@@ -268,6 +270,18 @@ export class MarkerService {
   
   }
 
+  makeCityAdminMarkers(city: CityAdmin): L.Marker | null {
+    if (city != null) {
+      const geom = typeof city.geom === 'string' ? JSON.parse(city.geom) : city.geom;
+      const lon = geom.coordinates[0];
+      const lat = geom.coordinates[1];
+      const latlng = [lat, lon];
+      const marker = this.apparenceCityAdmin(city, latlng);
+      return marker;
+    }
+    return null;
+  }
+
   /**
    * Area of alert
    * @param map 
@@ -415,4 +429,18 @@ export class MarkerService {
     
   }
 
+  apparenceCityAdmin(feature: any, latlng: number[]): L.Marker {
+    const smallIcon = L.icon({
+      iconUrl: "assets/images/svg/urbain.svg",
+      iconSize: [16, 16],
+      iconAnchor: [8, 16],
+      popupAnchor: [0, -16],
+      shadowSize: [16, 16]
+    });
+    const latlngexpression = new L.LatLng(latlng[0], latlng[1]);
+    const marker = L.marker(latlngexpression, { icon: smallIcon });
+    marker.setZIndexOffset(1000);
+
+    return marker;
+  }
 }

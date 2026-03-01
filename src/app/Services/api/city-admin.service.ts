@@ -36,6 +36,10 @@ export class CityAdminService {
     return this.http.get<{ data: CityAdmin[], total: number }>(`${this.apiUrl}/${countryId}?outOfGeometry=${outOfGeometry}&page=${page}&limit=${limit}`, this.httpOptions);
   }
 
+  getCitiesCount(countryId: number): Observable<{ total: number }> {
+    return this.http.get<{ total: number }>(`${this.apiUrl}/${countryId}/count`, this.httpOptions);
+  }
+
   updateCity(id: number, data: Partial<CityAdmin>): Observable<CityAdmin> {
     return this.http.put<CityAdmin>(`${this.apiUrl}/${id}`, data, this.httpOptions);
   }
