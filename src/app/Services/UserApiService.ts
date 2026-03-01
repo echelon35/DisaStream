@@ -35,4 +35,8 @@ export class UserApiService {
     getMyProfile(){
       return this.http.get<User>(API_URL + '/profile', this.httpOptions);
     }
+
+    isAdmin(){
+      return this.http.get<{ isAdmin: boolean }>(API_URL + '/admin', this.httpOptions);
+    }
 }

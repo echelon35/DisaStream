@@ -1,25 +1,31 @@
 import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from '../Shared/Services/Toastr.service';
-import { UserStore } from '../Store/user/user.store';
+import { UserApiService } from '../Services/UserApiService';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class IsAdminGuard {
-    readonly userStore = inject(UserStore);
+    readonly userService = inject(UserApiService);
 
     constructor(
         private router: Router,
         private toastrService: ToastrService
     ) { }
 
-    canActivate(): boolean {
-        const user = this.userStore.user();
-        if (user && user.roles && user.roles.some(r => r.name === 'Admin')) {
-            return true;
-        }
-
-        this.toastrService.warning("Accès refusé", "Vous ne possédez pas les droits nécéssaires pour accéder à cette page");
-        this.router.navigate(['/dashboard']);
-        return false;
+    canActivate(): Observable<boolean> {
+        return this.userService.isAdmin().pipe(
+            map((res: { isAdmin: boolean }) => {
+                if (res.isAdmin) {
+                    return true;
+                }
+                else{
+                    this.toastrService.warning("Accès refusé", "Vous ne possédez pas les droits nécéssaires pour accéder à cette page");
+                    this.router.navigate(['/dashboard']);
+                    return false;
+                }
+            })
+        );
     }
 }
