@@ -4,4 +4,5 @@ export class User {
     lastname = "";
     mail = "";
     username = "";
+    roles: { id: number, name: string }[] = [];
 }
