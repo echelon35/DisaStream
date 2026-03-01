@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthentificationApi } from '../AuthentificationApi.service';
+import { Country } from '../../Model/Country';
 
 export interface CityAdmin {
   id: number;
@@ -46,5 +47,13 @@ export class CityAdminService {
 
   updateMultipleCities(cityIds: number[], data: Partial<CityAdmin>): Observable<{ affected: number }> {
     return this.http.patch<{ affected: number }>(this.apiUrl, { cityIds, ...data }, this.httpOptions);
+  }
+
+  getCountry(id: number): Observable<Country> {
+    return this.http.get<Country>(`${environment.settings.backend}/admin/country/${id}`, this.httpOptions);
+  }
+
+  updateCountry(id: number, data: any): Observable<Country> {
+    return this.http.put<Country>(`${environment.settings.backend}/admin/country/${id}`, data, this.httpOptions);
   }
 }

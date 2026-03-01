@@ -5,7 +5,9 @@ import { GeographyApiService } from 'src/app/Services/GeographyApi.service';
 import { CityAdmin, CityAdminService } from 'src/app/Services/api/city-admin.service';
 import { Country } from 'src/app/Model/Country';
 import * as L from 'leaflet';
+import '@geoman-io/leaflet-geoman-free';
 import { MarkerService } from 'src/app/Map/Services/marker.service';
+import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 
 @Component({
   selector: 'app-admin-cities',
@@ -17,6 +19,7 @@ export class AdminCitiesView implements OnInit {
   private geoService = inject(GeographyApiService);
   private cityAdminService = inject(CityAdminService);
   private markerService = inject(MarkerService);
+  #toastrService = inject(ToastrService);
 
   countries: Country[] = [];
   selectedCountryId: number | null = null;
@@ -37,12 +40,22 @@ export class AdminCitiesView implements OnInit {
   private map: L.Map | undefined;
   private markersLayer = new L.LayerGroup();
 
-  // Form model for editing
   editModel = {
     paysId: null as number | null,
     population: 0,
     altitude: 0,
     timezone: ''
+  };
+
+  isEditingCountry: boolean = false;
+  countryLayer: L.GeoJSON | null = null;
+  selectedCountry: Country | null = null;
+  editCountryModel = {
+    population: 0,
+    superficie: 0,
+    wikilink: '',
+    trigramme: '',
+    iso3166_2: ''
   };
 
   ngOnInit(): void {
@@ -75,6 +88,16 @@ export class AdminCitiesView implements OnInit {
 
     this.isLoading = true;
     this.selectedCities = [];
+    this.isEditingCountry = false;
+
+    // Load Country Shape
+    this.cityAdminService.getCountry(this.selectedCountryId).subscribe({
+      next: (country) => {
+        this.selectedCountry = country;
+        this.renderCountryShape(country);
+      },
+      error: (e) => console.error('Failed to load country', e)
+    });
 
     this.cityAdminService.getCitiesByCountry(this.selectedCountryId, this.outOfGeometry, this.currentPage, this.pageSize)
       .subscribe({
@@ -128,25 +151,121 @@ export class AdminCitiesView implements OnInit {
 
     this.cities.forEach((city: CityAdmin) => {
       try {
-        
 
-          const marker = this.markerService.makeCityAdminMarkers(city)!
-            .bindTooltip(city.namefr)
-            .on('click', (e: L.LeafletMouseEvent) => this.selectCity(city, e));
 
-          this.markersLayer.addLayer(marker);
-          const lat = marker.getLatLng().lat;
-          const lng = marker.getLatLng().lng;
-          bounds.extend([lat, lng]);
+        const marker = this.markerService.makeCityAdminMarkers(city)!
+          .bindTooltip(city.namefr)
+          .on('click', (e: L.LeafletMouseEvent) => this.selectCity(city, e));
+
+        this.markersLayer.addLayer(marker);
+        const lat = marker.getLatLng().lat;
+        const lng = marker.getLatLng().lng;
+        bounds.extend([lat, lng]);
       } catch (e) {
         console.error('Erreur de chargement de la ville', city.namefr, e);
         this.cityInErrors.push(city);
       }
     });
 
-    if (bounds.isValid()) {
+    if (bounds.isValid() && !this.selectedCountry) {
       this.map.fitBounds(bounds, { padding: [50, 50] });
     }
+  }
+
+  private renderCountryShape(country: Country): void {
+    if (!this.map) return;
+    if (this.countryLayer) {
+      this.countryLayer.remove();
+      this.countryLayer = null;
+    }
+
+    if (!country.geom) return;
+
+    try {
+      const geom = typeof country.geom === 'string' ? JSON.parse(country.geom) : country.geom;
+      this.countryLayer = L.geoJSON(geom, {
+        style: {
+          color: '#4B5563', // gray-600
+          weight: 2,
+          opacity: 0.5,
+          fillColor: '#9CA3AF',
+          fillOpacity: 0.1
+        }
+      }).addTo(this.map);
+
+      this.map.fitBounds(this.countryLayer.getBounds(), { padding: [20, 20] });
+    } catch (e) {
+      console.error('Error parsing country shape', e);
+    }
+  }
+
+  toggleEditCountry(): void {
+    if (!this.selectedCountry || !this.countryLayer) return;
+
+    this.deselectAll();
+    this.isEditingCountry = true;
+    this.editCountryModel = {
+      population: this.selectedCountry.population || 0,
+      superficie: this.selectedCountry.superficie || 0,
+      wikilink: this.selectedCountry.wikilink || '',
+      trigramme: this.selectedCountry.trigramme || '',
+      iso3166_2: this.selectedCountry.iso3166_2 || ''
+    };
+
+    // Bring to front and styling to editing mode
+    this.countryLayer.bringToFront();
+    this.countryLayer.setStyle({
+      color: '#EF4444', // red-500
+      weight: 3,
+      opacity: 0.8,
+      fillColor: '#EF4444',
+      fillOpacity: 0.2
+    });
+
+    // Enable Leaflet-Geoman editing
+    this.countryLayer.pm.enable({
+      allowSelfIntersection: false
+    });
+  }
+
+  cancelEditCountry(): void {
+    this.isEditingCountry = false;
+    if (this.countryLayer) {
+      this.countryLayer.pm.disable();
+    }
+    // Re-render original shape
+    if (this.selectedCountry) {
+      this.renderCountryShape(this.selectedCountry);
+    }
+  }
+
+  saveCountry(): void {
+    if (!this.selectedCountry || !this.countryLayer) return;
+
+    const modifiedGeoJson: any = this.countryLayer.toGeoJSON();
+    // leaflet layer toGeoJSON can return Feature or FeatureCollection. We just want the geometry.
+    const geometry = modifiedGeoJson.features ? modifiedGeoJson.features[0].geometry : modifiedGeoJson.geometry || modifiedGeoJson;
+
+    const updateData = {
+      population: this.editCountryModel.population,
+      superficie: this.editCountryModel.superficie,
+      wikilink: this.editCountryModel.wikilink,
+      trigramme: this.editCountryModel.trigramme,
+      iso3166_2: this.editCountryModel.iso3166_2,
+      geom: JSON.stringify(geometry)
+    };
+
+    this.cityAdminService.updateCountry(this.selectedCountry.id, updateData).subscribe({
+      next: (res) => {
+        this.#toastrService.success('Pays mis à jour avec succès');
+        this.selectedCountry = res;
+        this.cancelEditCountry();
+      },
+      error: (e) => {
+        console.error(e);
+        this.#toastrService.error('Erreur lors de la mise à jour du pays');
+      }
+    });
   }
 
   selectCity(city: CityAdmin, event?: L.LeafletMouseEvent): void {
@@ -217,12 +336,12 @@ export class AdminCitiesView implements OnInit {
 
       this.cityAdminService.updateCity(this.selectedCities[0].id, updateData).subscribe({
         next: () => {
-          alert('Ville mise à jour avec succès');
+          this.#toastrService.success('Ville mise à jour avec succès');
           this.onFilterChange(false);
         },
         error: (err) => {
           console.error(err);
-          alert('Erreur lors de la mise à jour de la ville');
+          this.#toastrService.error('Erreur lors de la mise à jour de la ville');
         }
       });
     } else {
@@ -239,12 +358,12 @@ export class AdminCitiesView implements OnInit {
 
       this.cityAdminService.updateMultipleCities(cityIds, updateData).subscribe({
         next: (res) => {
-          alert(`Mise à jour groupée de ${res.affected} villes avec succès`);
+          this.#toastrService.success(`Mise à jour groupée de ${res.affected} villes avec succès`);
           this.onFilterChange(false);
         },
         error: (err) => {
           console.error(err);
-          alert('Erreur lors de la mise à jour groupée');
+          this.#toastrService.error('Erreur lors de la mise à jour groupée');
         }
       });
     }
