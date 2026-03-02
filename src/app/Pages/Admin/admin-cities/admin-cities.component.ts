@@ -58,6 +58,9 @@ export class AdminCitiesView implements OnInit {
     iso3166_2: ''
   };
 
+  isAddingZone: boolean = false;
+  isRemovingZone: boolean = false;
+
   ngOnInit(): void {
     this.geoService.getCountries().subscribe((countries) => {
       this.countries = countries.sort((a, b) => a.namefr.localeCompare(b.namefr));
@@ -182,7 +185,24 @@ export class AdminCitiesView implements OnInit {
     if (!country.geom) return;
 
     try {
-      const geom = typeof country.geom === 'string' ? JSON.parse(country.geom) : country.geom;
+      let geom = typeof country.geom === 'string' ? JSON.parse(country.geom) : country.geom;
+
+      // If it's a MultiPolygon, split it into separate Polygon features
+      // so Leaflet creates a separate layer for each island. This allows individual removal.
+      if (geom.type === 'MultiPolygon') {
+        geom = {
+          type: 'FeatureCollection',
+          features: geom.coordinates.map((coords: any[]) => ({
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'Polygon',
+              coordinates: coords
+            }
+          }))
+        };
+      }
+
       this.countryLayer = L.geoJSON(geom, {
         style: {
           color: '#4B5563', // gray-600
@@ -230,6 +250,9 @@ export class AdminCitiesView implements OnInit {
 
   cancelEditCountry(): void {
     this.isEditingCountry = false;
+    this.cancelAddingZoneMode();
+    this.endRemoveZoneMode();
+
     if (this.countryLayer) {
       this.countryLayer.pm.disable();
     }
@@ -243,8 +266,32 @@ export class AdminCitiesView implements OnInit {
     if (!this.selectedCountry || !this.countryLayer) return;
 
     const modifiedGeoJson: any = this.countryLayer.toGeoJSON();
-    // leaflet layer toGeoJSON can return Feature or FeatureCollection. We just want the geometry.
-    const geometry = modifiedGeoJson.features ? modifiedGeoJson.features[0].geometry : modifiedGeoJson.geometry || modifiedGeoJson;
+
+    // leaflet layer toGeoJSON can return Feature or FeatureCollection. 
+    // We combine all polygon/multipolygon features into a single MultiPolygon or Polygon geometry.
+    let finalGeometry: any = null;
+
+    if (modifiedGeoJson.type === 'FeatureCollection') {
+      const polygons: any[] = [];
+      for (const feature of modifiedGeoJson.features) {
+        if (feature.geometry.type === 'Polygon') {
+          polygons.push(feature.geometry.coordinates);
+        } else if (feature.geometry.type === 'MultiPolygon') {
+          polygons.push(...feature.geometry.coordinates);
+        }
+      }
+
+      if (polygons.length === 0) {
+        // Fallback or empty geometry
+        finalGeometry = modifiedGeoJson;
+      } else if (polygons.length === 1) {
+        finalGeometry = { type: 'Polygon', coordinates: polygons[0] };
+      } else {
+        finalGeometry = { type: 'MultiPolygon', coordinates: polygons };
+      }
+    } else {
+      finalGeometry = modifiedGeoJson.geometry || modifiedGeoJson;
+    }
 
     const updateData = {
       population: this.editCountryModel.population,
@@ -252,7 +299,7 @@ export class AdminCitiesView implements OnInit {
       wikilink: this.editCountryModel.wikilink,
       trigramme: this.editCountryModel.trigramme,
       iso3166_2: this.editCountryModel.iso3166_2,
-      geom: JSON.stringify(geometry)
+      geom: JSON.stringify(finalGeometry)
     };
 
     this.adminService.updateCountry(this.selectedCountry.id, updateData).subscribe({
@@ -365,6 +412,107 @@ export class AdminCitiesView implements OnInit {
           console.error(err);
           this.#toastrService.error('Erreur lors de la mise à jour groupée');
         }
+      });
+    }
+  }
+
+  // --- Add / Remove Zones ---
+  addZone(): void {
+    if (!this.map || !this.countryLayer) return;
+    this.endRemoveZoneMode();
+
+    if (this.isAddingZone) {
+      this.cancelAddingZoneMode();
+      return;
+    }
+
+    this.isAddingZone = true;
+    this.#toastrService.info('Dessinez une nouvelle zone sur la carte. (Cliquer pour placer les points)');
+
+    this.map.pm.enableDraw('Polygon', {
+      snappable: true,
+      snapDistance: 20,
+      allowSelfIntersection: false
+    });
+
+    this.map.once('pm:create', (e) => {
+      this.isAddingZone = false;
+      const layer = e.layer;
+
+      // Stop drawing mode
+      this.map!.pm.disableDraw();
+
+      // Apply the styling
+      (layer as L.Polygon).setStyle({
+        color: '#EF4444',
+        weight: 3,
+        opacity: 0.8,
+        fillColor: '#EF4444',
+        fillOpacity: 0.2
+      });
+
+      // Enable editing on this new layer too
+      (layer as any).pm.enable({ allowSelfIntersection: false });
+
+      // Add to our FeatureGroup/GeoJSON layer
+      this.countryLayer!.addLayer(layer);
+    });
+
+    document.addEventListener('keydown', this.onEscapeKeyPress);
+  }
+
+  private cancelAddingZoneMode() {
+    this.isAddingZone = false;
+    this.map?.pm.disableDraw();
+    this.map?.off('pm:create');
+  }
+
+  removeZone(): void {
+    if (!this.map || !this.countryLayer) return;
+    this.cancelAddingZoneMode();
+
+    if (this.isRemovingZone) {
+      this.endRemoveZoneMode();
+      return;
+    }
+
+    this.isRemovingZone = true;
+    this.#toastrService.info('Cliquez sur une zone pour la supprimer. (Échap pour annuler)');
+
+    // Bind click listeners on all child layers of countryLayer
+    this.countryLayer.eachLayer(layer => {
+      layer.on('click', this.onLayerClickForRemoval);
+    });
+
+    document.addEventListener('keydown', this.onEscapeKeyPress);
+  }
+
+  private onLayerClickForRemoval = (e: any) => {
+    if (!this.isRemovingZone || !this.countryLayer) return;
+
+    // e.target is the layer that was clicked.
+    this.countryLayer.removeLayer(e.target);
+    this.#toastrService.success('Zone supprimée.');
+    this.endRemoveZoneMode();
+  };
+
+  private onEscapeKeyPress = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      if (this.isRemovingZone) {
+        this.endRemoveZoneMode();
+      }
+      if (this.isAddingZone) {
+        this.cancelAddingZoneMode();
+      }
+    }
+  };
+
+  private endRemoveZoneMode() {
+    this.isRemovingZone = false;
+    document.removeEventListener('keydown', this.onEscapeKeyPress);
+    if (this.countryLayer) {
+      this.countryLayer.eachLayer(layer => {
+        layer.off('click', this.onLayerClickForRemoval);
       });
     }
   }
