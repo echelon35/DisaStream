@@ -130,6 +130,68 @@ export class AdminCitiesView implements OnInit {
     return Math.ceil(this.totalItems / this.pageSize);
   }
 
+  onMultiSelectToggleChange(): void {
+    if (!this.map) return;
+
+    if (this.isMultiSelectMode) {
+      this.#toastrService.info('Mode Multi-Sélection activé. Dessinez un rectangle sur la carte pour sélectionner.');
+      this.map.pm.enableDraw('Rectangle', {
+        snappable: false,
+        allowSelfIntersection: false
+      });
+
+      this.map.on('pm:create', this.onMultiSelectDrawCreate);
+    } else {
+      this.map.pm.disableDraw();
+      this.map.off('pm:create', this.onMultiSelectDrawCreate);
+    }
+  }
+
+  private onMultiSelectDrawCreate = (e: any) => {
+    if (!this.isMultiSelectMode || e.shape !== 'Rectangle') return;
+
+    const layer = e.layer as L.Rectangle;
+    const bounds = layer.getBounds();
+
+    // Find all markers within these bounds
+    let addedCount = 0;
+    this.markersLayer.eachLayer((markerLayer: any) => {
+      if (markerLayer instanceof L.Marker) {
+        const latLng = markerLayer.getLatLng();
+        if (bounds.contains(latLng)) {
+          // Find the city mapped to this marker
+          // We can find it by looking up in this.cities using some identifier
+          // The easiest way is to bind the city instance to the marker when creating it
+          const city = markerLayer.options['cityData'] as CityAdmin;
+          if (city) {
+            // Check if not already selected
+            if (!this.selectedCities.find(c => c.id === city.id)) {
+              this.selectedCities.push(city);
+              addedCount++;
+            }
+          }
+        }
+      }
+    });
+
+    if (addedCount > 0) {
+      this.#toastrService.success(`${addedCount} ville(s) ajoutée(s) à la sélection.`);
+      this.updateEditModel();
+      this.refreshMarkerIcons();
+    } else {
+      this.#toastrService.warning('Aucune ville trouvée dans cette zone.');
+    }
+
+    // Remove the drawn rectangle from the map
+    this.map!.removeLayer(layer);
+
+    // Keep the draw mode active for further selections
+    this.map!.pm.enableDraw('Rectangle', {
+      snappable: false,
+      allowSelfIntersection: false
+    });
+  };
+
   nextPage(): void {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
@@ -154,11 +216,13 @@ export class AdminCitiesView implements OnInit {
 
     this.cities.forEach((city: CityAdmin) => {
       try {
-
-
-        const marker = this.markerService.makeCityAdminMarkers(city)!
+        const isSelected = !!this.selectedCities.find(c => c.id === city.id);
+        const marker = this.markerService.makeCityAdminMarkers(city, isSelected)!
           .bindTooltip(city.namefr)
           .on('click', (e: L.LeafletMouseEvent) => this.selectCity(city, e));
+
+        // Attach city data to the marker options so we can retrieve it during multi-select
+        (marker as any).options['cityData'] = city;
 
         this.markersLayer.addLayer(marker);
         const lat = marker.getLatLng().lat;
@@ -333,11 +397,37 @@ export class AdminCitiesView implements OnInit {
     }
 
     this.updateEditModel();
+    this.refreshMarkerIcons();
   }
 
   deselectAll(): void {
     this.selectedCities = [];
     this.updateEditModel();
+    this.refreshMarkerIcons();
+  }
+
+  private refreshMarkerIcons(): void {
+    const selectedIds = new Set(this.selectedCities.map(c => c.id));
+    this.markersLayer.eachLayer((layer: any) => {
+      if (layer instanceof L.Marker && layer.options['cityData']) {
+        const cityId = (layer.options['cityData'] as CityAdmin).id;
+        const isSelected = selectedIds.has(cityId);
+
+        const iconUrl = isSelected ? "assets/images/svg/urbain_selected.svg" : "assets/images/svg/urbain.svg";
+        const currentIconUrl = (layer.options.icon as any)?.options.iconUrl;
+
+        if (iconUrl !== currentIconUrl) {
+          const newIcon = L.icon({
+            iconUrl: iconUrl,
+            iconSize: isSelected ? [20, 20] : [16, 16],
+            iconAnchor: isSelected ? [10, 20] : [8, 16],
+            popupAnchor: isSelected ? [0, -20] : [0, -16]
+          });
+          layer.setIcon(newIcon);
+          layer.setZIndexOffset(isSelected ? 1100 : 1000);
+        }
+      }
+    });
   }
 
   private updateEditModel(): void {
@@ -407,6 +497,7 @@ export class AdminCitiesView implements OnInit {
         next: (res) => {
           this.#toastrService.success(`Mise à jour groupée de ${res.affected} villes avec succès`);
           this.onFilterChange(false);
+          this.isMultiSelectMode = false;
         },
         error: (err) => {
           console.error(err);
