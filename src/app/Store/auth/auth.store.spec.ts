@@ -17,7 +17,7 @@ describe('AuthStore', () => {
 
     beforeEach(() => {
         mockAuthService = jasmine.createSpyObj('AuthentificationApi', ['login', 'checkExpiration']);
-        mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+        mockRouter = jasmine.createSpyObj('Router', ['navigate', 'navigateByUrl', 'parseUrl'], { url: '/' });
         mockToastrService = jasmine.createSpyObj('ToastrService', ['error']);
         mockUserStore = jasmine.createSpyObj('UserStore', ['getUser']);
 
@@ -51,7 +51,9 @@ describe('AuthStore', () => {
         const tokenResponse: TokenDto = { access_token: 'valid-token' };
 
         mockAuthService.login.and.returnValue(of(tokenResponse));
-        mockRouter.navigate.and.returnValue(Promise.resolve(true));
+        const mockUrlTree = { queryParams: {} };
+        mockRouter.parseUrl.and.returnValue(mockUrlTree);
+        mockRouter.navigateByUrl.and.returnValue(Promise.resolve(true));
 
         store.login(loginDto);
 
@@ -60,7 +62,7 @@ describe('AuthStore', () => {
         expect(store.token()).toBe('valid-token');
         expect(store.isAuthenticated()).toBeTrue();
         expect(store.loading()).toBeFalse();
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/']);
+        expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/');
     });
 
     it('should handle login error', () => {

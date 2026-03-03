@@ -48,7 +48,7 @@ export const AuthStore = signalStore(
                 localStorage.removeItem('auth-token');
                 patchState(store, { token: null, isTokenValid: false, isAuthenticated: false, loading: false });
                 const errorMsg = 'Votre session a expiré, veuillez-vous reconnecter.';
-                router.navigate(['/login'], { queryParams: { error: errorMsg } });
+                router.navigate(['/login'], { queryParams: { error: errorMsg, returnUrl: router.url !== '/login' ? router.url : undefined } });
                 console.warn('[AuthStore] Token expiré.');
               }
             }),
@@ -56,7 +56,7 @@ export const AuthStore = signalStore(
               const msg = error?.message ?? 'Erreur lors de la vérification du token';
               patchState(store, { error: msg, isTokenValid: false, isAuthenticated: false, loading: false });
               localStorage.removeItem('auth-token');
-              router.navigate(['/login'], { queryParams: { error: msg } });
+              router.navigate(['/login'], { queryParams: { error: msg, returnUrl: router.url !== '/login' ? router.url : undefined } });
               console.error('[AuthStore] Erreur checkExpiration:', error);
               return of(null);
             })
@@ -88,7 +88,9 @@ export const AuthStore = signalStore(
                   userLoaded: false,
                 });
                 // navigation sans reload
-                router.navigate(['/']).catch((e) => console.warn('[AuthStore] Navigation après login échouée', e));
+                const parsedUrl = router.parseUrl(router.url);
+                const returnUrl = parsedUrl.queryParams['returnUrl'] || '/';
+                router.navigateByUrl(returnUrl).catch((e) => console.warn('[AuthStore] Navigation après login échouée', e));
               },
               error: (error) => {
                 const msg = error?.message ?? 'Erreur lors de la connexion';

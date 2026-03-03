@@ -10,9 +10,9 @@ import { ToastrService } from 'src/app/Shared/Services/Toastr.service';
 import { AuthStore } from 'src/app/Store/auth/auth.store';
 
 @Component({
-    templateUrl: './Login.view.html',
-    standalone: true,
-    imports: [FormsModule, ReactiveFormsModule]
+  templateUrl: './Login.view.html',
+  standalone: true,
+  imports: [FormsModule, ReactiveFormsModule]
 })
 export class LoginView {
 
@@ -30,32 +30,34 @@ export class LoginView {
   #route = inject(ActivatedRoute);
   #fb = inject(FormBuilder);
   #authStore = inject(AuthStore);
-    
-  constructor() { 
+
+  constructor() {
 
     this.picture = this.#randomPictureService.getPictureRandom();
 
     const error = this.#route.snapshot.queryParamMap.get('error');
-    if(error){
+    if (error) {
       this.#toastrService.error(error);
     }
 
-    this.#seoService.generateTags("Se connecter sur Disastream","Inscrivez-vous sur Disastream pour consulter les données de plusieurs milliers d'aléas en temps réél","/assets/background/temperature.jpg");
+    this.#seoService.generateTags("Se connecter sur Disastream", "Inscrivez-vous sur Disastream pour consulter les données de plusieurs milliers d'aléas en temps réél", "/assets/background/temperature.jpg");
     this.loginForm = this.#fb.group({
       password: ['', Validators.required],
       mail: ['', [Validators.required, Validators.email]],
     });
   }
 
-  showLoginDiv(show:boolean){
+  showLoginDiv(show: boolean) {
     this.showLogin = show;
   }
 
-  connect(){
+  connect() {
     this.#authStore.login(this.loginForm.value);
   }
 
   googleConnect(): void {
+    const returnUrl = this.#route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    localStorage.setItem('returnUrl', returnUrl);
     this.#authService.googleLogin();
   }
 
