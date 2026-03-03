@@ -12,10 +12,10 @@ import { AuthStore } from 'src/app/Store/auth/auth.store';
 import { environment } from 'src/environments/environment.prod';
 
 @Component({
-    templateUrl: './LandingPage.view.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [ProPacksComponent, FreeModeComponent, CommonModule]
+  templateUrl: './LandingPage.view.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [ProPacksComponent, FreeModeComponent, CommonModule]
 })
 export class LandingPageView {
   title = 'Connectez-vous aux forces de la nature avec Disastream';
@@ -141,21 +141,23 @@ export class LandingPageView {
   #toastrService = inject(ToastrService);
   protected readonly authStore = inject(AuthStore);
 
-  constructor(){
-      this.#seoService.generateTags('Présentation de DisaStream', 'Soyez informés au plus vite de catastrophes naturelles partout dans le monde avec Disastream.','')
+  constructor() {
+    this.#seoService.generateTags('Présentation de DisaStream', 'Soyez informés au plus vite de catastrophes naturelles partout dans le monde avec Disastream.', '')
     const token = this.#route.snapshot.queryParamMap.get('access_token');
     const mail = this.#route.snapshot.queryParamMap.get('mail');
-    if(token){
+    if (token) {
       this.#authenticationApi.saveToken(token);
       this.#userApiService.getSummaryInfos().subscribe((user) => {
         // this.authenticationApi.storeUser(user);
-        this.#router.navigate(['/dashboard']).then(() => {
+        const returnUrl = localStorage.getItem('returnUrl') || '/dashboard';
+        localStorage.removeItem('returnUrl');
+        this.#router.navigateByUrl(returnUrl).then(() => {
           window.location.reload();
         });
       })
     }
-    else if(mail){
-      this.#toastrService.success(`Inscription réalisée avec succès.`,`Un mail de confirmation vient de vous être envoyé à <b>${mail}</b>.`);
+    else if (mail) {
+      this.#toastrService.success(`Inscription réalisée avec succès.`, `Un mail de confirmation vient de vous être envoyé à <b>${mail}</b>.`);
     }
   }
 
@@ -173,12 +175,12 @@ export class LandingPageView {
     this.isFeaturePictureVisible = y < 550;
   }
 
-  subscribe(){
+  subscribe() {
     this.freeModal?.toggleVisible();
     this.updateComponent();
   }
 
-  subscribePro(){
+  subscribePro() {
     this.proPackModal?.open();
     this.updateComponent();
   }
@@ -186,7 +188,7 @@ export class LandingPageView {
   /**
    * Update view
    */
-    updateComponent(){
-      this.cd.markForCheck();
-    }
+  updateComponent() {
+    this.cd.markForCheck();
+  }
 }

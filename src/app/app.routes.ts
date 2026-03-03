@@ -37,7 +37,7 @@ export const routes: Routes = [
   { path: 'dashboard/alert/new', component: NewAlertView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   // { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/map', component: DisasterView },
+  { path: 'dashboard/map', component: DisasterView, canActivate: [IsUserSignedIn] },
   { path: 'admin', component: AdminView, canActivate: [IsUserSignedIn, IsAdminGuard] },
   { path: 'admin/cities', component: AdminCitiesView, canActivate: [IsUserSignedIn, IsAdminGuard] },
   { path: '**', pathMatch: 'full', component: PageNotFoundView },
