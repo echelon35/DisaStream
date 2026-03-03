@@ -93,6 +93,13 @@
             <span class="text-sm text-gray-400">Page {{ currentPage }} / {{ totalPages }} ({{ totalItems }})</span>
             <button (click)="nextPage()" [disabled]="currentPage === totalPages"
                 class="px-3 py-1 bg-gray-800 text-white rounded-md disabled:opacity-50 hover:bg-gray-700 transition">Suivant</button>
+            <select [(ngModel)]="pageSize" (change)="onFilterChange(true)"
+                class="px-2 py-1 bg-gray-800 text-white rounded-md border border-gray-600">
+                <option [ngValue]="15">15</option>
+                <option [ngValue]="50">50</option>
+                <option [ngValue]="100">100</option>
+                <option [ngValue]="500">500</option>
+            </select>
         </div>
         }
 

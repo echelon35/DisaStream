@@ -31,7 +31,7 @@ export class AdminCitiesView implements OnInit {
   isMultiSelectMode: boolean = false;
 
   currentPage: number = 1;
-  pageSize: number = 50;
+  pageSize: number = 15;
   totalItems: number = 0;
 
   cityInErrors: CityAdmin[] = [];
