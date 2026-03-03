@@ -88,7 +88,7 @@ describe('AuthenticationView', () => {
         const username = form.controls['username'];
         const mail = form.controls['mail'];
         const password = form.controls['password'];
-        const acceptTerms = form.controls['acceptTerms'];
+        const rgpdConsent = form.controls['rgpdConsent'];
 
         username.setValue('');
         expect(username.valid).toBeFalsy();
@@ -113,10 +113,10 @@ describe('AuthenticationView', () => {
         password.setValue('StrongP@ssw0rd');
         expect(password.valid).toBeTruthy();
 
-        acceptTerms.setValue(false);
-        expect(acceptTerms.valid).toBeFalsy();
-        acceptTerms.setValue(true);
-        expect(acceptTerms.valid).toBeTruthy();
+        rgpdConsent.setValue(false);
+        expect(rgpdConsent.valid).toBeFalsy();
+        rgpdConsent.setValue(true);
+        expect(rgpdConsent.valid).toBeTruthy();
     });
 
     it('should submit form when valid', () => {
@@ -125,7 +125,7 @@ describe('AuthenticationView', () => {
         form.controls['username'].setValue('testuser');
         form.controls['mail'].setValue(email);
         form.controls['password'].setValue('StrongP@ssw0rd');
-        form.controls['acceptTerms'].setValue(true);
+        form.controls['rgpdConsent'].setValue(true);
 
         mockAuthApi.register.and.returnValue(of({ mail: email } as User));
 
@@ -144,7 +144,7 @@ describe('AuthenticationView', () => {
         form.controls['username'].setValue('testuser');
         form.controls['mail'].setValue('test@example.com');
         form.controls['password'].setValue('StrongP@ssw0rd');
-        form.controls['acceptTerms'].setValue(true);
+        form.controls['rgpdConsent'].setValue(true);
 
         component.onSubmit();
 
