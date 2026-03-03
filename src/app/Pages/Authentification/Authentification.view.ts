@@ -42,7 +42,7 @@ export class AuthenticationView {
       username: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
       mail: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.pattern(StrongPasswordRegx)]],
-      acceptTerms: [false, Validators.requiredTrue],
+      rgpdConsent: [false, Validators.requiredTrue],
       allowMarketing: [false],
     });
   }

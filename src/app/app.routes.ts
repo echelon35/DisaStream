@@ -20,10 +20,12 @@ import { ChangePasswordView } from './Pages/ChangePassword/ChangePassword.view';
 import { AdminView } from './Pages/Admin/Admin.view';
 import { AdminCitiesView } from './Pages/Admin/admin-cities/admin-cities.component';
 import { IsAdminGuard } from './Helpers/admin.guard';
+import { GoogleRegisterView } from './Pages/GoogleRegister/GoogleRegister.view';
 
 export const routes: Routes = [
   { path: '', component: LandingPageView },
   { path: 'auth', component: AuthenticationView },
+  { path: 'google-register', component: GoogleRegisterView },
   { path: 'login', component: LoginView },
   // { path: 'price', component: PricingView },
   // { path: 'faq', component: FAQView },

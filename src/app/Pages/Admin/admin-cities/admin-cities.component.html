@@ -94,7 +94,7 @@
             <button (click)="nextPage()" [disabled]="currentPage === totalPages"
                 class="px-3 py-1 bg-gray-800 text-white rounded-md disabled:opacity-50 hover:bg-gray-700 transition">Suivant</button>
             <select [(ngModel)]="pageSize" (change)="onFilterChange(true)"
-                class="px-2 py-1 bg-gray-800 text-white rounded-md border border-gray-600">
+                class="cursor-pointer col-start-1 row-start-1 w-auto appearance-none rounded-md bg-white py-1.5 pl-3 pr-8 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-indigo-600 sm:text-sm/6 dark:bg-white/5 dark:text-white dark:outline-white/10 dark:*:bg-gray-800 dark:focus-visible:outline-indigo-500">
                 <option [ngValue]="15">15</option>
                 <option [ngValue]="50">50</option>
                 <option [ngValue]="100">100</option>
