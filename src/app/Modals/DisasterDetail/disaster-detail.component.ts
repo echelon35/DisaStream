@@ -2,6 +2,8 @@ import { CommonModule } from "@angular/common";
 import { Component } from "@angular/core";
 import L from "leaflet";
 import { DetailService } from "src/app/Services/DetailService";
+import { Router } from "@angular/router";
+import { Disaster } from "src/app/Model/Disaster";
 
 @Component({
     selector: "app-disaster-detail",
@@ -18,12 +20,17 @@ export class DisasterDetailComponent {
     detailLayer: L.LayerGroup;
     mapReceived = false;
 
-    constructor(private detailService: DetailService){
-        
+    constructor(private detailService: DetailService, private router: Router) {
+
     }
 
-    close(){
+    close() {
         this.detailService.hide();
+    }
+
+    navigateToMap(disaster: Disaster) {
+        this.close();
+        this.router.navigate(['/dashboard', disaster.type, disaster.id], { state: { fromDisasterView: true } });
     }
 
 }

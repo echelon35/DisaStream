@@ -7,17 +7,17 @@ import { Flood } from "../Model/Flood";
 import { Hurricane } from "../Model/Hurricane";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class DisasterApiService {
 
-    constructor(private readonly apollo: Apollo){
+  constructor(private readonly apollo: Apollo) {
 
-    }
+  }
 
-    searchEarthquakes() {
-        return this.apollo.watchQuery<Earthquake[]>({
-            query: gql`
+  searchEarthquakes() {
+    return this.apollo.watchQuery<Earthquake[]>({
+      query: gql`
               {
                 earthquakes {
                   id,
@@ -25,12 +25,12 @@ export class DisasterApiService {
                 }
               }
             `
-          }).valueChanges.pipe(map(result => result?.data))
-    }
+    }).valueChanges.pipe(map(result => result?.data))
+  }
 
-    searchEruptions(){
-      return this.apollo.watchQuery<Eruption[]>({
-          query: gql`
+  searchEruptions() {
+    return this.apollo.watchQuery<Eruption[]>({
+      query: gql`
             {
               eruptions {
                 id,
@@ -39,12 +39,12 @@ export class DisasterApiService {
               }
             }
           `
-        }).valueChanges.pipe(map(result => result?.data));
-    }
+    }).valueChanges.pipe(map(result => result?.data));
+  }
 
-    searchHurricanes(){
-      return this.apollo.watchQuery<Hurricane[]>({
-          query: gql`
+  searchHurricanes() {
+    return this.apollo.watchQuery<Hurricane[]>({
+      query: gql`
             {
               hurricanes {
                 id,
@@ -56,12 +56,12 @@ export class DisasterApiService {
               }
             }
           `
-        }).valueChanges.pipe(map(result => result?.data));
-    }
+    }).valueChanges.pipe(map(result => result?.data));
+  }
 
-    searchFloods(){
-        return this.apollo.watchQuery<Flood[]>({
-            query: gql`
+  searchFloods() {
+    return this.apollo.watchQuery<Flood[]>({
+      query: gql`
               {
                 floods {
                   id,
@@ -72,34 +72,41 @@ export class DisasterApiService {
                 }
               }
             `
-          }).valueChanges.pipe(map(result => result?.data));
-    }
+    }).valueChanges.pipe(map(result => result?.data));
+  }
 
-    searchHurricaneById(id: number){
-      return this.apollo.watchQuery<any>({
-          query: gql`
+  searchHurricaneById(id: number) {
+    return this.apollo.watchQuery<any>({
+      query: gql`
             {
               hurricane(id:${id}) {
                 id,
                 premier_releve,
                 dernier_releve,
+                point,
+                surface,
+                forecast,
+                path,
+                name,
                 source {
                   name
                 }
               }
             }
           `
-      }).valueChanges;
-    }
+    }).valueChanges;
+  }
 
-    searchFloodById(id: number){
-        return this.apollo.watchQuery<any>({
-            query: gql`
+  searchFloodById(id: number) {
+    return this.apollo.watchQuery<any>({
+      query: gql`
               {
                 flood(id:${id}) {
                   id,
                   premier_releve,
                   dernier_releve,
+                  point,
+                  surface,
                   source {
                     name
                   },
@@ -108,17 +115,18 @@ export class DisasterApiService {
                 }
               }
             `
-        }).valueChanges;
-    }
+    }).valueChanges;
+  }
 
-    searchEarthquakeById(id: number){
-      return this.apollo.watchQuery<any>({
-          query: gql`
+  searchEarthquakeById(id: number) {
+    return this.apollo.watchQuery<any>({
+      query: gql`
             {
               earthquake(id:${id}) {
                 id,
                 premier_releve,
                 dernier_releve,
+                point,
                 magnitude,
                 source {
                   name
@@ -128,17 +136,19 @@ export class DisasterApiService {
               }
             }
           `
-      }).valueChanges;
-    }
+    }).valueChanges;
+  }
 
-    searchEruptionById(id: number){
-      return this.apollo.watchQuery<any>({
-          query: gql`
+  searchEruptionById(id: number) {
+    return this.apollo.watchQuery<any>({
+      query: gql`
             {
               eruption(id:${id}) {
                 id,
                 premier_releve,
                 dernier_releve,
+                point,
+                surface,
                 source {
                   name
                 },
@@ -147,7 +157,7 @@ export class DisasterApiService {
               }
             }
           `
-      }).valueChanges;
-    }
+    }).valueChanges;
+  }
 
 }
