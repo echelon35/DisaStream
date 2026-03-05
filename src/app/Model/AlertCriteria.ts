@@ -12,6 +12,8 @@ export class Criteria {
     alea: Alea = new Alea();
     name = "";
     label = "";
+    min?: number;
+    max?: number;
 }
 
 export class AlertCriteria {
@@ -19,7 +21,7 @@ export class AlertCriteria {
     criteriaType?: CriteriaType;
     value = "";
 
-    constructor(criteria: Criteria){
+    constructor(criteria: Criteria) {
         this.criteria = criteria;
     }
 }
