@@ -13,11 +13,7 @@
             <h2 class="text-base font-semibold text-gray-400" id="slide-over-title">{{disaster.title}}</h2>
           </div>
 
-          <div class="ml-3 flex h-7 items-center gap-4">
-            <button (click)="navigateToMap(disaster)"
-              class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 border border-indigo-500 rounded px-2 py-1">
-              Voir sur la carte
-            </button>
+          <div class="ml-3 flex h-7 items-center">
             <button (click)="close()" type="button"
               class="relative rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <span class="absolute -inset-2.5"></span>
@@ -150,6 +146,21 @@
               </div>
             </li>
           </ul>
+          <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button (click)="navigateToMap(disaster)" type="button"
+              class="inline-flex items-center gap-x-2 rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 dark:bg-indigo-500 dark:shadow-none dark:hover:bg-indigo-400 dark:focus-visible:outline-indigo-500">
+              Consulter le détail
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-receipt-text-icon lucide-receipt-text">
+                <path d="M13 16H8" />
+                <path d="M14 8H8" />
+                <path d="M16 12H8" />
+                <path
+                  d="M4 3a1 1 0 0 1 1-1 1.3 1.3 0 0 1 .7.2l.933.6a1.3 1.3 0 0 0 1.4 0l.934-.6a1.3 1.3 0 0 1 1.4 0l.933.6a1.3 1.3 0 0 0 1.4 0l.933-.6a1.3 1.3 0 0 1 1.4 0l.934.6a1.3 1.3 0 0 0 1.4 0l.933-.6A1.3 1.3 0 0 1 19 2a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1 1.3 1.3 0 0 1-.7-.2l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.934.6a1.3 1.3 0 0 1-1.4 0l-.933-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-1.4 0l-.934-.6a1.3 1.3 0 0 0-1.4 0l-.933.6a1.3 1.3 0 0 1-.7.2 1 1 0 0 1-1-1z" />
+              </svg>
+            </button>
+          </div>
         </div>
 
       </div>
