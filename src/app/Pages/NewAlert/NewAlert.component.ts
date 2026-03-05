@@ -76,7 +76,7 @@ export class NewAlertView {
   selectedMailIds: number[] = [];
 
   // Criteria Configuration
-  CRITERIA_CONFIG: Record<string, string[]> = {};
+  CRITERIA_CONFIG: Record<string, { name: string, min?: number, max?: number }[]> = {};
 
   readonly OPERATORS = ['>', '<', '=', '>=', '<='];
 
@@ -328,13 +328,30 @@ export class NewAlertView {
     }))
   }
 
-  getAvailableCriteria(aleaId: number): string[] {
-    console.log('Getting criteria for alea:', aleaId);
+  getAvailableCriteria(aleaId: number): { name: string, min?: number, max?: number }[] {
+    // console.log('Getting criteria for alea:', aleaId);
     return this.CRITERIA_CONFIG[aleaId] || [];
+  }
+
+  getSelectedCriterionConfig(aleaId: number, fieldName: string): { name: string, min?: number, max?: number } | undefined {
+    const criterias = this.getAvailableCriteria(aleaId);
+    return criterias.find(c => c.name === fieldName);
   }
 
   addCriterion(alea: Alea, field: string, operator: string, value: number) {
     if (!field || !operator || value === undefined || value === null) return;
+
+    const config = this.getSelectedCriterionConfig(alea.id, field);
+    if (config) {
+      if (config.min !== undefined && config.min !== null && value < config.min) {
+        this.toastrService.error('Valeur invalide', `La valeur doit être supérieure ou égale à ${config.min}`);
+        return;
+      }
+      if (config.max !== undefined && config.max !== null && value > config.max) {
+        this.toastrService.error('Valeur invalide', `La valeur doit être inférieure ou égale à ${config.max}`);
+        return;
+      }
+    }
 
     const criterion = new AlertCriterion();
     criterion.aleaId = alea.id;
@@ -400,7 +417,7 @@ export class NewAlertView {
 
   getCriterias() {
     this.publicApiService.getCriterias().subscribe((criterias) => {
-      const config: Record<string, string[]> = {};
+      const config: Record<string, { name: string, min?: number, max?: number }[]> = {};
 
       criterias.forEach(c => {
         const aleaId = c.alea?.id;
@@ -408,8 +425,12 @@ export class NewAlertView {
           if (!config[aleaId]) {
             config[aleaId] = [];
           }
-          if (!config[aleaId].includes(c.name)) {
-            config[aleaId].push(c.name);
+          if (!config[aleaId].find(existing => existing.name === c.name)) {
+            config[aleaId].push({
+              name: c.name,
+              min: c.min,
+              max: c.max
+            });
           }
         }
       });
