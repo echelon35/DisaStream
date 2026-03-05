@@ -21,7 +21,7 @@ import { AdminView } from './Pages/Admin/Admin.view';
 import { AdminCitiesView } from './Pages/Admin/admin-cities/admin-cities.component';
 import { IsAdminGuard } from './Helpers/admin.guard';
 import { GoogleRegisterView } from './Pages/GoogleRegister/GoogleRegister.view';
-import { DisasterMapDetailComponent } from './Pages/DisasterMapDetail/DisasterMapDetail.component';
+import { DisasterDetailView } from './Pages/DisasterMapDetail/DisasterDetail.view';
 
 export const routes: Routes = [
   { path: '', component: LandingPageView },
@@ -41,7 +41,7 @@ export const routes: Routes = [
   { path: 'dashboard/alert/edit', component: NewAlertView, canActivate: [IsUserSignedIn] },
   // { path: 'dashboard/alerts/manage', component: ManageAlertsView, canActivate: [IsUserSignedIn] },
   { path: 'dashboard/map', component: DisasterView, canActivate: [IsUserSignedIn] },
-  { path: 'dashboard/:alea/:id', component: DisasterMapDetailComponent, canActivate: [IsUserSignedIn] },
+  { path: 'dashboard/:alea/:id', component: DisasterDetailView, canActivate: [IsUserSignedIn] },
   { path: 'admin', component: AdminView, canActivate: [IsUserSignedIn, IsAdminGuard] },
   { path: 'admin/cities', component: AdminCitiesView, canActivate: [IsUserSignedIn, IsAdminGuard] },
   { path: '**', pathMatch: 'full', component: PageNotFoundView },

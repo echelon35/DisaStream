@@ -13,13 +13,12 @@ import { Eruption } from 'src/app/Model/Eruption';
 import { Disaster } from 'src/app/Model/Disaster';
 
 @Component({
-    selector: 'app-disaster-map-detail',
     standalone: true,
     imports: [CommonModule, SharedModule, MapComponent],
     providers: [MarkerService],
-    templateUrl: './DisasterMapDetail.component.html',
+    templateUrl: './DisasterDetail.view.html',
 })
-export class DisasterMapDetailComponent implements OnInit, OnDestroy {
+export class DisasterDetailView implements OnInit, OnDestroy {
     aleaType: string = '';
     aleaId: number = 0;
     disaster: any; // We'll hold the raw GraphQL response here
