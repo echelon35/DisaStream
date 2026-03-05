@@ -162,14 +162,18 @@ export class DetailAlertComponent {
     }
   }
 
-  open(alert: Alert | undefined) {
+  open(alert: Alert | undefined, isRestore: boolean = false) {
     this.alert = undefined;
     if (alert != null) {
       this.alert = alert;
-      this.razFilters();
-      this.DisastersFromAlertStore.reset();
+      if (!isRestore) {
+        this.razFilters();
+        this.DisastersFromAlertStore.reset();
+      }
       this.DisastersFromAlertStore.setAlert(alert!.id);
-      this.DisastersFromAlertStore.loadDisasterFromAlerts();
+      if (!isRestore) {
+        this.DisastersFromAlertStore.loadDisasterFromAlerts();
+      }
     }
   }
 
